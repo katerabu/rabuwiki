@@ -2,6 +2,13 @@
 
 **Nano** je jednoduchý textový editor pro terminál. Níže jsou uvedeny základní příkazy, které ti pomohou začít.
 
+
+## Obrázek
+
+Takhle vypadá nano:
+
+![nano s tímto návodem](obrazky/nano.png)
+
 ## Spuštění
 
 ```bash

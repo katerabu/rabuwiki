@@ -57,11 +57,28 @@ with open(INDEX_FILE, 'w', encoding='utf-8') as f:
 </head>
 <body>
   <h1>RabuKate Wiki</h1>
-  <ul>
+
+  <table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Návod (HTML)</th>
+        <th>Markdown (.md)</th>
+      </tr>
+    </thead>
+    <tbody>
 ''')
     for name, html_file in navody_html:
-        f.write(f'    <li><a href="navody/{html_file}">{name}</a></li>\n')
-    f.write('  </ul>\n</body>\n</html>')
+        md_file = f'{name}.md'
+        f.write(f'''      <tr>
+        <td><a href="navody/{html_file}">{name}</a></td>
+        <td><a href="markdown/{md_file}">{md_file}</a></td>
+      </tr>
+''')
+    f.write('''    </tbody>
+  </table>
+</body>
+</html>''')
+
 
 import subprocess
 
