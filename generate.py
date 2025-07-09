@@ -21,6 +21,16 @@ os.makedirs(HTML_DIR, exist_ok=True)
 # Načti všechny .md soubory
 files = [f for f in os.listdir(MARKDOWN_DIR) if f.endswith('.md')]
 
+import shutil
+
+SRC_IMG_DIR = os.path.join(MARKDOWN_DIR, 'obrazky')
+DST_IMG_DIR = os.path.join(HTML_DIR, 'obrazky')
+
+if os.path.exists(SRC_IMG_DIR):
+    shutil.rmtree(DST_IMG_DIR, ignore_errors=True)
+    shutil.copytree(SRC_IMG_DIR, DST_IMG_DIR)
+    print("🖼️ Složka s obrázky byla zkopírována do navody/obrazky/")
+
 # Vygeneruj HTML soubory
 navody_html = []
 for md_file in files:
