@@ -1,9 +1,30 @@
 <!DOCTYPE html>
 <html>
-<head><meta charset="UTF-8"><title>Návod 1</title></head>
+<head><meta charset="UTF-8"><title>wiki</title></head>
 <body>
-  <h2>Wiki: Jak na vlastní wiki stránky</h2>
-  <p>Tady bude tvůj obsah v HTML nebo převedený z Markdownu.</p>
-  <a href="../index.html">← Zpět</a>
+<h1>Jak vytvořit osobní wiki na GitHub Pages</h1>
+<h2>1. Předpoklady</h2>
+<ul>
+<li>GitHub účet</li>
+<li>Git nainstalovaný (<code>git --version</code>)</li>
+<li>VS Code nebo jiný editor</li>
+<li>Python 3 (<code>python3 --version</code>)</li>
+</ul>
+<h2>2. Struktura wiki</h2>
+<p>Vytvoř složku např. <code>moje-wiki</code>, uvnitř budou:</p>
+<ul>
+<li><code>markdown/</code> – Markdown soubory návodů</li>
+<li><code>navody/</code> – generované HTML návody</li>
+<li><code>index.html</code> – hlavní rozcestník s heslem</li>
+<li><code>generate.py</code> – skript pro generování</li>
+</ul>
+<h2>3. Použití</h2>
+<p>Po přidání nového <code>.md</code> souboru spusť:</p>
+<h2>4. Upload na GitHub</h2>
+<p>```bash
+git add .
+git commit -m "Aktualizace wiki"
+git push</p>
+<p><a href="../index.html">← Zpět</a></p>
 </body>
 </html>
