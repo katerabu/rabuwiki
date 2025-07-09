@@ -18,6 +18,7 @@ Vytvoř složku např. `moje-wiki`, uvnitř budou:
 Po přidání nového `.md` souboru spusť:
 
 
+
 ## 4. Upload na GitHub
 ```bash
 git add .
