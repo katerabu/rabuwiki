@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>btrfs-snaps-integrita</title></head>
+<body>
+<h1>📸 Snapshot a rollback – návod</h1>
+<p>✅ <strong>Předpoklady:</strong><br />
+- Máš systém nebo data na Btrfs subvolume (např. <code>/</code> nebo <code>/home</code>).<br />
+- Snapshoty se vytvářejí z read-write subvolume.<br />
+- Jsi v Linuxu s oprávněním root.</p>
+<hr />
+<h2>📍 Zjištění subvolumes</h2>
+<pre><code class="language-bash">sudo btrfs subvolume list /
+</code></pre>
+<p>Například u openSUSE nebo Ubuntu s Btrfs jako root můžeš vidět:</p>
+<pre><code>ID 256 gen 128 top level 5 path @
+ID 257 gen 129 top level 5 path @home
+</code></pre>
+<ul>
+<li>Subvolume <code>@</code> = root (<code>/</code>)  </li>
+<li>Subvolume <code>@home</code> = domovské adresáře (<code>/home</code>)</li>
+</ul>
+<hr />
+<h2>📸 Vytvoření snapshotu</h2>
+<pre><code class="language-bash">sudo btrfs subvolume snapshot /@ /mnt/btrfs_snapshots/@_preupdate
+</code></pre>
+<p>Tím vytvoříš snapshot aktuálního stavu rootu (<code>/</code>) do složky <code>/mnt/btrfs_snapshots</code>.<br />
+Složku musíš mít vytvořenou!</p>
+<hr />
+<h2>🔁 Rollback (obnovení snapshotu)</h2>
+<p>Rollback rootu většinou děláš při bootu z Live USB nebo z jiného systému – protože nemůžeš mazat aktivní root.</p>
+<h3><strong>Postup:</strong></h3>
+<ol>
+<li>Nabootuj z Live USB (např. Ubuntu)</li>
+<li>Připoj Btrfs oddíl:</li>
+</ol>
+<pre><code class="language-bash">sudo mount /dev/sdXn /mnt
+</code></pre>
+<ol>
+<li>Smaž aktuální subvolume <code>@</code>:</li>
+</ol>
+<pre><code class="language-bash">sudo btrfs subvolume delete /mnt/@
+</code></pre>
+<ol>
+<li>Obnov snapshot jako nový <code>@</code>:</li>
+</ol>
+<pre><code class="language-bash">sudo btrfs subvolume snapshot /mnt/btrfs_snapshots/@_preupdate /mnt/@
+</code></pre>
+<ol>
+<li>Odpoj a restartuj.</li>
+</ol>
+<hr />
+<h1>🔍 Scrub – kontrola integrity</h1>
+<p>Scrub prohledá všechny bloky a ověří kontrolní součty.<br />
+Pokud máš redundanci (např. RAID1), může Btrfs automaticky opravit chyby.</p>
+<hr />
+<h2>🔎 Spuštění scrubu</h2>
+<pre><code class="language-bash">sudo btrfs scrub start /mountpoint
+</code></pre>
+<p>Např.:</p>
+<pre><code class="language-bash">sudo btrfs scrub start /
+</code></pre>
+<p>Proces běží na pozadí.</p>
+<hr />
+<h2>📋 Stav scrubu</h2>
+<pre><code class="language-bash">sudo btrfs scrub status /
+</code></pre>
+<p><strong>Příklad výstupu:</strong></p>
+<pre><code>scrub status for UUID ...
+    scrub started at Tue Jul  9 16:20:01 2025 and finished after 00:02:34
+    total bytes scrubbed: 15.23GiB with 0 errors
+</code></pre>
+<hr />
+<h2>🛑 Zastavení scrubu (pokud je potřeba)</h2>
+<pre><code class="language-bash">sudo btrfs scrub cancel /
+</code></pre>
+<hr />
+<h2>✅ Tipy</h2>
+<ul>
+<li>Scrub můžeš automatizovat pomocí <code>cron</code> nebo <code>systemd</code> timeru (doporučeno 1× měsíčně).</li>
+<li>Snapshoty můžeš uchovávat i na jiném subvolumu/disku a přenášet pomocí <code>btrfs send/receive</code>.</li>
+</ul>
+<p><a href="../index.html">← Zpět</a></p>
+</body>
+</html>
