@@ -1,34 +1,7 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <title>esp-idf-setup</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css">
-  <style>
-    body {
-      max-width: 900px;
-      margin: 2em auto;
-      padding: 1em 2em;
-      background-color: #fff;
-    }
-    .markdown-body table {
-      border-collapse: collapse;
-      width: 100%;
-      margin-bottom: 1em;
-    }
-    .markdown-body th, .markdown-body td {
-      border: 1px solid #d0d7de;
-      padding: 6px 13px;
-    }
-    .markdown-body th {
-      background-color: #f6f8fa;
-      font-weight: 600;
-      text-align: left;
-    }
-  </style>
-</head>
+<head><meta charset="UTF-8"><title>esp-idf-setup</title></head>
 <body>
-  <article class="markdown-body">
 <pre><code class="language-markdown"># 🚀 ESP-IDF – Instalace a základní použití
 
 Návod pro vývoj na ESP32 pomocí oficiálního frameworku Espressif – ESP-IDF.
@@ -84,19 +57,60 @@ esptool.py --port /dev/ttyUSB0 read_flash_status
 </code></pre>
 <hr />
 <h2>🧾 Přehled základních příkazů <code>idf.py</code></h2>
-<p>| Příkaz                  | Popis                                                  |
-|-------------------------|--------------------------------------------------------|
-| <code>create-project &lt;jméno&gt;</code>| Vytvoří nový projekt                                   |
-| <code>set-target &lt;čip&gt;</code>      | Nastaví cílový čip (esp32, esp32s3, ...)              |
-| <code>menuconfig</code>            | Spustí textové UI pro konfiguraci                     |
-| <code>build</code>                 | Přeloží projekt                                        |
-| <code>clean</code> / <code>fullclean</code>   | Smaže výstupy / včetně konfigurace                    |
-| <code>flash</code>                 | Nahraje firmware                                      |
-| <code>monitor</code>               | Sériový výstup                                         |
-| <code>flash monitor</code>         | Kombinace nahrání a spuštění terminálu                |
-| <code>erase-flash</code>           | Vymaže celý flash čip                                  |
-| <code>reconfigure</code>           | Znovu vytvoří build systém                             |
-| <code>size</code> / <code>size-components</code> | Ukáže velikost výsledného firmware                  |</p>
+<table>
+<thead>
+<tr>
+<th>Příkaz</th>
+<th>Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>create-project &lt;jméno&gt;</code></td>
+<td>Vytvoří nový projekt</td>
+</tr>
+<tr>
+<td><code>set-target &lt;čip&gt;</code></td>
+<td>Nastaví cílový čip (esp32, esp32s3, ...)</td>
+</tr>
+<tr>
+<td><code>menuconfig</code></td>
+<td>Spustí textové UI pro konfiguraci</td>
+</tr>
+<tr>
+<td><code>build</code></td>
+<td>Přeloží projekt</td>
+</tr>
+<tr>
+<td><code>clean</code> / <code>fullclean</code></td>
+<td>Smaže výstupy / včetně konfigurace</td>
+</tr>
+<tr>
+<td><code>flash</code></td>
+<td>Nahraje firmware</td>
+</tr>
+<tr>
+<td><code>monitor</code></td>
+<td>Sériový výstup</td>
+</tr>
+<tr>
+<td><code>flash monitor</code></td>
+<td>Kombinace nahrání a spuštění terminálu</td>
+</tr>
+<tr>
+<td><code>erase-flash</code></td>
+<td>Vymaže celý flash čip</td>
+</tr>
+<tr>
+<td><code>reconfigure</code></td>
+<td>Znovu vytvoří build systém</td>
+</tr>
+<tr>
+<td><code>size</code> / <code>size-components</code></td>
+<td>Ukáže velikost výsledného firmware</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2>⚙️ Automatické rozpoznání portu</h2>
 <p>Od ESP-IDF v4.2:</p>
@@ -134,7 +148,6 @@ cd esp-idf
 <pre><code class="language-bash">alias get_idf='. $HOME/esp/esp-idf/export.sh'
 </code></pre>
 <p>```</p>
-    <p><a href="../index.html">← Zpět</a></p>
-  </article>
+<p><a href="../index.html">← Zpět na přehled</a></p>
 </body>
 </html>

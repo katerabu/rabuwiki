@@ -1,34 +1,7 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <title>rsync</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css">
-  <style>
-    body {
-      max-width: 900px;
-      margin: 2em auto;
-      padding: 1em 2em;
-      background-color: #fff;
-    }
-    .markdown-body table {
-      border-collapse: collapse;
-      width: 100%;
-      margin-bottom: 1em;
-    }
-    .markdown-body th, .markdown-body td {
-      border: 1px solid #d0d7de;
-      padding: 6px 13px;
-    }
-    .markdown-body th {
-      background-color: #f6f8fa;
-      font-weight: 600;
-      text-align: left;
-    }
-  </style>
-</head>
+<head><meta charset="UTF-8"><title>rsync</title></head>
 <body>
-  <article class="markdown-body">
 <h1>🔁 <code>rsync</code> – efektivní synchronizace souborů</h1>
 <p><code>rsync</code> je mocný nástroj pro synchronizaci souborů a adresářů mezi dvěma místy – lokálně i přes síť. Umí přenášet pouze změny, zachovávat oprávnění a je ideální pro zálohování.</p>
 <hr />
@@ -79,16 +52,48 @@
 <p>Nevykoná akci, jen vypíše, co by se stalo.</p>
 <hr />
 <h2>💡 Užitečné přepínače</h2>
-<p>| Přepínač       | Popis                                              |
-|----------------|-----------------------------------------------------|
-| <code>-a</code>           | Archivní mód (rekurze, symlinky, časy, oprávnění…)  |
-| <code>-v</code>           | Verbose – výpis akcí                                |
-| <code>--delete</code>     | Smazat soubory v cíli, které nejsou ve zdroji       |
-| <code>--exclude</code>    | Vynechat soubory podle vzoru                        |
-| <code>--progress</code>   | Zobrazit průběh kopírování                          |
-| <code>--dry-run</code>    | Zobrazit, co by se stalo, ale neprovádět změny      |
-| <code>-e ssh</code>       | Přenos přes SSH                                     |
-| <code>--update</code>     | Nepřepisuj novější soubory                          |</p>
+<table>
+<thead>
+<tr>
+<th>Přepínač</th>
+<th>Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-a</code></td>
+<td>Archivní mód (rekurze, symlinky, časy, oprávnění…)</td>
+</tr>
+<tr>
+<td><code>-v</code></td>
+<td>Verbose – výpis akcí</td>
+</tr>
+<tr>
+<td><code>--delete</code></td>
+<td>Smazat soubory v cíli, které nejsou ve zdroji</td>
+</tr>
+<tr>
+<td><code>--exclude</code></td>
+<td>Vynechat soubory podle vzoru</td>
+</tr>
+<tr>
+<td><code>--progress</code></td>
+<td>Zobrazit průběh kopírování</td>
+</tr>
+<tr>
+<td><code>--dry-run</code></td>
+<td>Zobrazit, co by se stalo, ale neprovádět změny</td>
+</tr>
+<tr>
+<td><code>-e ssh</code></td>
+<td>Přenos přes SSH</td>
+</tr>
+<tr>
+<td><code>--update</code></td>
+<td>Nepřepisuj novější soubory</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2>🧪 Testovací příklad</h2>
 <pre><code class="language-bash">rsync -av --dry-run --delete /home/user/ /mnt/backup/home/
@@ -109,7 +114,6 @@
 <li><a href="https://wiki.archlinux.org/title/rsync">rsync na ArchWiki</a></li>
 <li><a href="https://linuxize.com/post/how-to-use-rsync-for-local-and-remote-data-transfer-and-synchronization/">rsync examples</a></li>
 </ul>
-    <p><a href="../index.html">← Zpět</a></p>
-  </article>
+<p><a href="../index.html">← Zpět na přehled</a></p>
 </body>
 </html>

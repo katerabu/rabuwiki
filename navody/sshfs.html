@@ -1,34 +1,7 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <title>sshfs</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css">
-  <style>
-    body {
-      max-width: 900px;
-      margin: 2em auto;
-      padding: 1em 2em;
-      background-color: #fff;
-    }
-    .markdown-body table {
-      border-collapse: collapse;
-      width: 100%;
-      margin-bottom: 1em;
-    }
-    .markdown-body th, .markdown-body td {
-      border: 1px solid #d0d7de;
-      padding: 6px 13px;
-    }
-    .markdown-body th {
-      background-color: #f6f8fa;
-      font-weight: 600;
-      text-align: left;
-    }
-  </style>
-</head>
+<head><meta charset="UTF-8"><title>sshfs</title></head>
 <body>
-  <article class="markdown-body">
 <h1>Návod na použití SSHFS pro Ubuntu a Windows 11</h1>
 <p>SSHFS (SSH File System) umožňuje připojit vzdálený souborový systém přes SSH jako by byl lokální. Tento návod popisuje, jak jej nastavit a používat na Ubuntu a Windows 11.</p>
 <hr />
@@ -69,10 +42,27 @@ sudo apt install sshfs</p>
 <p>net use X: /delete</p>
 <hr />
 <h2>Užitečné příkazy</h2>
-<p>| Akce                 | Ubuntu                        | Windows (PowerShell)                      |
-|----------------------|------------------------------|------------------------------------------|
-| Připojit vzdálený FS | <code>sshfs user@host:/path ~/mnt</code>| <code>net use X: \\sshfs\user@host\path</code>     |
-| Odpojit FS           | <code>fusermount -u ~/mnt</code>         | <code>net use X: /delete</code>                      |</p>
+<table>
+<thead>
+<tr>
+<th>Akce</th>
+<th>Ubuntu</th>
+<th>Windows (PowerShell)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Připojit vzdálený FS</td>
+<td><code>sshfs user@host:/path ~/mnt</code></td>
+<td><code>net use X: \\sshfs\user@host\path</code></td>
+</tr>
+<tr>
+<td>Odpojit FS</td>
+<td><code>fusermount -u ~/mnt</code></td>
+<td><code>net use X: /delete</code></td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2>Zdroje</h2>
 <ul>
@@ -82,7 +72,6 @@ sudo apt install sshfs</p>
 </ul>
 <hr />
 <p><em>Vytvořeno ChatGPT, 2025</em></p>
-    <p><a href="../index.html">← Zpět</a></p>
-  </article>
+<p><a href="../index.html">← Zpět na přehled</a></p>
 </body>
 </html>

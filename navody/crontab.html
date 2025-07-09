@@ -1,34 +1,7 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <title>crontab</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css">
-  <style>
-    body {
-      max-width: 900px;
-      margin: 2em auto;
-      padding: 1em 2em;
-      background-color: #fff;
-    }
-    .markdown-body table {
-      border-collapse: collapse;
-      width: 100%;
-      margin-bottom: 1em;
-    }
-    .markdown-body th, .markdown-body td {
-      border: 1px solid #d0d7de;
-      padding: 6px 13px;
-    }
-    .markdown-body th {
-      background-color: #f6f8fa;
-      font-weight: 600;
-      text-align: left;
-    }
-  </style>
-</head>
+<head><meta charset="UTF-8"><title>crontab</title></head>
 <body>
-  <article class="markdown-body">
 <h1>🕒 <code>crontab</code> – plánování úloh v Linuxu</h1>
 <p><code>cron</code> je nástroj pro automatické spouštění příkazů nebo skriptů v definovaných intervalech. Pomocí <code>crontab</code> si nastavíš, kdy a co se má spustit.</p>
 <hr />
@@ -63,23 +36,78 @@ sudo crontab -l # pro rootovske ulohy
 </code></pre>
 <hr />
 <h2>🧑‍💻 Příklady použití</h2>
-<p>| Čas               | Crontab výraz     | Popis                                 |
-|-------------------|-------------------|----------------------------------------|
-| Každou minutu     | <code>* * * * *</code>       | Spustí se každou minutu                |
-| Každou hodinu     | <code>0 * * * *</code>       | V každou celou hodinu                  |
-| Denně ve 3:30     | <code>30 3 * * *</code>      | Každý den v 3:30 ráno                  |
-| Každou neděli     | <code>0 9 * * 0</code>       | V neděli v 9:00                        |
-| Každý první den v měsíci | <code>0 0 1 * *</code> | Každý první den měsíce o půlnoci       |</p>
+<table>
+<thead>
+<tr>
+<th>Čas</th>
+<th>Crontab výraz</th>
+<th>Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Každou minutu</td>
+<td><code>* * * * *</code></td>
+<td>Spustí se každou minutu</td>
+</tr>
+<tr>
+<td>Každou hodinu</td>
+<td><code>0 * * * *</code></td>
+<td>V každou celou hodinu</td>
+</tr>
+<tr>
+<td>Denně ve 3:30</td>
+<td><code>30 3 * * *</code></td>
+<td>Každý den v 3:30 ráno</td>
+</tr>
+<tr>
+<td>Každou neděli</td>
+<td><code>0 9 * * 0</code></td>
+<td>V neděli v 9:00</td>
+</tr>
+<tr>
+<td>Každý první den v měsíci</td>
+<td><code>0 0 1 * *</code></td>
+<td>Každý první den měsíce o půlnoci</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2>🧠 Speciální zástupci</h2>
-<p>| Zástupce      | Význam                        |
-|---------------|-------------------------------|
-| <code>@reboot</code>     | Spustí se po startu systému   |
-| <code>@daily</code>      | Jednou denně (0:00)           |
-| <code>@hourly</code>     | Každou hodinu (00:00)         |
-| <code>@weekly</code>     | Jednou týdně (neděle 0:00)    |
-| <code>@monthly</code>    | Jednou měsíčně (1. den 0:00)  |
-| <code>@yearly</code>     | Jednou ročně (1. 1. 0:00)     |</p>
+<table>
+<thead>
+<tr>
+<th>Zástupce</th>
+<th>Význam</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>@reboot</code></td>
+<td>Spustí se po startu systému</td>
+</tr>
+<tr>
+<td><code>@daily</code></td>
+<td>Jednou denně (0:00)</td>
+</tr>
+<tr>
+<td><code>@hourly</code></td>
+<td>Každou hodinu (00:00)</td>
+</tr>
+<tr>
+<td><code>@weekly</code></td>
+<td>Jednou týdně (neděle 0:00)</td>
+</tr>
+<tr>
+<td><code>@monthly</code></td>
+<td>Jednou měsíčně (1. den 0:00)</td>
+</tr>
+<tr>
+<td><code>@yearly</code></td>
+<td>Jednou ročně (1. 1. 0:00)</td>
+</tr>
+</tbody>
+</table>
 <p>📌 <strong>Příklad:</strong></p>
 <pre><code class="language-cron">@daily /home/user/scripts/daily-backup.sh
 </code></pre>
@@ -114,7 +142,6 @@ sudo crontab -l # pro rootovske ulohy
 <li><a href="https://man7.org/linux/man-pages/man5/crontab.5.html">man crontab</a></li>
 <li><a href="https://crontab.guru/">crontab.guru – online generátor výrazů</a></li>
 </ul>
-    <p><a href="../index.html">← Zpět</a></p>
-  </article>
+<p><a href="../index.html">← Zpět na přehled</a></p>
 </body>
 </html>
