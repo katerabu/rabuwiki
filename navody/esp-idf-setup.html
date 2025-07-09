@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>esp-idf-setup</title></head>
+<body>
+<pre><code class="language-markdown"># 🚀 ESP-IDF – Instalace a základní použití
+
+Návod pro vývoj na ESP32 pomocí oficiálního frameworku Espressif – ESP-IDF.
+
+---
+
+## 🛠️ Instalace závislostí (Linux / Ubuntu / Kubuntu)
+
+```bash
+sudo apt-get install git wget flex bison gperf python3 python3-pip python3-venv cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0
+python3 --version  # mělo by být &gt;= 3.7
+</code></pre>
+<hr />
+<h2>📥 Stažení a instalace ESP-IDF</h2>
+<pre><code class="language-bash">mkdir -p ~/esp
+cd ~/esp
+git clone --recursive https://github.com/espressif/esp-idf.git
+cd ~/esp/esp-idf
+./install.sh all
+</code></pre>
+<hr />
+<h2>🧠 Nastavení prostředí</h2>
+<pre><code class="language-bash">. $HOME/esp/esp-idf/export.sh
+</code></pre>
+<blockquote>
+<p>Nezapomeň přidat do <code>~/.bashrc</code>:</p>
+</blockquote>
+<pre><code class="language-bash">alias get_idf='. $HOME/esp/esp-idf/export.sh'
+</code></pre>
+<hr />
+<h2>✅ Testovací projekt – Hello World</h2>
+<pre><code class="language-bash">cd ~/esp
+cp -r $IDF_PATH/examples/get-started/hello_world .
+cd hello_world
+idf.py set-target esp32
+idf.py menuconfig
+idf.py build
+idf.py flash monitor
+</code></pre>
+<hr />
+<h2>🔌 Zjištění sériového portu</h2>
+<pre><code class="language-bash">sudo dmesg | grep tty
+ls /dev/ttyUSB*
+ls /dev/ttyACM*
+watch -n 0.5 ls /dev/ttyUSB* /dev/ttyACM*
+</code></pre>
+<hr />
+<h2>🔍 Práce s esptool.py</h2>
+<pre><code class="language-bash">esptool.py --port /dev/ttyUSB0 chip_id
+esptool.py --port /dev/ttyUSB0 flash_id
+esptool.py --port /dev/ttyUSB0 read_mac
+esptool.py --port /dev/ttyUSB0 read_flash_status
+</code></pre>
+<hr />
+<h2>🧾 Přehled základních příkazů <code>idf.py</code></h2>
+<p>| Příkaz                  | Popis                                                  |
+|-------------------------|--------------------------------------------------------|
+| <code>create-project &lt;jméno&gt;</code>| Vytvoří nový projekt                                   |
+| <code>set-target &lt;čip&gt;</code>      | Nastaví cílový čip (esp32, esp32s3, ...)              |
+| <code>menuconfig</code>            | Spustí textové UI pro konfiguraci                     |
+| <code>build</code>                 | Přeloží projekt                                        |
+| <code>clean</code> / <code>fullclean</code>   | Smaže výstupy / včetně konfigurace                    |
+| <code>flash</code>                 | Nahraje firmware                                      |
+| <code>monitor</code>               | Sériový výstup                                         |
+| <code>flash monitor</code>         | Kombinace nahrání a spuštění terminálu                |
+| <code>erase-flash</code>           | Vymaže celý flash čip                                  |
+| <code>reconfigure</code>           | Znovu vytvoří build systém                             |
+| <code>size</code> / <code>size-components</code> | Ukáže velikost výsledného firmware                  |</p>
+<hr />
+<h2>⚙️ Automatické rozpoznání portu</h2>
+<p>Od ESP-IDF v4.2:</p>
+<pre><code class="language-bash">idf.py flash monitor
+</code></pre>
+<blockquote>
+<p>Pokud je připojeno více zařízení, přidej <code>-p /dev/ttyUSB0</code>.</p>
+</blockquote>
+<hr />
+<h2>🧪 Ukázka celého průběhu</h2>
+<pre><code class="language-bash">idf.py create-project hello_world
+cd hello_world
+idf.py set-target esp32
+idf.py menuconfig
+idf.py build
+idf.py -p /dev/ttyUSB0 flash monitor
+</code></pre>
+<hr />
+<h2>🔄 Aktualizace ESP-IDF</h2>
+<pre><code class="language-bash">cd ~/esp
+git clone -b v5.2 https://github.com/espressif/esp-idf.git esp-idf
+cd esp-idf
+./install.sh
+. ./export.sh
+</code></pre>
+<hr />
+<blockquote>
+<p>🧠 Poznámka: Při vývoji vždy spusť:
+<code>bash
+. $HOME/esp/esp-idf/export.sh</code></p>
+</blockquote>
+<hr />
+<h2>📌 Tip</h2>
+<p>Pro rychlejší vývoj si vytvoř alias:</p>
+<pre><code class="language-bash">alias get_idf='. $HOME/esp/esp-idf/export.sh'
+</code></pre>
+<p>```</p>
+<p><a href="../index.html">← Zpět</a></p>
+</body>
+</html>
