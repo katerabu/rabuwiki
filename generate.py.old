@@ -1,6 +1,7 @@
 import os
 import markdown
 import subprocess
+import shutil
 
 # Nejprve stáhni změny z GitHubu
 try:
@@ -39,6 +40,15 @@ for md_file in files:
 </body>
 </html>''')
     navody_html.append((name, html_file))
+
+# Zkopíruj složku s obrázky (pokud existuje)
+OBRAZKY_ZDROJ = os.path.join(MARKDOWN_DIR, 'obrazky')
+OBRAZKY_CIL = 'obrazky'
+
+if os.path.exists(OBRAZKY_ZDROJ):
+    shutil.rmtree(OBRAZKY_CIL, ignore_errors=True)
+    shutil.copytree(OBRAZKY_ZDROJ, OBRAZKY_CIL)
+    print("🖼️  Složka s obrázky byla zkopírována.")
 
 # Vygeneruj index.html
 with open(INDEX_FILE, 'w', encoding='utf-8') as f:

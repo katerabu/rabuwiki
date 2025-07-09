@@ -1,7 +1,21 @@
 <!DOCTYPE html>
 <html>
-<head><meta charset="UTF-8"><title>btrfs-snaps-integrita</title></head>
+<head>
+  <meta charset="UTF-8">
+  <title>btrfs-snaps-integrita</title>
+  <!-- Přidáno GitHub Markdown CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css">
+  <style>
+    body {
+      max-width: 900px;
+      margin: 2em auto;
+      padding: 1em 2em;
+      background-color: #fff;
+    }
+  </style>
+</head>
 <body>
+  <article class="markdown-body">
 <h1>📸 Snapshot a rollback – návod</h1>
 <p>✅ <strong>Předpoklady:</strong><br />
 - Máš systém nebo data na Btrfs subvolume (např. <code>/</code> nebo <code>/home</code>).<br />
@@ -79,6 +93,7 @@ Pokud máš redundanci (např. RAID1), může Btrfs automaticky opravit chyby.</
 <li>Scrub můžeš automatizovat pomocí <code>cron</code> nebo <code>systemd</code> timeru (doporučeno 1× měsíčně).</li>
 <li>Snapshoty můžeš uchovávat i na jiném subvolumu/disku a přenášet pomocí <code>btrfs send/receive</code>.</li>
 </ul>
-<p><a href="../index.html">← Zpět</a></p>
+    <p><a href="../index.html">← Zpět</a></p>
+  </article>
 </body>
 </html>

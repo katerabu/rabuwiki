@@ -26,17 +26,32 @@ navody_html = []
 for md_file in files:
     with open(os.path.join(MARKDOWN_DIR, md_file), 'r', encoding='utf-8') as f:
         text = f.read()
-    html = markdown.markdown(text, extensions=['fenced_code'])
+    html_content = markdown.markdown(text, extensions=['fenced_code'])
     
     name = os.path.splitext(md_file)[0]
     html_file = f'{name}.html'
     with open(os.path.join(HTML_DIR, html_file), 'w', encoding='utf-8') as f:
         f.write(f'''<!DOCTYPE html>
 <html>
-<head><meta charset="UTF-8"><title>{name}</title></head>
+<head>
+  <meta charset="UTF-8">
+  <title>{name}</title>
+  <!-- Přidáno GitHub Markdown CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css">
+  <style>
+    body {{
+      max-width: 900px;
+      margin: 2em auto;
+      padding: 1em 2em;
+      background-color: #fff;
+    }}
+  </style>
+</head>
 <body>
-{html}
-<p><a href="../index.html">← Zpět</a></p>
+  <article class="markdown-body">
+{html_content}
+    <p><a href="../index.html">← Zpět</a></p>
+  </article>
 </body>
 </html>''')
     navody_html.append((name, html_file))
