@@ -32,6 +32,7 @@ Každý řádek v `crontab` má tuto podobu:
 
 ```bash
 crontab -e
+sudo crontab -e # pro ulohy provaděné pod rootem
 ```
 
 Tím otevřeš svůj plán úloh v editoru (např. `nano`, `vim`).
@@ -42,6 +43,7 @@ Tím otevřeš svůj plán úloh v editoru (např. `nano`, `vim`).
 
 ```bash
 crontab -l
+sudo crontab -l # pro rootovske ulohy
 ```
 
 ---

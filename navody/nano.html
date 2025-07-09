@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>nano</title></head>
+<body>
+<h1>Základní návod pro nano</h1>
+<p><strong>Nano</strong> je jednoduchý textový editor pro terminál. Níže jsou uvedeny základní příkazy, které ti pomohou začít.</p>
+<h2>Spuštění</h2>
+<p>```bash
+nano název_souboru</p>
+<p>Pohyb v souboru
+Šipky: Pohyb kurzorem</p>
+<p>Ctrl + _ + číslo řádku: Přejít na konkrétní řádek</p>
+<p>Úpravy
+Piš text běžně jako v jiném editoru</p>
+<p>Backspace nebo Delete: mazání znaků</p>
+<p>Uložení a ukončení
+Ctrl + O: Uložit soubor (potvrď název Enterem)</p>
+<p>Ctrl + X: Ukončit editor (pokud jsou neuložené změny, editor se zeptá)</p>
+<p>Užitočné příkazy</p>
+<p>| Klávesová zkratka | Akce                         |
+| ----------------- | ---------------------------- |
+| <code>Ctrl</code> + <code>G</code>      | Nápověda                     |
+| <code>Ctrl</code> + <code>W</code>      | Hledat v souboru             |
+| <code>Ctrl</code> + <code>K</code>      | Vyjmout řádek                |
+| <code>Ctrl</code> + <code>U</code>      | Vložit řádek                 |
+| <code>Ctrl</code> + <code>\</code>      | Nahradit (hledat a nahradit) |
+| <code>Ctrl</code> + <code>C</code>      | Zobrazit pozici kurzoru      |</p>
+<p>Tipy
+Nano automaticky nevytváří zálohy – ulož si práci často!</p>
+<p>Při chybě použij Ctrl + C k přerušení příkazu nebo návratu</p>
+<p>Editor nano je vhodný pro začátečníky i pokročilé, kteří potřebují rychlé úpravy přímo v terminálu.</p>
+<h1>🅰️ Nano – legenda Meta (<code>M-</code>) příkazů (Alt + …)</h1>
+<p>V editoru <strong>nano</strong> znamená <code>M-</code> klávesovou zkratku s <strong>Alt</strong> (tzv. „Meta“ klávesou). Níže jsou nejčastější z nich – i s popisem v češtině.</p>
+<p>| Zkratka (M-…)   | Klávesa             | Význam (česky)                          |
+|-----------------|---------------------|------------------------------------------|
+| <code>M-U</code>           | <code>Alt + U</code>           | Vrátit poslední akci (Undo)             |
+| <code>M-E</code>           | <code>Alt + E</code>           | Přejít na konec slova                   |
+| <code>M-B</code>           | <code>Alt + B</code>           | Přejít na začátek slova                 |
+| <code>M-6</code>           | <code>Alt + 6</code>           | Kopírovat aktuální řádek (označení)     |
+| <code>M-]</code>           | <code>Alt + ]</code>           | Skok na konec bloku závorek             |
+| <code>M-[</code>           | <code>Alt + [</code>           | Skok na začátek bloku závorek           |
+| <code>M-A</code>           | <code>Alt + A</code>           | Spustit/ukončit označování (markování)  |
+| <code>M-Y</code>           | <code>Alt + Y</code>           | Přejít na začátek souboru               |
+| <code>M-\\</code>          | <code>Alt + \\</code>          | Přejít na začátek                        |
+| <code>M-/</code>           | <code>Alt + /</code>           | Přejít na konec souboru                 |
+| <code>M-T</code>           | <code>Alt + T</code>           | Kontrola pravopisu (pokud je podpora)   |
+| <code>M-V</code>           | <code>Alt + V</code>           | Posun o stránku dolů (někdy <code>PgDn</code>)     |
+| <code>M-^</code>           | <code>Alt + Shift + 6</code>   | Začít označování (jiná varianta <code>M-A</code>)  |
+| <code>M-Q</code>           | <code>Alt + Q</code>           | Přeskočit zpět na předchozí výskyt      |
+| <code>M-G</code>           | <code>Alt + G</code>           | Přejít na konkrétní řádek               |
+| <code>M-R</code>           | <code>Alt + R</code>           | Vložit obsah jiného souboru             |
+| <code>M-C</code>           | <code>Alt + C</code>           | Zobrazit/skrýt počítadlo znaků a řádků  |</p>
+<blockquote>
+<p>📝 Některé zkratky se liší podle nastavení systému nebo klávesnice – pokud ti některé nefungují, zkus jiný terminál (např. <code>xterm</code> nebo <code>gnome-terminal</code>).</p>
+</blockquote>
+<hr />
+<h2>🧪 Tip: Jak poznáš aktivní označení</h2>
+<p>Když zmáčkneš <code>Alt + A</code>, aktivuje se označování. Pomocí šipek označíš blok textu a pak:</p>
+<ul>
+<li><code>Ctrl + K</code> = vyjmeš (odstraníš) označený blok</li>
+<li><code>Alt + 6</code> = zkopíruješ blok</li>
+<li><code>Ctrl + U</code> = vložíš blok</li>
+</ul>
+<hr />
+<p>^ = Ctrl
+M- = Alt (Meta)</p>
+<p>🧪 Tip pro otestování:
+Pokud si nejsi jistý, co zkratka dělá, klidně si otevři testovací soubor a vyzkoušej např.:</p>
+<p>Alt + U → vrátí poslední změnu
+Alt + E → pohyb na konec řádku/slova
+Alt + A → označování textu (začne výběr)</p>
+<p><a href="../index.html">← Zpět</a></p>
+</body>
+</html>
