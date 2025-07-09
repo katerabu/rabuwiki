@@ -1,5 +1,13 @@
 import os
 import markdown
+import subprocess
+
+# Nejprve stáhni změny z GitHubu
+try:
+    subprocess.run(['git', 'pull', 'origin', 'main'], check=True)
+    print("✅ Aktualizace z GitHubu proběhla.")
+except subprocess.CalledProcessError:
+    print("⚠️ Nepodařilo se provést git pull. Zkontroluj konflikt nebo připojení.")
 
 # Cesty
 MARKDOWN_DIR = 'markdown'
