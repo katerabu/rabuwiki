@@ -1,3 +1,10 @@
+---
+title: ESP IDF – moderní vývojové prostředí
+category: Počítače
+tags: [linux, mikrokontrolery, espressif]
+last_update: 2025-07-09
+---
+
 # Instalace:
 sudo apt-get install git wget flex bison gperf python3 python3-pip python3-venv cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0
 python --version # mel by byt vyssi nez 2.7.17

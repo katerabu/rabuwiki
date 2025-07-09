@@ -1,3 +1,11 @@
+---
+title: rsync – zálohování v linuxu
+category: Počítače
+tags: [linux, zalohovani]
+last_update: 2025-07-09
+---
+
+
 # 🔁 `rsync` – efektivní synchronizace souborů
 
 `rsync` je mocný nástroj pro synchronizaci souborů a adresářů mezi dvěma místy – lokálně i přes síť. Umí přenášet pouze změny, zachovávat oprávnění a je ideální pro zálohování.

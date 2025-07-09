@@ -1,3 +1,11 @@
+---
+title: ESP IDF setup – moderní vývojové prostředí
+category: Počítače
+tags: [linux, mikrokontrolery, espressif]
+last_update: 2025-07-09
+---
+
+
 ```markdown
 # 🚀 ESP-IDF – Instalace a základní použití
 

@@ -1,3 +1,11 @@
+---
+title: ESP32 – mqtt
+category: Počítače
+tags: [linux, mikrokontrolery, espressif]
+last_update: 2025-07-09
+---
+
+
 ```markdown
 # ☁️ ESP32 – MQTT klient pomocí ESP-IDF
 

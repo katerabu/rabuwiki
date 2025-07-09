@@ -1,3 +1,11 @@
+---
+title: sshfs – vzdaleny soubor pristup
+category: Počítače
+tags: [linux, samba, vzdaleneslozky]
+last_update: 2025-07-09
+---
+
+
 # Návod na použití SSHFS pro Ubuntu a Windows 11
 
 SSHFS (SSH File System) umožňuje připojit vzdálený souborový systém přes SSH jako by byl lokální. Tento návod popisuje, jak jej nastavit a používat na Ubuntu a Windows 11.

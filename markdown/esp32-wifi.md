@@ -1,3 +1,11 @@
+---
+title: ESP32 – wifi
+category: Počítače
+tags: [linux, mikrokontrolery, espressif]
+last_update: 2025-07-09
+---
+
+
 ```markdown
 # 📡 ESP32 – Připojení k Wi-Fi pomocí ESP-IDF
 

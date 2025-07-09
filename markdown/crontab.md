@@ -1,3 +1,10 @@
+---
+title: Crontab – plánovnání úloh
+category: Počítače
+tags: [linux, automatizace, spousteni]
+last_update: 2025-07-09
+---
+
 # 🕒 `crontab` – plánování úloh v Linuxu
 
 `cron` je nástroj pro automatické spouštění příkazů nebo skriptů v definovaných intervalech. Pomocí `crontab` si nastavíš, kdy a co se má spustit.

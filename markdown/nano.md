@@ -1,3 +1,11 @@
+---
+title: nano – testový editor
+category: Počítače
+tags: [linux, office, vývoj]
+last_update: 2025-07-09
+---
+
+
 # Základní návod pro nano
 
 **Nano** je jednoduchý textový editor pro terminál. Níže jsou uvedeny základní příkazy, které ti pomohou začít.

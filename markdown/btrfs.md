@@ -1,3 +1,10 @@
+---
+title: Btrfs – moderní souborový systém
+category: Počítače
+tags: [linux, souborový systém, btrfs, snapshoty, raid]
+last_update: 2025-07-09
+---
+
 ```markdown
 # 🧱 Btrfs – moderní souborový systém
 
