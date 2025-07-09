@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>esp32-wifi</title></head>
+<body>
+<pre><code class="language-markdown"># 📡 ESP32 – Připojení k Wi-Fi pomocí ESP-IDF
+
+Tento návod ukazuje, jak nakonfigurovat a připojit zařízení ESP32 k Wi-Fi síti pomocí ESP-IDF.
+
+---
+
+## 🔧 Použitý příklad
+
+Espressif poskytuje oficiální ukázku `wifi/station`, která se nachází zde:
+
+```bash
+cd ~/esp
+cp -r $IDF_PATH/examples/wifi/getting_started/station wifi_station
+cd wifi_station
+</code></pre>
+<hr />
+<h2>⚙️ Konfigurace sítě (menuconfig)</h2>
+<pre><code class="language-bash">idf.py menuconfig
+</code></pre>
+<ol>
+<li>Přejdi do:<br />
+<code>Example Configuration</code></li>
+<li>Nastav:</li>
+<li><em>WiFi SSID</em> – název tvé Wi-Fi sítě</li>
+<li><em>WiFi Password</em> – heslo</li>
+</ol>
+<blockquote>
+<p>Nastavení se uloží do <code>sdkconfig</code> souboru.</p>
+</blockquote>
+<hr />
+<h2>🛠️ Kompilace a nahrání</h2>
+<pre><code class="language-bash">idf.py set-target esp32
+idf.py build
+idf.py -p /dev/ttyUSB0 flash monitor
+</code></pre>
+<hr />
+<h2>✅ Co očekávat v terminálu</h2>
+<p>Po úspěšném připojení bys měl v <code>idf.py monitor</code> vidět něco jako:</p>
+<pre><code>I (3179) wifi station: WiFi init finished.
+I (4319) wifi station: Connected to ap SSID:myssid password:*****
+I (4359) wifi station: got ip:192.168.0.105
+</code></pre>
+<hr />
+<h2>📌 Tipy</h2>
+<ul>
+<li>Pokud máš problémy s připojením, zkontroluj heslo nebo zkus jiné pásmo (např. 2.4 GHz).</li>
+<li>Lze také upravit <code>sdkconfig.defaults</code> a přidat SSID/PASS pro snadné sdílení v týmu.
+```</li>
+</ul>
+<p><a href="../index.html">← Zpět</a></p>
+</body>
+</html>

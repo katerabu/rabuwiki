@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>esp32-mqtt</title></head>
+<body>
+<pre><code class="language-markdown"># ☁️ ESP32 – MQTT klient pomocí ESP-IDF
+
+Ukázka, jak vytvořit jednoduchého MQTT klienta na ESP32 pomocí knihovny z ESP-IDF.
+
+---
+
+## 📦 Použitý příklad
+
+Espressif poskytuje oficiální ukázku MQTT klienta:
+
+```bash
+cd ~/esp
+cp -r $IDF_PATH/examples/protocols/mqtt/tcp mqtt_client
+cd mqtt_client
+</code></pre>
+<hr />
+<h2>⚙️ Nastavení MQTT serveru (brokeru)</h2>
+<pre><code class="language-bash">idf.py menuconfig
+</code></pre>
+<ol>
+<li>Přejdi do:</li>
+<li><code>Example Configuration</code></li>
+<li>Změň:</li>
+<li><em>Broker URI</em> – např. <code>mqtt://broker.hivemq.com</code></li>
+<li>Nebo vlastní: <code>mqtt://192.168.0.10:1883</code></li>
+</ol>
+<hr />
+<h2>🧪 Kompilace a nahrání</h2>
+<pre><code class="language-bash">idf.py set-target esp32
+idf.py build
+idf.py -p /dev/ttyUSB0 flash monitor
+</code></pre>
+<hr />
+<h2>📋 Výstup</h2>
+<p>Po připojení k MQTT brokeru:</p>
+<pre><code>I (3519) MQTT_CLIENT: MQTT_EVENT_CONNECTED
+I (3529) MQTT_CLIENT: sent publish successful, msg_id=1234
+</code></pre>
+<hr />
+<h2>🧠 MQTT struktura (v kódu)</h2>
+<p>Typický handler v <code>mqtt_client_main.c</code>:</p>
+<pre><code class="language-c">esp_mqtt_client_handle_t client = esp_mqtt_client_init(&amp;mqtt_cfg);
+esp_mqtt_client_start(client);
+esp_mqtt_client_subscribe(client, &quot;/esp32/topic&quot;, 0);
+esp_mqtt_client_publish(client, &quot;/esp32/topic&quot;, &quot;Hello MQTT&quot;, 0, 1, 0);
+</code></pre>
+<hr />
+<h2>🔐 Podpora TLS</h2>
+<p>V <code>menuconfig</code> můžeš zapnout:
+- <code>Enable SSL support</code>
+- <code>Broker URI</code> pak nastav na <code>mqtts://...</code></p>
+<hr />
+<h2>📌 Tipy</h2>
+<ul>
+<li>Pro testování můžeš použít:</li>
+<li>MQTT.fx</li>
+<li>mosquitto_sub/pub</li>
+<li>webový nástroj: https://mqtt-explorer.com
+```</li>
+</ul>
+<p><a href="../index.html">← Zpět</a></p>
+</body>
+</html>
