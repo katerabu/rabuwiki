@@ -56,7 +56,7 @@ with open(INDEX_FILE, 'w', encoding='utf-8') as f:
   </script>
 </head>
 <body>
-  <h1>Moje Wiki</h1>
+  <h1>RabuKate Wiki</h1>
   <ul>
 ''')
     for name, html_file in navody_html:
