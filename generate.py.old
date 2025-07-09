@@ -80,7 +80,7 @@ for md_file in files:
 </html>''')
     navody_html.append((name, html_file))
 
-# Vygeneruj index.html s tabulkou 3 sloupců
+# Vygeneruj index.html s tabulkou 2 sloupců
 with open(INDEX_FILE, 'w', encoding='utf-8') as f:
     f.write('''<!DOCTYPE html>
 <html>
@@ -123,9 +123,8 @@ with open(INDEX_FILE, 'w', encoding='utf-8') as f:
   <table>
     <thead>
       <tr>
-        <th>Návod</th>
-        <th>HTML verze</th>
-        <th>Markdown verze (GitHub Pages)</th>
+        <th>Návod HTML</th>
+        <th>Návod GitHub (Markdown)</th>
       </tr>
     </thead>
     <tbody>
@@ -133,9 +132,8 @@ with open(INDEX_FILE, 'w', encoding='utf-8') as f:
     for name, html_file in navody_html:
         md_url = f"https://katerabu.github.io/rabuwiki/markdown/{name}.html"
         f.write(f'''      <tr>
-        <td>{name}</td>
-        <td><a href="navody/{html_file}">HTML</a></td>
-        <td><a href="{md_url}" target="_blank" rel="noopener noreferrer">Markdown</a></td>
+        <td><a href="navody/{html_file}">{name}</a></td>
+        <td><a href="{md_url}">{name}</a></td>
       </tr>
 ''')
     f.write('''    </tbody>
