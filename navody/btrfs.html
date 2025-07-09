@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>btrfs</title></head>
+<body>
+<pre><code class="language-markdown"># 🧱 Btrfs – moderní souborový systém
+
+Btrfs (B-tree File System) je moderní souborový systém pro Linux, navržený jako náhrada za ext4, ZFS a další. Je zaměřen na spolehlivost, škálovatelnost a pokročilé funkce.
+
+---
+
+## 🕰️ Krátká historie
+
+- Vývoj zahájen 2007 (Chris Mason, původně Oracle)
+- Hlavní cíle:
+  - snapshots (snímky)
+  - checksumming (ochrana dat)
+  - komprese
+  - vestavěný RAID
+  - copy-on-write (COW)
+- Od jádra Linuxu 2.6.29 (2009) dostupný v mainline kernelu
+- Dnes stabilní a podporovaný ve většině distribucí (např. openSUSE, Fedora, Ubuntu, Debian)
+
+---
+
+## 🧩 Klíčové vlastnosti
+
+| Funkce                | Popis |
+|-----------------------|-------|
+| **Copy-on-Write (CoW)** | Nová data jsou zapsána vedle starých – šetří disk a zvyšuje bezpečnost |
+| **Snapshots**          | Rychlé a efektivní zálohování celých stavů FS |
+| **Subvolume**          | Oddělené oddíly uvnitř jednoho Btrfs FS |
+| **Transparentní komprese** | Podpora Zlib, Zstd, LZO |
+| **Checksumming**       | Detekce a oprava chyb na úrovni dat i metadata |
+| **Vestavěný RAID**     | RAID 0/1/10/5/6 bez potřeby externího softwaru |
+| **Send/Receive**       | Efektivní přenos snapshotů mezi systémy |
+
+---
+
+## 🔧 Použití v Linuxu – základní příkazy
+
+### 📁 Vytvoření Btrfs souborového systému
+
+```bash
+sudo mkfs.btrfs /dev/sdX
+</code></pre>
+<h3>🔍 Zjištění info o souborovém systému</h3>
+<pre><code class="language-bash">sudo btrfs filesystem show
+sudo btrfs filesystem df /mnt
+</code></pre>
+<h3>📦 Připojení se subvolume</h3>
+<pre><code class="language-bash">sudo mount -o subvol=@ /dev/sdX /mnt
+</code></pre>
+<h3>📸 Snapshoty</h3>
+<pre><code class="language-bash">sudo btrfs subvolume snapshot /mnt/@ /mnt/@_snapshot_nazev
+</code></pre>
+<h3>🧹 Mazání snapshotu</h3>
+<pre><code class="language-bash">sudo btrfs subvolume delete /mnt/@_snapshot_nazev
+</code></pre>
+<h3>💾 Send/Receive (zálohování)</h3>
+<pre><code class="language-bash">sudo btrfs send /mnt/@_snapshot_nazev | gzip &gt; snapshot.gz
+</code></pre>
+<hr />
+<h2>🧪 Testování a lab</h2>
+<pre><code class="language-bash">sudo mkfs.btrfs /dev/loop0
+sudo mount /dev/loop0 /mnt/test
+sudo btrfs subvolume create /mnt/test/@home
+sudo btrfs subvolume snapshot /mnt/test/@home /mnt/test/@home_snapshot
+</code></pre>
+<hr />
+<h2>⚠️ Na co si dát pozor</h2>
+<ul>
+<li>RAID5/6 stále <strong>experimentální</strong> – používat s opatrností</li>
+<li>Fragmentace u velkých zápisů – sledovat pomocí:
+  <code>bash
+  sudo btrfs filesystem defragment -r /mnt</code></li>
+<li>Snapshoty nesmažou původní data – pozor na místo na disku</li>
+</ul>
+<hr />
+<h2>💻 Btrfs ve Windows</h2>
+<p>Btrfs není oficiálně podporovaný ve Windows, ale existují způsoby:</p>
+<h3>🛠️ WinBtrfs</h3>
+<ul>
+<li>Otevřený ovladač pro Windows:
+  🔗 https://github.com/maharmstone/btrfs</li>
+<li>Umožňuje čtení i zápis Btrfs disků</li>
+<li>Podpora subvolumes a RAID</li>
+</ul>
+<h3>🔒 Přístup přes WSL2</h3>
+<ul>
+<li>Není přímá podpora Btrfs</li>
+<li>Možnosti:</li>
+<li>Mount přes <code>WinBtrfs</code></li>
+<li>Nebo přístup přes sdílený disk z Linux VM</li>
+</ul>
+<hr />
+<h2>📌 Kde se Btrfs používá</h2>
+<ul>
+<li><strong>openSUSE</strong> – výchozí FS</li>
+<li><strong>Fedora</strong> – od verze 33 výchozí</li>
+<li><strong>Ubuntu</strong> – dostupný, ale není výchozí</li>
+<li>Vhodný pro:</li>
+<li>NAS servery</li>
+<li>Snapshot/zálohování desktopů</li>
+<li>Virtuální prostředí</li>
+</ul>
+<hr />
+<h2>📚 Odkazy</h2>
+<ul>
+<li><a href="https://btrfs.readthedocs.io/en/latest/">Oficiální wiki Btrfs</a></li>
+<li><a href="https://wiki.archlinux.org/title/Comparison_of_file_systems">ArchWiki – Comparison of file systems</a></li>
+<li><a href="https://man7.org/linux/man-pages/man8/btrfs.8.html">Btrfs man pages</a></li>
+<li><a href="https://github.com/maharmstone/btrfs">WinBtrfs projekt na GitHubu</a>
+```</li>
+</ul>
+<p><a href="../index.html">← Zpět</a></p>
+</body>
+</html>
