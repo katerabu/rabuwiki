@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>crontab</title></head>
+<body>
+<h1>🕒 <code>crontab</code> – plánování úloh v Linuxu</h1>
+<p><code>cron</code> je nástroj pro automatické spouštění příkazů nebo skriptů v definovaných intervalech. Pomocí <code>crontab</code> si nastavíš, kdy a co se má spustit.</p>
+<hr />
+<h2>📘 Základní syntaxe</h2>
+<p>Každý řádek v <code>crontab</code> má tuto podobu:</p>
+<pre><code class="language-cron">* * * * * /cesta/k/příkazu
+│ │ │ │ │
+│ │ │ │ └── den v týdnu (0–7) (0 nebo 7 = neděle)
+│ │ │ └──── měsíc (1–12)
+│ │ └────── den v měsíci (1–31)
+│ └──────── hodina (0–23)
+└────────── minuta (0–59)
+</code></pre>
+<hr />
+<h2>📋 Příklad: každodenní záloha pomocí <code>rsync</code> ve 2:00 ráno</h2>
+<pre><code class="language-cron">0 2 * * * /usr/bin/rsync -av /home/user/ /mnt/backup/home/ &gt;&gt; /var/log/rsync.log 2&gt;&amp;1
+</code></pre>
+<hr />
+<h2>🧪 Otevření vlastního crontabu</h2>
+<pre><code class="language-bash">crontab -e
+</code></pre>
+<p>Tím otevřeš svůj plán úloh v editoru (např. <code>nano</code>, <code>vim</code>).</p>
+<hr />
+<h2>📄 Výpis naplánovaných úloh</h2>
+<pre><code class="language-bash">crontab -l
+</code></pre>
+<hr />
+<h2>❌ Smazání všech úloh</h2>
+<pre><code class="language-bash">crontab -r
+</code></pre>
+<hr />
+<h2>🧑‍💻 Příklady použití</h2>
+<p>| Čas               | Crontab výraz     | Popis                                 |
+|-------------------|-------------------|----------------------------------------|
+| Každou minutu     | <code>* * * * *</code>       | Spustí se každou minutu                |
+| Každou hodinu     | <code>0 * * * *</code>       | V každou celou hodinu                  |
+| Denně ve 3:30     | <code>30 3 * * *</code>      | Každý den v 3:30 ráno                  |
+| Každou neděli     | <code>0 9 * * 0</code>       | V neděli v 9:00                        |
+| Každý první den v měsíci | <code>0 0 1 * *</code> | Každý první den měsíce o půlnoci       |</p>
+<hr />
+<h2>🧠 Speciální zástupci</h2>
+<p>| Zástupce      | Význam                        |
+|---------------|-------------------------------|
+| <code>@reboot</code>     | Spustí se po startu systému   |
+| <code>@daily</code>      | Jednou denně (0:00)           |
+| <code>@hourly</code>     | Každou hodinu (00:00)         |
+| <code>@weekly</code>     | Jednou týdně (neděle 0:00)    |
+| <code>@monthly</code>    | Jednou měsíčně (1. den 0:00)  |
+| <code>@yearly</code>     | Jednou ročně (1. 1. 0:00)     |</p>
+<p>📌 <strong>Příklad:</strong></p>
+<pre><code class="language-cron">@daily /home/user/scripts/daily-backup.sh
+</code></pre>
+<hr />
+<h2>📂 Umístění logů</h2>
+<p>Cron výstup standardně posílá e-mailem uživateli. Pokud systém nemá MTA (Mail Transfer Agent), doporučuje se logovat ručně:</p>
+<pre><code class="language-cron">0 4 * * * /path/to/command &gt;&gt; /var/log/muj_script.log 2&gt;&amp;1
+</code></pre>
+<hr />
+<h2>🔄 Tipy</h2>
+<ul>
+<li>Používej absolutní cesty ke skriptům a příkazům.</li>
+<li>Ověř si, že skript má právo na spuštění (<code>chmod +x</code>).</li>
+<li>Proměnné prostředí v <code>cron</code>u nejsou stejné jako v běžném shellu – nastav <code>PATH</code> uvnitř skriptu, pokud je potřeba.</li>
+<li><code>cron</code> má vlastní prostředí – spouštěj skripty, které se obejdou bez interaktivního vstupu.</li>
+</ul>
+<hr />
+<h2>🔧 Systémové crontaby</h2>
+<ul>
+<li><code>/etc/crontab</code> – hlavní crontab s možností definovat uživatele</li>
+<li><code>/etc/cron.d/</code> – individuální crontab soubory</li>
+<li><code>/etc/cron.{hourly,daily,weekly,monthly}/</code> – skripty spouštěné podle plánovaných složek</li>
+</ul>
+<hr />
+<h2>✅ Testování úloh</h2>
+<p>Pro simulaci cron spuštění můžeš spustit příkaz ručně:</p>
+<pre><code class="language-bash">bash /path/to/script.sh
+</code></pre>
+<hr />
+<h2>📚 Další odkazy</h2>
+<ul>
+<li><a href="https://man7.org/linux/man-pages/man5/crontab.5.html">man crontab</a></li>
+<li><a href="https://crontab.guru/">crontab.guru – online generátor výrazů</a></li>
+</ul>
+<p><a href="../index.html">← Zpět</a></p>
+</body>
+</html>

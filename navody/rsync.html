@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>rsync</title></head>
+<body>
+<h1>🔁 <code>rsync</code> – efektivní synchronizace souborů</h1>
+<p><code>rsync</code> je mocný nástroj pro synchronizaci souborů a adresářů mezi dvěma místy – lokálně i přes síť. Umí přenášet pouze změny, zachovávat oprávnění a je ideální pro zálohování.</p>
+<hr />
+<h2>📦 Základní syntaxe</h2>
+<pre><code class="language-bash">rsync [volby] zdroj cíl
+</code></pre>
+<p>Například:</p>
+<pre><code class="language-bash">rsync -av /home/user/ /mnt/backup/home/
+</code></pre>
+<ul>
+<li><code>-a</code> – archivní mód (zachová symlinky, oprávnění, časy, atd.)</li>
+<li><code>-v</code> – verbose (výstupní informace)</li>
+</ul>
+<blockquote>
+<p>🔹 Uvozovka <strong>/ na konci zdrojového adresáře</strong> znamená "obsah adresáře", bez lomítka by kopíroval i samotný adresář.</p>
+</blockquote>
+<hr />
+<h2>📁 Praktické příklady</h2>
+<h3>1. 📥 Lokální kopie dat</h3>
+<pre><code class="language-bash">rsync -av /data/ /backup/data/
+</code></pre>
+<p>Synchronizuje obsah <code>/data/</code> do <code>/backup/data/</code>.</p>
+<h3>2. 🌐 Kopie přes SSH</h3>
+<pre><code class="language-bash">rsync -av -e ssh /home/user/ user@remote:/backup/user/
+</code></pre>
+<p>Přenese soubory přes SSH na vzdálený server.</p>
+<h3>3. 🔄 Z obou stran synchronizovat změny (pomocí <code>--update</code>)</h3>
+<pre><code class="language-bash">rsync -avu /source/ /dest/
+</code></pre>
+<p>Volba <code>--update</code> zaručuje, že novější soubory nebudou přepsány staršími.</p>
+<hr />
+<h2>🧹 Mazání souborů, které už nejsou ve zdroji</h2>
+<pre><code class="language-bash">rsync -av --delete /src/ /dst/
+</code></pre>
+<p>Smaže soubory v cíli, které už neexistují ve zdroji.</p>
+<blockquote>
+<p>⚠️ Používej opatrně – můžeš přijít o data.</p>
+</blockquote>
+<hr />
+<h2>📑 Vyloučení souborů</h2>
+<pre><code class="language-bash">rsync -av --exclude '*.tmp' /src/ /dst/
+</code></pre>
+<p>Ignoruje všechny soubory s příponou <code>.tmp</code>.</p>
+<hr />
+<h2>🔍 Suchý běh (co by rsync udělal)</h2>
+<pre><code class="language-bash">rsync -av --dry-run /src/ /dst/
+</code></pre>
+<p>Nevykoná akci, jen vypíše, co by se stalo.</p>
+<hr />
+<h2>💡 Užitečné přepínače</h2>
+<p>| Přepínač       | Popis                                              |
+|----------------|-----------------------------------------------------|
+| <code>-a</code>           | Archivní mód (rekurze, symlinky, časy, oprávnění…)  |
+| <code>-v</code>           | Verbose – výpis akcí                                |
+| <code>--delete</code>     | Smazat soubory v cíli, které nejsou ve zdroji       |
+| <code>--exclude</code>    | Vynechat soubory podle vzoru                        |
+| <code>--progress</code>   | Zobrazit průběh kopírování                          |
+| <code>--dry-run</code>    | Zobrazit, co by se stalo, ale neprovádět změny      |
+| <code>-e ssh</code>       | Přenos přes SSH                                     |
+| <code>--update</code>     | Nepřepisuj novější soubory                          |</p>
+<hr />
+<h2>🧪 Testovací příklad</h2>
+<pre><code class="language-bash">rsync -av --dry-run --delete /home/user/ /mnt/backup/home/
+</code></pre>
+<p>Simuluje synchronizaci <code>/home/user/</code> do zálohy na <code>/mnt/backup/home/</code>, včetně mazání souborů, které již ve zdroji nejsou.</p>
+<hr />
+<h2>🛡️ Tipy pro bezpečné použití</h2>
+<ul>
+<li>Nejprve si vždy vyzkoušej příkaz s <code>--dry-run</code></li>
+<li>Dbej na správné lomítko na konci cest (<code>/</code>)</li>
+<li>Před použitím <code>--delete</code> zálohuj cílová data</li>
+<li>Vytvářej skripty pro pravidelnou zálohu s logováním</li>
+</ul>
+<hr />
+<h2>📚 Další odkazy</h2>
+<ul>
+<li><a href="https://man7.org/linux/man-pages/man1/rsync.1.html">Oficiální man page rsync</a></li>
+<li><a href="https://wiki.archlinux.org/title/rsync">rsync na ArchWiki</a></li>
+<li><a href="https://linuxize.com/post/how-to-use-rsync-for-local-and-remote-data-transfer-and-synchronization/">rsync examples</a></li>
+</ul>
+<p><a href="../index.html">← Zpět</a></p>
+</body>
+</html>

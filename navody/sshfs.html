@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>sshfs</title></head>
+<body>
+<h1>Návod na použití SSHFS pro Ubuntu a Windows 11</h1>
+<p>SSHFS (SSH File System) umožňuje připojit vzdálený souborový systém přes SSH jako by byl lokální. Tento návod popisuje, jak jej nastavit a používat na Ubuntu a Windows 11.</p>
+<hr />
+<h2>Obsah</h2>
+<ul>
+<li><a href="#co-je-sshfs">Co je SSHFS</a></li>
+<li><a href="#použití-na-ubuntu">Použití na Ubuntu</a></li>
+<li><a href="#použití-na-windows-11">Použití na Windows 11</a></li>
+<li><a href="#užitečné-příkazy">Užitečné příkazy</a></li>
+<li><a href="#zdroje">Zdroje</a></li>
+</ul>
+<hr />
+<h2>Co je SSHFS</h2>
+<p>SSHFS využívá protokol SSH pro připojení vzdáleného souborového systému jako lokálního. Na Linuxu využívá FUSE, na Windows je dostupný přes nástroje třetích stran.</p>
+<hr />
+<h2>Použití na Ubuntu</h2>
+<h3>1. Instalace SSHFS</h3>
+<p>sudo apt update
+sudo apt install sshfs</p>
+<h3>2. Vytvoření mount pointu</h3>
+<p>mkdir ~/remote_mount</p>
+<h3>3. Připojení vzdáleného systému</h3>
+<p>sshfs username@remote_host:/cesta/k/adresari ~/remote_mount</p>
+<h3>4. Odpojení vzdáleného systému</h3>
+<h2>fusermount -u ~/remote_mount</h2>
+<h2>Použití na Windows 11</h2>
+<p>Windows nativně SSHFS nepodporuje, použijeme nástroje třetích stran.</p>
+<h3>Instalace WinFsp a SSHFS-Win</h3>
+<ol>
+<li>Stáhněte a nainstalujte <a href="https://winfsp.dev/">WinFsp</a>.</li>
+<li>Stáhněte a nainstalujte <a href="https://github.com/billziss-gh/sshfs-win/releases">SSHFS-Win</a>.</li>
+</ol>
+<h3>Připojení přes PowerShell</h3>
+<p>net use X: \sshfs\username@remote_host[\path]</p>
+<p>Příklad:</p>
+<p>net use X: \sshfs\john@192.168.1.100\home\john\documents</p>
+<h3>Odpojení jednotky</h3>
+<p>net use X: /delete</p>
+<hr />
+<h2>Užitečné příkazy</h2>
+<p>| Akce                 | Ubuntu                        | Windows (PowerShell)                      |
+|----------------------|------------------------------|------------------------------------------|
+| Připojit vzdálený FS | <code>sshfs user@host:/path ~/mnt</code>| <code>net use X: \\sshfs\user@host\path</code>     |
+| Odpojit FS           | <code>fusermount -u ~/mnt</code>         | <code>net use X: /delete</code>                      |</p>
+<hr />
+<h2>Zdroje</h2>
+<ul>
+<li>Garfinkel, S., 2023. <em>SSHFS User Guide</em>. Dostupné z: https://github.com/libfuse/sshfs [cit. 2025-07-09].</li>
+<li>Ziss-gh, B., 2023. <em>SSHFS-Win: SSH File System for Windows</em>. Dostupné z: https://github.com/billziss-gh/sshfs-win [cit. 2025-07-09].</li>
+<li>Microsoft, 2024. <em>Mount Network Drive using net use</em>. Dostupné z: https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/net-use [cit. 2025-07-09].</li>
+</ul>
+<hr />
+<p><em>Vytvořeno ChatGPT, 2025</em></p>
+<p><a href="../index.html">← Zpět</a></p>
+</body>
+</html>
