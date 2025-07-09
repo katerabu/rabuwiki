@@ -18,11 +18,7 @@ INDEX_FILE = 'index.html'
 # Vytvoř složku pro HTML, pokud neexistuje
 os.makedirs(HTML_DIR, exist_ok=True)
 
-# Načti všechny .md soubory
-files = [f for f in os.listdir(MARKDOWN_DIR) if f.endswith('.md')]
-
-import shutil
-
+# Zkopíruj obrázky z markdown/obrazky do navody/obrazky
 SRC_IMG_DIR = os.path.join(MARKDOWN_DIR, 'obrazky')
 DST_IMG_DIR = os.path.join(HTML_DIR, 'obrazky')
 
@@ -30,6 +26,9 @@ if os.path.exists(SRC_IMG_DIR):
     shutil.rmtree(DST_IMG_DIR, ignore_errors=True)
     shutil.copytree(SRC_IMG_DIR, DST_IMG_DIR)
     print("🖼️ Složka s obrázky byla zkopírována do navody/obrazky/")
+
+# Načti všechny .md soubory
+files = [f for f in os.listdir(MARKDOWN_DIR) if f.endswith('.md')]
 
 # Vygeneruj HTML soubory
 navody_html = []
@@ -46,7 +45,7 @@ for md_file in files:
 <head>
   <meta charset="UTF-8">
   <title>{name}</title>
-  <!-- Přidáno GitHub Markdown CSS -->
+  <!-- GitHub Markdown CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css">
   <style>
     body {{
@@ -54,6 +53,21 @@ for md_file in files:
       margin: 2em auto;
       padding: 1em 2em;
       background-color: #fff;
+    }}
+    .markdown-body table {{
+      border-collapse: collapse;
+      width: 100%;
+      margin-bottom: 1em;
+    }}
+    .markdown-body th,
+    .markdown-body td {{
+      border: 1px solid #d0d7de;
+      padding: 6px 13px;
+    }}
+    .markdown-body th {{
+      background-color: #f6f8fa;
+      font-weight: 600;
+      text-align: left;
     }}
   </style>
 </head>
@@ -65,15 +79,6 @@ for md_file in files:
 </body>
 </html>''')
     navody_html.append((name, html_file))
-
-# Zkopíruj složku s obrázky (pokud existuje)
-OBRAZKY_ZDROJ = os.path.join(MARKDOWN_DIR, 'obrazky')
-OBRAZKY_CIL = 'obrazky'
-
-if os.path.exists(OBRAZKY_ZDROJ):
-    shutil.rmtree(OBRAZKY_CIL, ignore_errors=True)
-    shutil.copytree(OBRAZKY_ZDROJ, OBRAZKY_CIL)
-    print("🖼️  Složka s obrázky byla zkopírována.")
 
 # Vygeneruj index.html
 with open(INDEX_FILE, 'w', encoding='utf-8') as f:
@@ -92,30 +97,11 @@ with open(INDEX_FILE, 'w', encoding='utf-8') as f:
 </head>
 <body>
   <h1>RabuKate Wiki</h1>
-
-  <table border="1" cellpadding="8" cellspacing="0">
-    <thead>
-      <tr>
-        <th>Návod (HTML)</th>
-        <th>Markdown (.md)</th>
-      </tr>
-    </thead>
-    <tbody>
+  <ul>
 ''')
     for name, html_file in navody_html:
-        md_file = f'{name}.md'
-        f.write(f'''      <tr>
-        <td><a href="navody/{html_file}">{name}</a></td>
-        <td><a href="markdown/{md_file}">{md_file}</a></td>
-      </tr>
-''')
-    f.write('''    </tbody>
-  </table>
-</body>
-</html>''')
-
-
-import subprocess
+        f.write(f'    <li><a href="navody/{html_file}">{name}</a></li>\n')
+    f.write('  </ul>\n</body>\n</html>')
 
 # Automatické commitnutí a push
 try:
