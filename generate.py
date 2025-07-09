@@ -46,7 +46,7 @@ with open(INDEX_FILE, 'w', encoding='utf-8') as f:
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Moje Wiki</title>
+  <title>RabuKate Wiki</title>
   <script>
     const heslo = prompt("Zadej heslo:");
     if (heslo !== "tajne123") {
