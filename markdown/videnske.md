@@ -23,8 +23,8 @@ Tento rodinný recept na vídeňské knedlíčky je osvědčený a lahodný. Dí
 - Sůl, pepř  
 - (volitelné) špetka muškátového oříšku  
 
-📷 **Ilustrační foto ingrediencí:**  
-![Ingredience](https://i.imgur.com/fh2IHYl.jpeg)
+📷 **Ilustrační foto:**  
+![Vídeňské knedlíčky](obrazky/videnske.png)
 
 ---
 
@@ -37,9 +37,6 @@ Tento rodinný recept na vídeňské knedlíčky je osvědčený a lahodný. Dí
 - Směs nalijte na pečivo, přidejte cibulku a nasekanou petržel.  
 - Jemně promíchejte a nechte 10–15 minut odležet, dokud pečivo nenabobtná.  
 
-📷 **Těsto připravené k formování:**  
-![Těsto](https://i.imgur.com/jT1X0Nd.jpeg)
-
 ---
 
 ### 2. Tvarování a napařování v konvektomatu  
@@ -49,17 +46,12 @@ Tento rodinný recept na vídeňské knedlíčky je osvědčený a lahodný. Dí
   - **100 °C – pára (steam)**  
   - **Doba: 20 minut**  
 
-📷 **Knedlíčky připravené ke vkladu do konvektomatu:**  
-![Knedlíčky před pečením](https://i.imgur.com/PO5M2cZ.jpeg)
-
 ---
 
 ### 3. Servírování  
 - Po uvaření nechte knedlíčky chvíli odpočinout.  
 - Podávejte teplé, ideálně s hovězím na smetaně nebo gulášem.  
 
-📷 **Hotové knedlíčky připravené k podávání:**  
-![Hotové knedlíčky](https://i.imgur.com/2ZsNN3U.jpeg)
 
 ---
 
