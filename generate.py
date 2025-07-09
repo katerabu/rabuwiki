@@ -80,7 +80,7 @@ for md_file in files:
 </html>''')
     navody_html.append((name, html_file))
 
-# Vygeneruj index.html
+# Vygeneruj index.html s tabulkou 3 sloupců
 with open(INDEX_FILE, 'w', encoding='utf-8') as f:
     f.write('''<!DOCTYPE html>
 <html>
@@ -94,14 +94,54 @@ with open(INDEX_FILE, 'w', encoding='utf-8') as f:
       throw new Error("Špatné heslo");
     }
   </script>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 900px;
+      margin: 1em auto;
+    }
+    th, td {
+      border: 1px solid #888;
+      padding: 8px 12px;
+      text-align: left;
+    }
+    th {
+      background-color: #eee;
+    }
+    a {
+      color: #0366d6;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
   <h1>RabuKate Wiki</h1>
-  <ul>
+  <table>
+    <thead>
+      <tr>
+        <th>Návod</th>
+        <th>HTML verze</th>
+        <th>Markdown verze (GitHub Pages)</th>
+      </tr>
+    </thead>
+    <tbody>
 ''')
     for name, html_file in navody_html:
-        f.write(f'    <li><a href="navody/{html_file}">{name}</a></li>\n')
-    f.write('  </ul>\n</body>\n</html>')
+        md_url = f"https://katerabu.github.io/rabuwiki/markdown/{name}.html"
+        f.write(f'''      <tr>
+        <td>{name}</td>
+        <td><a href="navody/{html_file}">HTML</a></td>
+        <td><a href="{md_url}" target="_blank" rel="noopener noreferrer">Markdown</a></td>
+      </tr>
+''')
+    f.write('''    </tbody>
+  </table>
+</body>
+</html>''')
 
 # Automatické commitnutí a push
 try:
