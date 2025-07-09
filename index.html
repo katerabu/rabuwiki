@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <title>Rabu Wiki</title>
+  <script>
+    const heslo = prompt("Zadej heslo:");
+    if (heslo !== "RabuWiki*1977") {
+      document.write("Přístup zamítnut.");
+      throw new Error("Chybné heslo");
+    }
+  </script>
+</head>
+<body>
+  <h1>Rabu Wiki</h1>
+  <ul>
+    <li><a href="navody/wiki.html">Vlastní wiki page</a></li>
+    <li><a href="navody/navod2.html">Návod 2</a></li>
+  </ul>
+</body>
+</html>
