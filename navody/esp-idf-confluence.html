@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>esp-idf-confluence</title></head>
+<body>
+<p>h1. 🚀 ESP-IDF – Instalace a základní použití</p>
+<p>Návod pro vývoj na ESP32 pomocí oficiálního frameworku Espressif – ESP-IDF.</p>
+<p>h2. 🛠️ Instalace závislostí (Linux / Ubuntu / Kubuntu)</p>
+<p>{code:bash}
+sudo apt-get install git wget flex bison gperf python3 python3-pip python3-venv cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0
+python3 --version  # mělo by být &gt;= 3.7
+{code}</p>
+<p>h2. 📥 Stažení a instalace ESP-IDF</p>
+<p>{code:bash}
+mkdir -p ~/esp
+cd ~/esp
+git clone --recursive https://github.com/espressif/esp-idf.git
+cd ~/esp/esp-idf
+./install.sh all
+{code}</p>
+<p>h2. 🧠 Nastavení prostředí</p>
+<p>{code:bash}
+. $HOME/esp/esp-idf/export.sh
+{code}</p>
+<p><em>Nezapomeň přidat do <code>~/.bashrc</code>:</em></p>
+<p>{code:bash}
+alias get_idf='. $HOME/esp/esp-idf/export.sh'
+{code}</p>
+<p>h2. ✅ Testovací projekt – Hello World</p>
+<p>{code:bash}
+cd ~/esp
+cp -r $IDF_PATH/examples/get-started/hello_world .
+cd hello_world
+idf.py set-target esp32
+idf.py menuconfig
+idf.py build
+idf.py flash monitor
+{code}</p>
+<p>h2. 🔌 Zjištění sériového portu</p>
+<p>{code:bash}
+sudo dmesg | grep tty
+ls /dev/ttyUSB<em>
+ls /dev/ttyACM</em>
+watch -n 0.5 ls /dev/ttyUSB<em> /dev/ttyACM</em>
+{code}</p>
+<p>h2. 🔍 Práce s esptool.py</p>
+<p>{code:bash}
+esptool.py --port /dev/ttyUSB0 chip_id
+esptool.py --port /dev/ttyUSB0 flash_id
+esptool.py --port /dev/ttyUSB0 read_mac
+esptool.py --port /dev/ttyUSB0 read_flash_status
+{code}</p>
+<p>h2. 🧾 Přehled základních příkazů idf.py</p>
+<p>|| Příkaz || Popis ||
+| create-project <jméno> | Vytvoří nový projekt |
+| set-target &lt;čip&gt;       | Nastaví cílový čip (esp32, esp32s3, ...) |
+| menuconfig             | Spustí textové UI pro konfiguraci |
+| build                  | Přeloží projekt |
+| clean / fullclean      | Smaže výstupy / i konfiguraci |
+| flash                  | Nahraje firmware |
+| monitor                | Sériový výstup |
+| flash monitor          | Kombinace nahrání a spuštění terminálu |
+| erase-flash            | Vymaže celý flash čip |
+| reconfigure            | Znovu vytvoří build systém |
+| size / size-components | Zobrazí velikost výsledné binárky |</p>
+<p>h2. ⚙️ Automatické rozpoznání portu</p>
+<p>Od ESP-IDF v4.2:</p>
+<p>{code:bash}
+idf.py flash monitor
+{code}</p>
+<p><em>Pokud je připojeno více zařízení, použij:</em></p>
+<p>{code:bash}
+idf.py -p /dev/ttyUSB0 flash monitor
+{code}</p>
+<p>h2. 🧪 Ukázka celého průběhu</p>
+<p>{code:bash}
+idf.py create-project hello_world
+cd hello_world
+idf.py set-target esp32
+idf.py menuconfig
+idf.py build
+idf.py -p /dev/ttyUSB0 flash monitor
+{code}</p>
+<p>h2. 🔄 Aktualizace ESP-IDF</p>
+<p>{code:bash}
+cd ~/esp
+git clone -b v5.2 https://github.com/espressif/esp-idf.git esp-idf
+cd esp-idf
+./install.sh
+. ./export.sh
+{code}</p>
+<p>h2. 📌 Tip</p>
+<p>Pro rychlejší vývoj si vytvoř alias:</p>
+<p>{code:bash}
+alias get_idf='. $HOME/esp/esp-idf/export.sh'
+{code}</p>
+<p><a href="../index.html">← Zpět</a></p>
+</body>
+</html>
