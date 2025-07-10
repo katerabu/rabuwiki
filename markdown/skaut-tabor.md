@@ -1,3 +1,11 @@
+---
+title: Co mít na skautsky tabor
+category: Cestování
+tags: [skaut, letnitabor, tabor, stanování, výbava]
+last_update: 2025-07-10
+---
+
+
 # Skautský tábor – Manuál pro rodiče
 
 ## Při nástupu na tábor dítě odevzdá:
