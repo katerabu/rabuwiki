@@ -114,6 +114,6 @@ Uvítáme přivezení:
 
 ## Kontakt
 **Vedoucí tábora:** Jan Polášek  
-**Adresa:** Labuty 9  
-**Telefon:** 734 640 006  
-**E-mail:** olda.polasek@seznam.cz
+**Adresa:** Labuty čp je X, kdo bručí je mědvěd  
+**Telefon:** sedumsettřicetčtyři 64 třinuly 6  
+**E-mail:** olda.polasek na seznamu
