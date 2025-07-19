@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>backup – zálohování do RPi5</title></head>
+<body>
+<h1>🚀 Kompletní návod: Šifrovaný intranetový cloud pro zálohování ze dvou Windows notebooků na RPi5 s NVMe diskem</h1>
+<h1>1️⃣ Příprava RPi: aktualizace a složky</h1>
+<p>sudo apt update &amp;&amp; sudo apt upgrade -y
+sudo mkdir -p /mnt/cloud-notebook1-container /mnt/cloud-notebook2-container</p>
+<h1>(Pokud NVMe ještě není připojený)</h1>
+<p>lsblk  # zkontroluj zařízení
+sudo mkfs.ext4 /dev/nvme0n1p1  # POZOR: smaže data!
+sudo mount /dev/nvme0n1p1 /mnt</p>
+<h1>2️⃣ Vytvoření prázdných VeraCrypt kontejnerů (50GB)</h1>
+<p>sudo fallocate -l 50G /mnt/cloud-notebook1-container/backup1.vc
+sudo fallocate -l 50G /mnt/cloud-notebook2-container/backup2.vc</p>
+<h1>3️⃣ Na Windows:</h1>
+<h1>- vytvoř kontejnery přes VeraCrypt GUI (https://www.veracrypt.fr/en/Downloads.html)</h1>
+<h1>- nastav silné heslo, souborový systém NTFS/ext4</h1>
+<h1>- přenes kontejnerové soubory (.vc) zpět na RPi do příslušných složek</h1>
+<h1>4️⃣ Instalace balíčků na RPi</h1>
+<p>sudo apt install veracrypt openssh-server samba -y
+sudo systemctl enable --now ssh</p>
+<h1>5️⃣ Připojení VeraCrypt kontejnerů na RPi (přidej své heslo)</h1>
+<p>sudo veracrypt --mount /mnt/cloud-notebook1-container/backup1.vc /mnt/cloud-notebook1 --password="TvojeSilneHeslo" --non-interactive
+sudo veracrypt --mount /mnt/cloud-notebook2-container/backup2.vc /mnt/cloud-notebook2 --password="TvojeSilneHeslo" --non-interactive</p>
+<h1>6️⃣ Samba sdílení (volitelné)</h1>
+<h1>Uprav /etc/samba/smb.conf přidáním:</h1>
+<h1>[notebook1]</h1>
+<h1>path = /mnt/cloud-notebook1</h1>
+<h1>valid users = liko</h1>
+<h1>read only = no</h1>
+<h1></h1>
+<h1>[notebook2]</h1>
+<h1>path = /mnt/cloud-notebook2</h1>
+<h1>valid users = liko</h1>
+<h1>read only = no</h1>
+<p>sudo smbpasswd -a liko
+sudo systemctl restart smbd</p>
+<h1>7️⃣ Zálohování z Windows</h1>
+<h1>- Připoj Samba sdílení v Průzkumníku: \IP_RPi\notebook1 a \IP_RPi\notebook2</h1>
+<h1>- Nebo rsync přes WSL / DeltaCopy:</h1>
+<h1>rsync -avz /mnt/c/Users/uzivatel/Documents/ liko@IP_RPi:/mnt/cloud-notebook1/</h1>
+<h1>8️⃣ Automatický skript na RPi pro zálohy:</h1>
+<p>cat &lt;&lt; 'EOF' &gt; ~/backup-cloud.sh</p>
+<h1>!/bin/bash</h1>
+<p>veracrypt --mount /mnt/cloud-notebook1-container/backup1.vc /mnt/cloud-notebook1 --password="TvojeSilneHeslo" --non-interactive
+veracrypt --mount /mnt/cloud-notebook2-container/backup2.vc /mnt/cloud-notebook2 --password="TvojeSilneHeslo" --non-interactive</p>
+<p>rsync -av --delete /home/liko/notebook1_data/ /mnt/cloud-notebook1/
+rsync -av --delete /home/liko/notebook2_data/ /mnt/cloud-notebook2/</p>
+<p>veracrypt -d /mnt/cloud-notebook1
+veracrypt -d /mnt/cloud-notebook2
+EOF</p>
+<p>chmod +x ~/backup-cloud.sh</p>
+<h1>9️⃣ Bezpečnostní doporučení</h1>
+<h1>- používej silná hesla / klíčové soubory pro VeraCrypt</h1>
+<h1>- omez přístup přes firewall na interní síť</h1>
+<h1>- pravidelně aktualizuj systém</h1>
+<h1>- přistupuj pouze z důvěryhodných zařízení</h1>
+<h1>💡 Tip: Naplánuj skript v cron (např. každý den v 3 ráno)</h1>
+<h1>crontab -e</h1>
+<h1>0 3 * * * /home/liko/backup-cloud.sh &gt;&gt; /var/log/backup-cloud.log 2&gt;&amp;1</h1>
+<h1>------------------------------------</h1>
+<h1>🔗 Užitočné zdroje:</h1>
+<h1>- VeraCrypt: https://www.veracrypt.fr/en/Home.html</h1>
+<h1>- Rsync for Windows (WSL): https://learn.microsoft.com/en-us/windows/wsl/</h1>
+<h1>- Samba: https://www.samba.org/samba/docs/current/man-html/smb.conf.5.html</h1>
+<h1>- RPi NVMe disk setup: https://www.raspberrypi.com/documentation/computers/storage.html</h1>
+<p><a href="../index.html">← Zpět na přehled</a></p>
+</body>
+</html>
