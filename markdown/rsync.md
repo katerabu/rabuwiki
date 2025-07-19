@@ -5,41 +5,51 @@ tags: [linux, zalohovani]
 last_update: 2025-07-09
 ---
 
-## začneme příklady:
+Příklady zálohování pomocí rsync
 
-## příklad 1 uložit zde: /etc/cron.hourly/rsync-bocxod 
+### Příklad 1 - uložit jako: /etc/cron.hourly/rsync-bocxod
 
-# zalohovani z rpi5 na bocxod
-# nezalohuje spatne pojmenovane soubory
-# spousti se v "crontab -e" bez sudo! 
-# "-a" zachovají se všechny atributy souborů, jako jsou oprávnění, časy a vlastníci.
-# "-v" zobrazí informace o průběhu zálohování.
-# "-z" komprimuje přenos dat, což může urychlit přenos, pokud zálohujete na vzdálené zařízení. 
-# "--delete" soubory a adresáře, které byly odstraněny ze zdrojového adresáře, budou také odstraněny z cílového umístění.
-# "-r" včetně vnořených podadresářů
-# bez delete
+# Zálohování z rpi5 na bocxod
+# Nezálohuje špatně pojmenované soubory
+# Spouští se v "crontab -e" bez sudo!
+
+# Přepínače rsync:
+# -a          zachovává atributy (práva, časy, vlastníky)
+# -v          zobrazuje průběh
+# -z          komprimuje přenos
+# --delete    maže v cíli soubory, které byly smazány ve zdroji (zde NENÍ použito)
+# -r          rekurzivní přenos podadresářů
+
 echo "===============" >> /var/log/rsync-bocxod
 date >> /var/log/rsync-bocxod
-rsync -avr --omit-dir-times -e ssh liko@10.20.1.5:/home/liko/Share/ /home/liko/Backup/ 
-echo "synchronizace Share rpi5 -> Backup bocxod dokoncena..." >> /var/log/rsync-bocxod
-# echo "VYPNUTO - zakonmentovano v /etc/cron.hourly/rsync-bocxod" >> /var/log/rsync-bocxod 
+rsync -avr --omit-dir-times -e ssh liko@10.20.1.5:/home/liko/Share/ /home/liko/Backup/
+echo "synchronizace Share rpi5 -> Backup bocxod dokončena..." >> /var/log/rsync-bocxod
 
-## příklad 2 s delete uložit zde: /etc/cron.daily/rsync-bocxod-delete 
+# echo "VYPNUTO - zakomentováno v /etc/cron.hourly/rsync-bocxod" >> /var/log/rsync-bocxod
 
-# zalohovani z rpi5 na bocxod
-# nezalohuje spatne pojmenovane soubory
-# spousti se v "crontab -e" bez sudo! 
-# "-a" zachovají se všechny atributy souborů, jako jsou oprávnění, časy a vlastníci.
-# "-v" zobrazí informace o průběhu zálohování.
-# "-z" komprimuje přenos dat, což může urychlit přenos, pokud zálohujete na vzdálené zařízení. 
-# "--delete" soubory a adresáře, které byly odstraněny ze zdrojového adresáře, budou také odstraněny z cílového umístění.
-# "-r" včetně vnořených podadresářů
+
+### Příklad 2 - uložit jako: /etc/cron.daily/rsync-bocxod-delete
+
+# Zálohování z rpi5 na bocxod
+# Nezálohuje špatně pojmenované soubory
+# Spouští se v "crontab -e" bez sudo!
+
+# Přepínače rsync:
+# -a          zachovává atributy
+# -v          zobrazuje průběh
+# -z          komprimuje přenos
+# --delete    maže v cíli to, co bylo smazáno ve zdroji
+# -r          rekurzivní přenos podadresářů
+
 echo "===============" >> /var/log/rsync-bocxod
 date >> /var/log/rsync-bocxod
 rsync -avr --omit-dir-times --delete -e ssh liko@10.20.1.5:/home/liko/Share/ /home/liko/Backup/
-echo "soubory smazane na Share rpi5 -> smazany taktez z Backup bocxod..." >> /var/log/rsync-bocxod
-echo "synchronizace Share rpi5 -> Backup bocxod dokoncena..." >> /var/log/rsync-bocxod
-# echo "VYPNUTO - zakonmentovano v /etc/cron.hourly/rsync-bocxod" >> /var/log/rsync-bocxod 
+echo "soubory smazané na Share rpi5 -> smazány také z Backup bocxod..." >> /var/log/rsync-bocxod
+echo "synchronizace Share rpi5 -> Backup bocxod dokončena..." >> /var/log/rsync-bocxod
+
+# echo "VYPNUTO - zakomentováno v /etc/cron.hourly/rsync-bocxod" >> /var/log/rsync-bocxod
+
+
 
 # 🔁 `rsync` – efektivní synchronizace souborů
 
