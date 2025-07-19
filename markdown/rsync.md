@@ -5,50 +5,59 @@ tags: [linux, zalohovani]
 last_update: 2025-07-09
 ---
 
-Příklady zálohování pomocí rsync
+Příklad 1: Zálohování bez --delete
+Soubor: /etc/cron.hourly/rsync-bocxod
 
-### Příklad 1 - uložit jako: /etc/cron.hourly/rsync-bocxod
-
+```bash
 # Zálohování z rpi5 na bocxod
 # Nezálohuje špatně pojmenované soubory
 # Spouští se v "crontab -e" bez sudo!
 
 # Přepínače rsync:
-# -a          zachovává atributy (práva, časy, vlastníky)
-# -v          zobrazuje průběh
-# -z          komprimuje přenos
-# --delete    maže v cíli soubory, které byly smazány ve zdroji (zde NENÍ použito)
-# -r          rekurzivní přenos podadresářů
+# -a       zachovává atributy (práva, časy, vlastníky)
+# -v       zobrazuje průběh
+# -z       komprimuje přenos
+# -r       rekurzivní přenos podadresářů
+# --delete zde není použit!
 
 echo "===============" >> /var/log/rsync-bocxod
 date >> /var/log/rsync-bocxod
-rsync -avr --omit-dir-times -e ssh liko@10.20.1.5:/home/liko/Share/ /home/liko/Backup/
+
+rsync -avr --omit-dir-times -e ssh \
+  liko@10.20.1.5:/home/liko/Share/ \
+  /home/liko/Backup/
+
 echo "synchronizace Share rpi5 -> Backup bocxod dokončena..." >> /var/log/rsync-bocxod
 
 # echo "VYPNUTO - zakomentováno v /etc/cron.hourly/rsync-bocxod" >> /var/log/rsync-bocxod
+```
+Příklad 2: Zálohování s --delete
+Soubor: /etc/cron.daily/rsync-bocxod-delete
 
-
-### Příklad 2 - uložit jako: /etc/cron.daily/rsync-bocxod-delete
-
+```bash
 # Zálohování z rpi5 na bocxod
 # Nezálohuje špatně pojmenované soubory
 # Spouští se v "crontab -e" bez sudo!
 
 # Přepínače rsync:
-# -a          zachovává atributy
-# -v          zobrazuje průběh
-# -z          komprimuje přenos
-# --delete    maže v cíli to, co bylo smazáno ve zdroji
-# -r          rekurzivní přenos podadresářů
+# -a       zachovává atributy
+# -v       zobrazuje průběh
+# -z       komprimuje přenos
+# -r       rekurzivní přenos podadresářů
+# --delete maže z cíle, co bylo smazáno ve zdroji
 
 echo "===============" >> /var/log/rsync-bocxod
 date >> /var/log/rsync-bocxod
-rsync -avr --omit-dir-times --delete -e ssh liko@10.20.1.5:/home/liko/Share/ /home/liko/Backup/
+
+rsync -avr --omit-dir-times --delete -e ssh \
+  liko@10.20.1.5:/home/liko/Share/ \
+  /home/liko/Backup/
+
 echo "soubory smazané na Share rpi5 -> smazány také z Backup bocxod..." >> /var/log/rsync-bocxod
 echo "synchronizace Share rpi5 -> Backup bocxod dokončena..." >> /var/log/rsync-bocxod
 
 # echo "VYPNUTO - zakomentováno v /etc/cron.hourly/rsync-bocxod" >> /var/log/rsync-bocxod
-
+```
 
 
 # 🔁 `rsync` – efektivní synchronizace souborů
