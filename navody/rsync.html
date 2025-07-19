@@ -2,54 +2,43 @@
 <html>
 <head><meta charset="UTF-8"><title>rsync – zálohování v linuxu</title></head>
 <body>
-<p>Příklad 1: Zálohování bez --delete
-Soubor: /etc/cron.hourly/rsync-bocxod</p>
-<pre><code class="language-bash"># Zálohování z rpi5 na bocxod
-# Nezálohuje špatně pojmenované soubory
-# Spouští se v &quot;crontab -e&quot; bez sudo!
-
-# Přepínače rsync:
+<h2>📁 Příklad 1: Zálohování bez <code>--delete</code></h2>
+<p><strong>Umístění:</strong> <code>/etc/cron.hourly/rsync-bocxod</code><br />
+Spouští se každou hodinu přes <code>cron</code>.  </p>
+<pre><code class="language-bash"># ✅ Zálohování z rpi5 na bocxod
+# 🚫 Nezálohuje špatně pojmenované soubory
+# 🛠️ Spouští se přes crontab bez sudo
+# 📌 Použité přepínače:
 # -a       zachovává atributy (práva, časy, vlastníky)
-# -v       zobrazuje průběh
-# -z       komprimuje přenos
-# -r       rekurzivní přenos podadresářů
-# --delete zde není použit!
-
+# -v       vypisuje průběh
+# -r       rekurzivní přenos
+# --omit-dir-times   ignoruje časy adresářů
+# -e ssh   použije SSH pro přenos
+# ⚠️ BEZ --delete
 echo &quot;===============&quot; &gt;&gt; /var/log/rsync-bocxod
 date &gt;&gt; /var/log/rsync-bocxod
-
-rsync -avr --omit-dir-times -e ssh \
-  liko@10.20.1.5:/home/liko/Share/ \
-  /home/liko/Backup/
-
-echo &quot;synchronizace Share rpi5 -&gt; Backup bocxod dokončena...&quot; &gt;&gt; /var/log/rsync-bocxod
-
-# echo &quot;VYPNUTO - zakomentováno v /etc/cron.hourly/rsync-bocxod&quot; &gt;&gt; /var/log/rsync-bocxod
+rsync -avr --omit-dir-times -e ssh liko@10.20.1.5:/home/liko/Share/ /home/liko/Backup/ 
+echo &quot;synchronizace Share rpi5 -&gt; Backup bocxod dokoncena...&quot; &gt;&gt; /var/log/rsync-bocxod
+# echo &quot;VYPNUTO - zakonmentovano v /etc/cron.hourly/rsync-bocxod&quot; &gt;&gt; /var/log/rsync-bocxod 
 </code></pre>
-<p>Příklad 2: Zálohování s --delete
-Soubor: /etc/cron.daily/rsync-bocxod-delete</p>
-<pre><code class="language-bash"># Zálohování z rpi5 na bocxod
-# Nezálohuje špatně pojmenované soubory
-# Spouští se v &quot;crontab -e&quot; bez sudo!
-
-# Přepínače rsync:
+<hr />
+<h2>🧹 Příklad 2: Zálohování <strong>s mazáním</strong> (<code>--delete</code>)</h2>
+<p><strong>Umístění:</strong> <code>/etc/cron.daily/rsync-bocxod-delete</code><br />
+Spouští se jednou denně.</p>
+<pre><code class="language-bash"># 🔄 Zálohování z rpi5 na bocxod
+# 🧹 Udržuje synchronizaci mazáním souborů (s --delete)
+# 📌 Přepínače:
 # -a       zachovává atributy
-# -v       zobrazuje průběh
-# -z       komprimuje přenos
-# -r       rekurzivní přenos podadresářů
-# --delete maže z cíle, co bylo smazáno ve zdroji
-
+# -v       vypisuje průběh
+# -r       rekurzivní přenos
+# --omit-dir-times   ignoruje časy adresářů
+# --delete   maže v cíli soubory, které byly smazány ve zdroji
 echo &quot;===============&quot; &gt;&gt; /var/log/rsync-bocxod
 date &gt;&gt; /var/log/rsync-bocxod
-
-rsync -avr --omit-dir-times --delete -e ssh \
-  liko@10.20.1.5:/home/liko/Share/ \
-  /home/liko/Backup/
-
-echo &quot;soubory smazané na Share rpi5 -&gt; smazány také z Backup bocxod...&quot; &gt;&gt; /var/log/rsync-bocxod
-echo &quot;synchronizace Share rpi5 -&gt; Backup bocxod dokončena...&quot; &gt;&gt; /var/log/rsync-bocxod
-
-# echo &quot;VYPNUTO - zakomentováno v /etc/cron.hourly/rsync-bocxod&quot; &gt;&gt; /var/log/rsync-bocxod
+rsync -avr --omit-dir-times --delete -e ssh liko@10.20.1.5:/home/liko/Share/ /home/liko/Backup/
+echo &quot;soubory smazane na Share rpi5 -&gt; smazany taktez z Backup bocxod...&quot; &gt;&gt; /var/log/rsync-bocxod
+echo &quot;synchronizace Share rpi5 -&gt; Backup bocxod dokoncena...&quot; &gt;&gt; /var/log/rsync-bocxod
+# echo &quot;VYPNUTO - zakonmentovano v /etc/cron.hourly/rsync-bocxod&quot; &gt;&gt; /var/log/rsync-bocxod 
 </code></pre>
 <h1>🔁 <code>rsync</code> – efektivní synchronizace souborů</h1>
 <p><code>rsync</code> je mocný nástroj pro synchronizaci souborů a adresářů mezi dvěma místy – lokálně i přes síť. Umí přenášet pouze změny, zachovávat oprávnění a je ideální pro zálohování.</p>
