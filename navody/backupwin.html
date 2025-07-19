@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>backupwin – zálohování z Win do RPi5</title></head>
+<body>
+<h1>README: Šifrované zálohování ze dvou Windows 11 notebooků na Raspberry Pi 5 s NVMe 2TB 🔐💾🖥️</h1>
+<hr />
+<h2>Obsah 📚</h2>
+<ol>
+<li><a href="#přehled-projektu">Přehled projektu</a>  </li>
+<li><a href="#hardware-a-síťové-prostředí">Hardware a síťové prostředí</a>  </li>
+<li><a href="#požadavky-a-nástroje">Požadavky a nástroje</a>  </li>
+<li><a href="#příprava-raspberry-pi-5-raspbian">Příprava Raspberry Pi 5 (Raspbian)</a>  </li>
+<li><a href="#vytvoření-a-montování-veracrypt-kontejnerů">Vytvoření a montování VeraCrypt kontejnerů</a>  </li>
+<li><a href="#nastavení-samba-serveru">Nastavení Samba serveru</a>  </li>
+<li><a href="#nastavení-ssh-klíčů-pro-bezpečný-přístup">Nastavení SSH klíčů pro bezpečný přístup</a>  </li>
+<li><a href="#powershell-zálohovací-skripty-pro-windows-11--nastavení-plánovače-úloh">PowerShell zálohovací skripty pro Windows 11 + nastavení Plánovače úloh</a>  </li>
+<li><a href="#tipy-a-bezpečnostní-doporučení">Tipy a bezpečnostní doporučení</a>  </li>
+<li><a href="#zdroje-citace-a-odkazy">Zdroje, citace a odkazy</a>  </li>
+</ol>
+<hr />
+<h2>1. Přehled projektu 📝</h2>
+<p>Zálohování dat ze dvou Windows 11 notebooků do šifrovaných VeraCrypt kontejnerů na Raspberry Pi 5 s NVMe diskem 2TB.<br />
+Každý notebook má vlastní uživatelský účet a vlastní 512GB VeraCrypt kontejner.<br />
+Data se přes Samba sdílení bezpečně přenášejí přes lokální intranet IPv4 subnet.  </p>
+<hr />
+<h2>2. Hardware a síťové prostředí 🖥️📡</h2>
+<ul>
+<li><strong>Raspberry Pi 5</strong> s NVMe SSD 2TB  </li>
+<li>OS: Raspbian (aktuální verze)  </li>
+<li>Síť: Intranet IPv4, jeden subnet (např. 192.168.1.0/24)  </li>
+<li>Dva Windows 11 notebooky, každý s vlastním uživatelem a heslem  </li>
+</ul>
+<hr />
+<h2>3. Požadavky a nástroje 🛠️</h2>
+<ul>
+<li>VeraCrypt na Raspberry Pi  </li>
+<li>Samba server na Raspberry Pi  </li>
+<li>SSH server na Raspberry Pi  </li>
+<li>Windows 11 PowerShell na noteboocích  </li>
+<li>SSH klient (OpenSSH je v Windows 11 standardně dostupný)  </li>
+</ul>
+<hr />
+<h2>4. Příprava Raspberry Pi 5 (Raspbian) ⚙️🐧</h2>
+<h3>Aktualizace systému</h3>
+<pre><code>sudo apt update &amp;&amp; sudo apt upgrade -y
+</code></pre>
+<h3>Instalace VeraCrypt, Samba, SSH</h3>
+<pre><code>sudo apt install veracrypt samba ssh -y
+</code></pre>
+<h3>Vytvoření uživatelských účtů pro Samba</h3>
+<pre><code>sudo adduser backupuser1
+sudo smbpasswd -a backupuser1
+
+sudo adduser backupuser2
+sudo smbpasswd -a backupuser2
+</code></pre>
+<hr />
+<h2>5. Vytvoření a montování VeraCrypt kontejnerů 🔒</h2>
+<h3>Vytvoření 512 GB souborů kontejnerů</h3>
+<pre><code>dd if=/dev/zero of=/home/backupuser1/backupcontainer1.vc bs=1M count=524288
+dd if=/dev/zero of=/home/backupuser2/backupcontainer2.vc bs=1M count=524288
+</code></pre>
+<h3>Inicializace VeraCrypt kontejnerů</h3>
+<p>Pro uživatele <code>backupuser1</code>:</p>
+<pre><code>veracrypt --text --create /home/backupuser1/backupcontainer1.vc \
+  --size 512G --password=STRONG_PASSWORD1 --encryption=AES --hash=SHA-512 --filesystem=ext4
+</code></pre>
+<p>Pro uživatele <code>backupuser2</code>:</p>
+<pre><code>veracrypt --text --create /home/backupuser2/backupcontainer2.vc \
+  --size 512G --password=STRONG_PASSWORD2 --encryption=AES --hash=SHA-512 --filesystem=ext4
+</code></pre>
+<p><em>(Zvolte silná a bezpečná hesla.)</em></p>
+<h3>Vytvoření mountpointů a montování</h3>
+<pre><code>sudo mkdir -p /mnt/backup1
+sudo mkdir -p /mnt/backup2
+</code></pre>
+<p>Montování kontejnerů:</p>
+<pre><code>veracrypt --text --mount /home/backupuser1/backupcontainer1.vc /mnt/backup1 -p STRONG_PASSWORD1
+veracrypt --text --mount /home/backupuser2/backupcontainer2.vc /mnt/backup2 -p STRONG_PASSWORD2
+</code></pre>
+<hr />
+<h2>6. Nastavení Samba serveru 🌐</h2>
+<h3>Úprava <code>/etc/samba/smb.conf</code></h3>
+<p>Přidejte sekce:</p>
+<pre><code>[Backup1]
+   path = /mnt/backup1
+   valid users = backupuser1
+   read only = no
+   browsable = yes
+
+[Backup2]
+   path = /mnt/backup2
+   valid users = backupuser2
+   read only = no
+   browsable = yes
+</code></pre>
+<h3>Restart Samba</h3>
+<pre><code>sudo systemctl restart smbd
+</code></pre>
+<hr />
+<h2>7. Nastavení SSH klíčů 🔑</h2>
+<h3>Na Windows 11 notebooku v PowerShellu</h3>
+<p>Vygenerujte klíče (pokud ještě nejsou):</p>
+<pre><code>ssh-keygen -t rsa -b 4096 -f $env:USERPROFILE\.ssh\id_rsa -N ""
+</code></pre>
+<h3>Přeneste veřejný klíč na Raspberry Pi (nahraďte IP a uživatele)</h3>
+<pre><code>scp $env:USERPROFILE\.ssh\id_rsa.pub backupuser1@192.168.1.X:/home/backupuser1/
+</code></pre>
+<h3>Na Raspberry Pi (pro backupuser1)</h3>
+<pre><code>mkdir -p /home/backupuser1/.ssh
+cat /home/backupuser1/id_rsa.pub &gt;&gt; /home/backupuser1/.ssh/authorized_keys
+chmod 700 /home/backupuser1/.ssh
+chmod 600 /home/backupuser1/.ssh/authorized_keys
+rm /home/backupuser1/id_rsa.pub
+</code></pre>
+<p><em>Totéž opakujte pro <code>backupuser2</code> a druhý notebook.</em></p>
+<hr />
+<h2>8. PowerShell zálohovací skripty pro Windows 11 + nastavení Plánovače úloh ⏰🖥️</h2>
+<h3>Notebook 1 – <code>BackupToRPi_User1.ps1</code></h3>
+<pre><code># PowerShell skript pro zálohu na Raspberry Pi Samba share Backup1
+
+$RPiIP = "192.168.1.X"                      # IP RPi
+$sharePath = "\\$RPiIP\Backup1"
+$backupSource = "C:\DataToBackup"           # Zdroj zálohy
+$timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
+$backupDest = "$sharePath\Backup_$timestamp"
+
+# Připojení Samba sdílení pod písmenem Z:
+New-PSDrive -Name "Z" -PSProvider FileSystem -Root $sharePath -Persist
+
+# Vytvoření cílové složky na síťovém disku
+New-Item -ItemType Directory -Path $backupDest -Force | Out-Null
+
+# Kopírování dat
+Copy-Item -Path "$backupSource\*" -Destination $backupDest -Recurse -Force
+
+# Odpojení síťové jednotky
+Remove-PSDrive -Name "Z"
+</code></pre>
+<hr />
+<h3>Notebook 2 – <code>BackupToRPi_User2.ps1</code></h3>
+<pre><code># PowerShell skript pro zálohu na Raspberry Pi Samba share Backup2
+
+$RPiIP = "192.168.1.X"                      # IP RPi
+$sharePath = "\\$RPiIP\Backup2"
+$backupSource = "D:\WorkFiles"               # Zdroj zálohy
+$timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
+$backupDest = "$sharePath\Backup_$timestamp"
+
+New-PSDrive -Name "Z" -PSProvider FileSystem -Root $sharePath -Persist
+New-Item -ItemType Directory -Path $backupDest -Force | Out-Null
+Copy-Item -Path "$backupSource\*" -Destination $backupDest -Recurse -Force
+Remove-PSDrive -Name "Z"
+</code></pre>
+<hr />
+<h3>Nastavení Plánovače úloh na Windows 11 📅</h3>
+<ol>
+<li>Otevřete <strong>Plánovač úloh</strong> (Task Scheduler).  </li>
+<li>Vytvořte novou úlohu:  </li>
+<li>Název: <code>Záloha na RPi BackupUser1</code> (resp. <code>BackupUser2</code>)  </li>
+<li>Spouštění: Např. každý den v 19:00 nebo podle potřeby  </li>
+<li>Akce:  </li>
+<li>Spustit program: <code>powershell.exe</code>  </li>
+<li>Argumenty: <code>-File "C:\Cesta\k\souboru\BackupToRPi_User1.ps1"</code> (resp. User2)  </li>
+<li>V záložce <strong>Obecné</strong> zaškrtněte "Spustit s nejvyššími oprávněními"  </li>
+<li>Uložte úlohu.  </li>
+</ol>
+<hr />
+<h2>9. Tipy a bezpečnostní doporučení ⚠️🔒</h2>
+<ul>
+<li>Každý uživatel má vlastní VeraCrypt kontejner a Samba účet s oddělenými právy.  </li>
+<li>Uchovávejte silná a bezpečná hesla, ideálně spravujte v password manageru.  </li>
+<li>Raspberry Pi pravidelně aktualizujte (<code>sudo apt update &amp;&amp; sudo apt upgrade</code>).  </li>
+<li>Omezte přístup v síti (firewall) na potřebné IP adresy.  </li>
+<li>Pravidelně testujte obnovu dat ze záloh.  </li>
+<li>Zálohujte i VeraCrypt kontejnery samotné (externí záloha).  </li>
+<li>Používejte SSH klíče místo hesel pro lepší bezpečnost.  </li>
+<li>Přemýšlejte o monitoringu Raspberry Pi a Samba serveru.  </li>
+</ul>
+<hr />
+<h2>10. Zdroje, citace a odkazy 📖🌐</h2>
+<ul>
+<li><a href="https://www.veracrypt.fr/en/Home.html">VeraCrypt Official</a>  </li>
+<li><a href="https://www.samba.org/samba/docs/current/man-html/smb.conf.5.html">Samba Documentation</a>  </li>
+<li><a href="https://learn.microsoft.com/en-us/windows/win32/taskschd/task-scheduler-start-page">Microsoft Docs: Task Scheduler</a>  </li>
+<li><a href="https://learn.microsoft.com/en-us/powershell/">Windows PowerShell Docs</a>  </li>
+<li><a href="https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_keymanagement">SSH Keygen on Windows</a>  </li>
+<li><a href="https://www.raspberrypi.com/documentation/computers/">Raspberry Pi OS Documentation</a>  </li>
+</ul>
+<hr />
+<p>Konec navodu! 🚀😊  </p>
+<p><a href="../index.html">← Zpět na přehled</a></p>
+</body>
+</html>
