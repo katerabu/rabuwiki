@@ -51,14 +51,38 @@ rsync -av --delete /home/liko/notebook2_data/ /mnt/cloud-notebook2/</p>
 veracrypt -d /mnt/cloud-notebook2
 EOF</p>
 <p>chmod +x ~/backup-cloud.sh</p>
-<h1>9️⃣ Bezpečnostní doporučení</h1>
-<h1>- používej silná hesla / klíčové soubory pro VeraCrypt</h1>
-<h1>- omez přístup přes firewall na interní síť</h1>
-<h1>- pravidelně aktualizuj systém</h1>
-<h1>- přistupuj pouze z důvěryhodných zařízení</h1>
-<h1>💡 Tip: Naplánuj skript v cron (např. každý den v 3 ráno)</h1>
-<h1>crontab -e</h1>
-<h1>0 3 * * * /home/liko/backup-cloud.sh &gt;&gt; /var/log/backup-cloud.log 2&gt;&amp;1</h1>
+<h1>9️⃣ Automatické připojení VeraCrypt kontejnerů při startu RPi</h1>
+<h1>Vytvoř systemd službu:</h1>
+<p>cat &lt;&lt; 'EOF' | sudo tee /etc/systemd/system/veracrypt-mount.service
+[Unit]
+Description=Mount VeraCrypt containers at boot
+After=network-online.target
+Wants=network-online.target</p>
+<p>[Service]
+Type=oneshot
+ExecStart=/usr/bin/veracrypt --mount /mnt/cloud-notebook1-container/backup1.vc /mnt/cloud-notebook1 --password="TvojeSilneHeslo" --non-interactive
+ExecStart=/usr/bin/veracrypt --mount /mnt/cloud-notebook2-container/backup2.vc /mnt/cloud-notebook2 --password="TvojeSilneHeslo" --non-interactive
+RemainAfterExit=yes</p>
+<p>[Install]
+WantedBy=multi-user.target
+EOF</p>
+<h1>Aktivuj službu:</h1>
+<p>sudo systemctl daemon-reload
+sudo systemctl enable veracrypt-mount.service
+sudo systemctl start veracrypt-mount.service</p>
+<h1>10️⃣ PowerShell skript pro Windows zálohy na RPi (pomocí rsync přes WSL)</h1>
+<h1>Ulož jako backup.ps1 na Windows (upravit IP a cesty):</h1>
+<p>$source1 = "C:\Users\uzivatel\Documents\"
+$source2 = "C:\Users\uzivatel\Pictures\"
+$dest1 = "liko@IP_RPi:/mnt/cloud-notebook1/"
+$dest2 = "liko@IP_RPi:/mnt/cloud-notebook2/"</p>
+<h1>Nastav cestu k WSL rsync</h1>
+<p>$rsync = "C:\Windows\System32\wsl.exe"</p>
+<p>Write-Host "Spouštím zálohu Documents..."
+&amp; $rsync rsync -avz --delete "$source1" "$dest1"</p>
+<p>Write-Host "Spouštím zálohu Pictures..."
+&amp; $rsync rsync -avz --delete "$source2" "$dest2"</p>
+<p>Write-Host "Zálohování dokončeno."</p>
 <h1>------------------------------------</h1>
 <h1>🔗 Užitočné zdroje:</h1>
 <h1>- VeraCrypt: https://www.veracrypt.fr/en/Home.html</h1>

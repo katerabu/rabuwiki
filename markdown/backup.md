@@ -68,15 +68,49 @@ EOF
 
 chmod +x ~/backup-cloud.sh
 
-# 9️⃣ Bezpečnostní doporučení
-# - používej silná hesla / klíčové soubory pro VeraCrypt
-# - omez přístup přes firewall na interní síť
-# - pravidelně aktualizuj systém
-# - přistupuj pouze z důvěryhodných zařízení
+# 9️⃣ Automatické připojení VeraCrypt kontejnerů při startu RPi
 
-# 💡 Tip: Naplánuj skript v cron (např. každý den v 3 ráno)
-# crontab -e
-# 0 3 * * * /home/liko/backup-cloud.sh >> /var/log/backup-cloud.log 2>&1
+# Vytvoř systemd službu:
+cat << 'EOF' | sudo tee /etc/systemd/system/veracrypt-mount.service
+[Unit]
+Description=Mount VeraCrypt containers at boot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/veracrypt --mount /mnt/cloud-notebook1-container/backup1.vc /mnt/cloud-notebook1 --password="TvojeSilneHeslo" --non-interactive
+ExecStart=/usr/bin/veracrypt --mount /mnt/cloud-notebook2-container/backup2.vc /mnt/cloud-notebook2 --password="TvojeSilneHeslo" --non-interactive
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# Aktivuj službu:
+sudo systemctl daemon-reload
+sudo systemctl enable veracrypt-mount.service
+sudo systemctl start veracrypt-mount.service
+
+# 10️⃣ PowerShell skript pro Windows zálohy na RPi (pomocí rsync přes WSL)
+
+# Ulož jako backup.ps1 na Windows (upravit IP a cesty):
+
+$source1 = "C:\Users\uzivatel\Documents\"
+$source2 = "C:\Users\uzivatel\Pictures\"
+$dest1 = "liko@IP_RPi:/mnt/cloud-notebook1/"
+$dest2 = "liko@IP_RPi:/mnt/cloud-notebook2/"
+
+# Nastav cestu k WSL rsync
+$rsync = "C:\Windows\System32\wsl.exe"
+
+Write-Host "Spouštím zálohu Documents..."
+& $rsync rsync -avz --delete "$source1" "$dest1"
+
+Write-Host "Spouštím zálohu Pictures..."
+& $rsync rsync -avz --delete "$source2" "$dest2"
+
+Write-Host "Zálohování dokončeno."
 
 # ------------------------------------
 # 🔗 Užitočné zdroje:
