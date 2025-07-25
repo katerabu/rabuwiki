@@ -1,6 +1,6 @@
 ## Rozšíření - na festivaly, výpravy, dovolene potřebujeme větší auto, nejlíp dodávku
 
-Je potřeba větší auto než RAV4, tak jaké?
+Je potřeba větší auto než RAV4, tak jaké? Jed az dolu a zjistis ze to bude asi Ford Transit Custom 2.2 TDCi 92Kw 6-Míst Long, Caravelle je moc draha totiz...
 
 # 🚐 Srovnání rodinných vanů a SUV – rozměry a využitelnost
 | Parametr                                            | **Toyota RAV4 (2015)** | **Ford Tourneo Custom L2** | **Toyota Proace Verso Long** | **VW T6 Caravelle LWB** | **Mercedes Vito Tourer Long** |
