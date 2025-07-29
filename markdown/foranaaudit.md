@@ -1,3 +1,10 @@
+---
+title: Forenzní analýza a auditování
+category: Počítače
+tags: [forenz, analýza, audit, kryptografie, kyberbezpečnost]
+last_update: 2025-07-29
+---
+
 ## 🔍 Forenzní analýza a auditování
 
 ### 🧩 Co je Forenzní analýza?
