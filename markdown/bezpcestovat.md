@@ -1,6 +1,7 @@
 ---
 title: Bezpečnost cestovani s mobilem
 category: Počítače
+category: Cestování
 tags: [android, mobil, internet, kyberbezpečnost]
 last_update: 2025-07-29
 ---
