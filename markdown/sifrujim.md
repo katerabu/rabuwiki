@@ -1,3 +1,10 @@
+---
+title: Šifrovaná komunikace a IM (Signal, Threema, Matrix)
+category: Počítače
+tags: [internet, mobil, zpravy, sifrovani, kyberbezpečnost]
+last_update: 2025-07-29
+---
+
 ## 📤 Šifrovaná komunikace a IM (Signal, Threema, Matrix)
 
 Bezpečná a šifrovaná komunikace je základem ochrany soukromí a integrity dat při přenosu zpráv. Instant messaging (IM) aplikace s end-to-end šifrováním chrání obsah zpráv před odposlechem, modifikací i neoprávněným přístupem.
