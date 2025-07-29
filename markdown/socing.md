@@ -1,3 +1,10 @@
+---
+title: Sociální inženýrství (Social Engineering)
+category: Počítače
+tags: [internet, socialní, inženýring, ochrana, kyberbezpečnost]
+last_update: 2025-07-29
+---
+
 ## 🕵️‍♂️ Sociální inženýrství (Social Engineering)
 
 ### 🤔 Co je sociální inženýrství?
