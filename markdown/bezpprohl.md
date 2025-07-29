@@ -1,3 +1,10 @@
+---
+title: Zabezpečení prohlížečů a soukromí online
+category: Počítače
+tags: [linux, browser, internet, kyberbezpečnost]
+last_update: 2025-07-29
+---
+
 ## 🌐 Zabezpečení prohlížečů a soukromí online
 
 Prohlížeče jsou hlavní branou na internet, kde dochází k citlivým operacím – přihlašování, nákupům, práci s osobními údaji. Zabezpečení prohlížečů a ochrana soukromí jsou proto zásadní.
