@@ -1,3 +1,11 @@
+---
+title: Bezpečnost cestovani s mobilem
+category: Počítače
+tags: [android, mobil, internet, kyberbezpečnost]
+last_update: 2025-07-29
+---
+
+
 ## 🧳 Cestování a bezpečnost (mobil, hotspoty, veřejná Wi-Fi)
 
 ### 🌍 Úvod
