@@ -1,3 +1,10 @@
+---
+title: Bezpečnost pomocí MikroTik L009UiGS-2HaxD-IN
+category: Počítače
+tags: [linux, firewall, konfigurace, kyberbezpečnost]
+last_update: 2025-07-29
+---
+
 ## 🛡️🔐 Bezpečnost pomocí MikroTik L009UiGS-2HaxD-IN – konkrétní postupy a pokročilé firewall konfigurace 🚀🖧
 
 MikroTik L009UiGS-2HaxD-IN je výkonný a flexibilní router/firewall ideální pro domácí i malé firemní sítě. Umožňuje pokročilou správu síťové bezpečnosti včetně firewall pravidel, VLAN, VPN, QoS a monitoringu. Níže naleznete detailní krok za krokem návod k bezpečnému nastavení sítě a doporučené konfigurace firewallu 🔥.
