@@ -1,4 +1,11 @@
-## 🌐 INETSEC – Internet Security (Bezpečnost webu a sítí)
+---
+title: Internet Security (Bezpečnost webu a sítí)
+category: Počítače
+tags: [internet, weby, sítě, kryptografie, kyberbezpečnost]
+last_update: 2025-07-29
+---
+
+## 🌐 Internet Security (Bezpečnost webu a sítí)
 
 ### 🧱 Definice a principy
 - **Internet Security** pokrývá technická opatření na ochranu dat v přenosu i v klidu (např. šifrování TLS/SSL, VPN, IPsec). Označuje se také jako síťová vrstva ochrany (Van Rossum, 2025). :contentReference[oaicite:1]{index=1}
