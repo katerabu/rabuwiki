@@ -1,3 +1,10 @@
+---
+title: Rozšíření - větší auto / dodávku
+category: Cestování
+tags: [festival, výprava, dovolena, stanování, výbava]
+last_update: 2025-07-09
+---
+
 ## Rozšíření - na festivaly, výpravy, dovolene potřebujeme větší auto, nejlíp dodávku
 
 Je potřeba větší auto než RAV4, tak jaké? Jed az dolu a zjistis ze to bude asi Ford Transit Custom 2.2 TDCi 92Kw 6-Míst Long, Caravelle je moc draha totiz...
