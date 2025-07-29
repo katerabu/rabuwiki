@@ -1,3 +1,10 @@
+---
+title: Mobile Device Management (MDM)
+category: Počítače
+tags: [internet, mobil, politika, aplikace, sifrovani, kyberbezpečnost]
+last_update: 2025-07-29
+---
+
 ## 📱 Mobile Device Management (MDM)
 
 ### 🧭 Co je MDM?
