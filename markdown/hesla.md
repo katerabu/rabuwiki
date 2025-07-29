@@ -1,3 +1,10 @@
+---
+title: Hesla a autentizace
+category: Počítače
+tags: [hesla, analýza, autentizace, kryptografie, kyberbezpečnost]
+last_update: 2025-07-29
+---
+
 ## 🔐 Hesla a autentizace
 
 ### 🧠 Základní principy
