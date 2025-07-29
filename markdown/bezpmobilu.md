@@ -1,3 +1,11 @@
+---
+title: Bezpečnost mobilních zařízení
+category: Počítače
+tags: [android, mobil, internet, kyberbezpečnost]
+last_update: 2025-07-29
+---
+
+
 ## 📱 Bezpečnost mobilních zařízení
 
 Mobilní zařízení jsou dnes klíčovou součástí osobního i pracovního života. Ochrana těchto zařízení před ztrátou dat, škodlivými útoky a neoprávněným přístupem je nezbytná.
