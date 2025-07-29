@@ -1,3 +1,10 @@
+---
+title: Přehled REST API – jednoduchý průvodce
+category: Počítače
+tags: [internet, REST, HTTP, programování]
+last_update: 2025-07-29
+---
+
 # 🧭 Přehled REST API – jednoduchý průvodce
 
 ## 🌐 Co je REST API?  
