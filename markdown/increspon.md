@@ -1,3 +1,10 @@
+---
+title: Incident Response (reakce na bezpečnostní incidenty)
+category: Počítače
+tags: [reakce, incidenty, kryptografie, kyberbezpečnost]
+last_update: 2025-07-29
+---
+
 ## 🧯 Incident Response (reakce na bezpečnostní incidenty)
 
 ### 🧭 Co je Incident Response?
