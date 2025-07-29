@@ -1,3 +1,10 @@
+---
+title: Zálohování a obnova dat (Backup & Recovery)
+category: Počítače
+tags: [backup, recovevry, kyberbezpečnost]
+last_update: 2025-07-29
+---
+
 ## 💾 Zálohování a obnova dat (Backup & Recovery)
 
 ### 📘 Co je zálohování?
