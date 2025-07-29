@@ -83,12 +83,4 @@ Cestování přináší zvýšená bezpečnostní rizika zejména při použív�
 - Electronic Frontier Foundation (2023). *Surveillance Self-Defense: Public Wi-Fi*.  
 - CISA (2021). *Securing Public Wi-Fi Networks*.  
 
----
 
-Pokud chceš, můžu připravit další témata, třeba:
-
-- 🔒 Mobilní VPN a jejich konfigurace  
-- 🧰 Bezpečnostní aplikace na cesty  
-- 🔐 Ochrana dat při práci z hotelových zařízení  
-
-Stačí říct! 😊
