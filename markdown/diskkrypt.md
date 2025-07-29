@@ -1,3 +1,10 @@
+---
+title: Bezpečnost disků - kryptografie
+category: Počítače
+tags: [ukládání, zálohování, kryptografie, kyberbezpečnost]
+last_update: 2025-07-29
+---
+
 ## 🔐 Disková kryptografie (Disk Encryption)
 
 ### 🧾 Co je disková kryptografie?
