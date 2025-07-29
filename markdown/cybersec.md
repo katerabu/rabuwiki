@@ -1,3 +1,10 @@
+---
+title: Cybersecurity – Přehled doporučení a hrozeb (z přednášky / školení)
+category: Počítače
+tags: [ukládání, zálohování, kryptografie, kyberbezpečnost]
+last_update: 2025-07-29
+---
+
 # 🛡️ Cybersecurity – Přehled doporučení a hrozeb
 
 ## 📡 Domácí síť a routery
