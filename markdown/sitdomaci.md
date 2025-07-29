@@ -1,3 +1,10 @@
+---
+title: Domácí síť – firewall, segmentace, DNS ochrana
+category: Počítače
+tags: [internet, firewall, sítě, ochrana, kyberbezpečnost]
+last_update: 2025-07-29
+---
+
 ## 🏠 Domácí síť – firewall, segmentace, DNS ochrana
 
 Domácí síť je často nejzranitelnějším místem v zabezpečení IT prostředí, zejména pokud je připojena k internetu a obsahuje více zařízení. Správné nastavení firewallu, segmentace sítě a DNS ochrana výrazně zvyšují bezpečnost.
