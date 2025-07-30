@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Forenzní analýza a auditování</title></head>
+<body>
+<h2>🔍 Forenzní analýza a auditování</h2>
+<h3>🧩 Co je Forenzní analýza?</h3>
+<p>Digitální forenzní analýza je proces <strong>sběru, uchování, analýzy a prezentace digitálních důkazů</strong> tak, aby byly použitelné v rámci vyšetřování bezpečnostních incidentů, porušení politik nebo i soudních sporů.</p>
+<blockquote>
+<p>„Digital forensics is the practice of uncovering and interpreting electronic data.“<br />
+– Carrier, B. (2003), <em>Digital Forensic Research</em></p>
+</blockquote>
+<hr />
+<h3>📋 Hlavní kroky digitální forenzní analýzy</h3>
+<pre><code>+-------------------+
+| 1. Identifikace   |
++-------------------+
+         ↓
++-------------------+
+| 2. Zachycení      |
++-------------------+
+         ↓
++-------------------+
+| 3. Analýza        |
++-------------------+
+         ↓
++-------------------+
+| 4. Prezentace     |
++-------------------+
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Fáze</th>
+<th>Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Identifikace</strong></td>
+<td>Určení zařízení a dat relevantních k incidentu</td>
+</tr>
+<tr>
+<td><strong>Zachycení</strong></td>
+<td>Forenzní kopie dat s dodržením integrity a chain-of-custody</td>
+</tr>
+<tr>
+<td><strong>Analýza</strong></td>
+<td>Podrobná zkoumání dat za účelem nalezení důkazů</td>
+</tr>
+<tr>
+<td><strong>Prezentace</strong></td>
+<td>Vypracování zpráv a případná svědecká výpověď</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>🛠️ Nástroje a techniky forenzní analýzy</h3>
+<table>
+<thead>
+<tr>
+<th>Nástroj</th>
+<th>Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FTK (Forensic Toolkit)</td>
+<td>Kompletní sada pro forenzní vyšetřování</td>
+</tr>
+<tr>
+<td>EnCase</td>
+<td>Populární komerční forenzní software</td>
+</tr>
+<tr>
+<td>Autopsy/Sleuth Kit</td>
+<td>Open-source forenzní nástroje</td>
+</tr>
+<tr>
+<td>Volatility</td>
+<td>Analýza paměti (RAM)</td>
+</tr>
+<tr>
+<td>Wireshark</td>
+<td>Analýza síťových dat</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>📝 Auditování v kontextu forenzní analýzy</h3>
+<p>Auditování je <strong>kontinuální proces monitorování a vyhodnocování bezpečnostních opatření</strong>, který podporuje včasnou detekci incidentů a usnadňuje forenzní vyšetřování.</p>
+<ul>
+<li>Záznamy (logy) musí být zabezpečené a neměnné.  </li>
+<li>Pravidelné kontroly integrity dat.  </li>
+<li>Shoda s normami (např. ISO/IEC 27001, PCI DSS).  </li>
+</ul>
+<hr />
+<h3>🔍 Forenzní analýza mobilních zařízení</h3>
+<p>Mobilní zařízení představují specifické výzvy díky omezené možnosti přístupu k datům, různorodým platformám a rychlé změně obsahu.</p>
+<h4>Klíčové aspekty forenzní analýzy mobilů:</h4>
+<ul>
+<li><strong>Zachování integrity dat:</strong> Použití fyzické izolace (např. Faradayova klec), režimu letadlo, aby se zabránilo dálkovému smazání nebo změně.  </li>
+<li><strong>Získání dat:</strong> Fyzická kopie paměti, logy aplikací, SMS, hovory, GPS data, cloudové zálohy.  </li>
+<li><strong>Nástroje pro analýzu:</strong> Cellebrite, Oxygen Forensic Detective, MSAB XRY.  </li>
+<li><strong>Právní aspekty:</strong> Dodržování zákonných pravidel pro sběr a uchovávání dat (např. GDPR).  </li>
+</ul>
+<hr />
+<h3>🔄 Proces forenzní analýzy mobilních zařízení</h3>
+<pre><code>+----------------------------+
+| 1. Zajištění a izolace     |
++-------------+--------------+
+              ↓
++-------------+--------------+
+| 2. Extrakce dat            |
++-------------+--------------+
+              ↓
++-------------+--------------+
+| 3. Analýza dat             |
++-------------+--------------+
+              ↓
++-------------+--------------+
+| 4. Dokumentace a zpráva    |
++----------------------------+
+</code></pre>
+<hr />
+<h3>📚 Doporučení a best practices</h3>
+<ul>
+<li>Používat certifikované forenzní nástroje.  </li>
+<li>Dodržovat postupy chain-of-custody.  </li>
+<li>Zajistit bezpečné uchování a zálohování dat.  </li>
+<li>Pravidelně aktualizovat znalosti a nástroje.  </li>
+</ul>
+<hr />
+<h3>📚 Standardy a normy</h3>
+<ul>
+<li><strong>ISO/IEC 27037:2012</strong> – Guidelines for identification, collection, acquisition and preservation of digital evidence<br />
+<a href="https://www.iso.org/standard/44381.html">🔗 https://www.iso.org/standard/44381.html</a>  </li>
+<li><strong>ISO/IEC 27041:2015</strong> – Guidance on assuring suitability and adequacy of incident investigative methods<br />
+<a href="https://www.iso.org/standard/44382.html">🔗 https://www.iso.org/standard/44382.html</a>  </li>
+<li><strong>NIST SP 800-86</strong> – Guide to Integrating Forensic Techniques into Incident Response<br />
+<a href="https://doi.org/10.6028/NIST.SP.800-86">🔗 https://doi.org/10.6028/NIST.SP.800-86</a>  </li>
+</ul>
+<hr />
+<h3>📚 Citace (Harvard)</h3>
+<ul>
+<li>Carrier, B. (2003). <em>Digital Forensic Research: The Next 10 Years</em>.  </li>
+<li>ISO (2012). <em>ISO/IEC 27037:2012 – Guidelines for identification, collection, acquisition and preservation of digital evidence</em>.  </li>
+<li>NIST (2006). <em>SP 800-86 – Guide to Integrating Forensic Techniques into Incident Response</em>.  </li>
+<li>Casey, E. (2011). <em>Digital Evidence and Computer Crime</em>.  </li>
+</ul>
+<h2>🔍 Forenzní analýza a auditování - I. doplnění</h2>
+<p>Forenzní analýza je klíčovou součástí bezpečnostních incidentů, auditů a vyšetřování kybernetických útoků. Cílem je shromáždit, analyzovat a zabezpečit digitální důkazy tak, aby byly použitelné v rámci interních vyšetřování i právních procesů.</p>
+<hr />
+<h3>🛡️ Forenzní analýza cloudových prostředí</h3>
+<p>Cloudové služby přinášejí specifická rizika a výzvy pro forenzní analýzu:</p>
+<ul>
+<li><strong>Sběr důkazů:</strong> Oproti fyzickým zařízením chybí přímý přístup ke hardwaru, důkazy jsou často distribuované mezi více datovými centry.  </li>
+<li><strong>Logování a auditní stopy:</strong> Závisí na poskytovateli cloudu a konfiguraci služeb (např. AWS CloudTrail, Azure Monitor).  </li>
+<li><strong>Kontrola integrity dat:</strong> Nutné používat kryptografické hashe, auditní protokoly a časové razítka.  </li>
+<li><strong>Spolupráce s poskytovatelem:</strong> Využívání API a požadavky na data musí být koordinovány podle smluvních podmínek a právních rámců.  </li>
+<li><strong>Zabezpečení multi-tenancy:</strong> Nutnost zajistit oddělení dat a důkazů od ostatních zákazníků.  </li>
+</ul>
+<p>Doporučené postupy:<br />
+- Aktivace auditních protokolů ještě před incidentem.<br />
+- Používání nástrojů pro automatizovanou analýzu cloudových logů.<br />
+- Zálohování a export klíčových dat v souladu s GDPR a dalšími regulacemi.</p>
+<hr />
+<h3>⚙️ Automatizace forenzních procesů</h3>
+<p>Automatizace výrazně zvyšuje efektivitu a přesnost forenzních vyšetřování:</p>
+<ul>
+<li><strong>Nástroje:</strong> Volání skriptů a workflow v nástrojích jako Autopsy, Volatility, GRR Rapid Response, TheHive, Velociraptor.  </li>
+<li><strong>Automatizované sbírání dat:</strong> Nasazení agentů na systémy pro rychlé zachycení dat při incidentu.  </li>
+<li><strong>Analýza logů:</strong> Použití SIEM systémů (Splunk, ELK Stack) pro korelaci a rychlou identifikaci vzorců chování.  </li>
+<li><strong>Reportování:</strong> Automatizovaná generace přehledů a zpráv pro management a právní oddělení.  </li>
+</ul>
+<p>Výhody:<br />
+- Minimalizace lidských chyb.<br />
+- Rychlejší reakční doba.<br />
+- Lepší škálovatelnost vyšetřování.</p>
+<hr />
+<h3>🔒 Právní aspekty digitální forenzní analýzy</h3>
+<p>Forenzní analýza se musí řídit zákonnými normami, aby důkazy byly použitelné a nezpochybnitelné:</p>
+<ul>
+<li><strong>Řetězec důkazů (Chain of Custody):</strong> Dokumentace o původu, manipulaci a uchování digitálních důkazů.  </li>
+<li><strong>Soulad s legislativou:</strong> GDPR, zákony o ochraně osobních údajů, zákony o kybernetické bezpečnosti a trestním řízení.  </li>
+<li><strong>Práva a povinnosti vyšetřovatelů:</strong> Potřeba povolení (soudní příkaz) pro přístup k datům, respektování práv uživatelů a obviněných.  </li>
+<li><strong>Zabezpečení dat:</strong> Zajištění důkazů proti neoprávněné manipulaci či zveřejnění.  </li>
+<li><strong>Admissibilita důkazů:</strong> Důkazy musí být získány zákonně, nesmí být získány nelegálním způsobem.  </li>
+</ul>
+<p>Doporučené kroky:<br />
+- Školení forenzních analytiků v právních otázkách.<br />
+- Používání certifikovaných nástrojů a postupů.<br />
+- Pravidelné audity a revize procesů.</p>
+<hr />
+<h3>🔗 Užitečné odkazy</h3>
+<ul>
+<li><a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-101r1.pdf">NIST Special Publication 800-101 Revision 1 – Guidelines on Mobile Device Forensics</a>  </li>
+<li><a href="https://www.iso.org/standard/44381.html">ISO/IEC 27037:2012 – Guidelines for identification, collection, acquisition and preservation of digital evidence</a>  </li>
+<li><a href="https://www.sans.org/digital-forensics-and-incident-response/">SANS Digital Forensics and Incident Response Resources</a>  </li>
+<li><a href="https://www.forensicfocus.com/">Forensic Focus – Community and Resources</a>  </li>
+</ul>
+<hr />
+<h3>📚 Citace (Harvard)</h3>
+<ul>
+<li>NIST (2014). <em>Guidelines on Mobile Device Forensics</em>.  </li>
+<li>ISO (2012). <em>ISO/IEC 27037:2012 – Guidelines for identification, collection, acquisition and preservation of digital evidence</em>.  </li>
+<li>SANS Institute (2023). <em>Digital Forensics and Incident Response Resources</em>.  </li>
+<li>Casey, E. (2011). <em>Digital Evidence and Computer Crime: Forensic Science, Computers and the Internet</em>. 3rd ed. Academic Press.</li>
+</ul>
+<p><a href="../index.html">← Zpět na přehled</a></p>
+</body>
+</html>

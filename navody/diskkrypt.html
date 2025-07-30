@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Bezpečnost disků - kryptografie</title></head>
+<body>
+<h2>🔐 Disková kryptografie (Disk Encryption)</h2>
+<h3>🧾 Co je disková kryptografie?</h3>
+<p>Disková kryptografie slouží k <strong>ochraně uložených dat</strong> před neoprávněným přístupem – i v případě fyzické krádeže zařízení. Šifrování může být aplikováno na:</p>
+<ul>
+<li><strong>celý disk</strong> (Full Disk Encryption – FDE)</li>
+<li><strong>oddíl/discový svazek</strong></li>
+<li><strong>soubory/složky</strong></li>
+</ul>
+<blockquote>
+<p>„Encryption is the last line of defense – if your system is compromised or stolen, your data remains unreadable.“<br />
+– Schneier, B. (2015). <em>Data and Goliath</em></p>
+</blockquote>
+<hr />
+<h3>🧱 Typy šifrování</h3>
+<pre><code>    +---------------------------+
+    |   Typy šifrování disku   |
+    +---------------------------+
+    | 🔒 Full Disk Encryption   |
+    | 🗂️ File/Folder Encryption |
+    | 📁 Container (e.g. VeraCrypt) |
+    +---------------------------+
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Typ</th>
+<th>Vlastnosti</th>
+<th>Vhodné použití</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>FDE (např. BitLocker)</strong></td>
+<td>Šifruje celý disk včetně OS</td>
+<td>Notebooky, firemní stanice</td>
+</tr>
+<tr>
+<td><strong>File-based (např. EFS)</strong></td>
+<td>Šifrování na úrovni souborů</td>
+<td>Dokumenty, sdílené disky</td>
+</tr>
+<tr>
+<td><strong>Kontejnery (VeraCrypt)</strong></td>
+<td>Virtuální disk se šifrovaným obsahem</td>
+<td>Přenosná média, citlivé složky</td>
+</tr>
+<tr>
+<td><strong>Hybridní přístup</strong></td>
+<td>Kombinace více typů</td>
+<td>Vysoká bezpečnost</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>🔑 Algoritmy a standardy</h3>
+<ul>
+<li><strong>AES-256</strong> – nejčastější standard (symetrický blokový algoritmus)</li>
+<li><strong>XTS-AES</strong> – bezpečnější mód pro šifrování blokových zařízení</li>
+<li><strong>LUKS</strong> – standardní formát pro šifrování disků na Linuxu (dm-crypt)</li>
+<li><strong>BitLocker</strong> – proprietární technologie od Microsoftu (Windows Pro+)</li>
+<li><strong>FileVault 2</strong> – šifrování disku od Apple (macOS)</li>
+</ul>
+<p>📌 Doporučeno: <strong>AES-256 + XTS</strong> s dlouhým heslem nebo klíčem chráněným TPM/HSM</p>
+<hr />
+<h3>💡 Doporučené nástroje</h3>
+<table>
+<thead>
+<tr>
+<th>Nástroj</th>
+<th>Platforma</th>
+<th>Poznámka</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>BitLocker</strong></td>
+<td>Windows</td>
+<td>Integrace s OS, TPM, bezplatný</td>
+</tr>
+<tr>
+<td><strong>FileVault 2</strong></td>
+<td>macOS</td>
+<td>Výchozí volba na Macu</td>
+</tr>
+<tr>
+<td><strong>LUKS/dm-crypt</strong></td>
+<td>Linux</td>
+<td>Flexibilní, podporuje klíče i hesla</td>
+</tr>
+<tr>
+<td><strong>VeraCrypt</strong></td>
+<td>Cross-platform</td>
+<td>Silné šifrování, skryté kontejnery</td>
+</tr>
+<tr>
+<td><strong>Zed!</strong></td>
+<td>Windows</td>
+<td>Šifrování souborů/folderů (alternativa k ZIP + heslo)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>🧯 Hrozby a bezpečnostní doporučení</h3>
+<table>
+<thead>
+<tr>
+<th>Riziko</th>
+<th>Ochrana</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>❌ Špatně zvolené heslo</td>
+<td>Použij silnou passphrase (např. 6+ náhodných slov)</td>
+</tr>
+<tr>
+<td>❌ Uspání místo vypnutí zařízení</td>
+<td>Útok přes RAM (Cold Boot Attack)</td>
+</tr>
+<tr>
+<td>❌ Nechráněný boot (bez hesla v BIOSu)</td>
+<td>Nastavit BIOS heslo, zakázat boot z USB</td>
+</tr>
+<tr>
+<td>❌ Nešifrovaný swap/hibernační oddíl</td>
+<td>Zahrnout do šifrování</td>
+</tr>
+<tr>
+<td>❌ Přístup v běhu systému (Evil Maid)</td>
+<td>Fyzická ochrana, podpis bootloaderu, Secure Boot</td>
+</tr>
+</tbody>
+</table>
+<p>📌 Vždy vypínej zařízení, neuspávej. Šifrování nechrání běžící OS před útoky.</p>
+<hr />
+<h3>🔐 ASCII diagram – jak funguje FDE s TPM</h3>
+<pre><code>    +-----------------------+
+    |   Uživatel zapne PC   |
+    +----------+------------+
+               ↓
+    +----------+------------+
+    | Bootloader + TPM ověření|
+    +----------+------------+
+               ↓
+    |  TPM uvolní šifrovací klíč  |
+               ↓
+    +----------+------------+
+    | Dešifrování systémového disku |
+    +----------+------------+
+               ↓
+    |    OS se normálně spustí    |
+</code></pre>
+<p>TPM (Trusted Platform Module) ukládá šifrovací klíč bezpečně a umožňuje jeho vydání jen při splnění integrity systému (např. nezměněný bootloader, BIOS).</p>
+<hr />
+<h3>✅ Ověřování a správa klíčů</h3>
+<ul>
+<li><strong>Hesla vs klíčové soubory</strong> – klíčový soubor může být bezpečnější (např. uložen na USB)</li>
+<li><strong>Vícefázové odemykání</strong> – např. heslo + klíč na USB</li>
+<li><strong>Záloha klíčů</strong> – offline, ve fyzickém trezoru</li>
+</ul>
+<hr />
+<h3>🧪 Testování a obnova</h3>
+<ul>
+<li><strong>Zálohuj metadata (např. LUKS header)</strong> – umožňuje obnovu</li>
+<li>Testuj obnovu ze šifrovaného média – například obnovením image v sandboxu</li>
+<li>Pokud používáš VeraCrypt, vytvoř záchranný disk (rescue disk)</li>
+</ul>
+<hr />
+<h3>❗ Co šifrování neřeší</h3>
+<ul>
+<li>Nechrání před malwarem a ransomwarem <strong>během běhu systému</strong></li>
+<li>Nezabrání úniku dat, pokud uživatel data sám sdílí</li>
+<li>Není náhradou za správu přístupových práv, audit a zálohování</li>
+</ul>
+<p>📌 Šifrování je <strong>poslední vrstva</strong>, ne jediná ochrana.</p>
+<hr />
+<h3>📚 Citace (Harvard)</h3>
+<ul>
+<li>Schneier, B. (2015). <em>Data and Goliath: The Hidden Battles to Collect Your Data and Control Your World</em>. Norton &amp; Company.  </li>
+<li>NIST (2020). <em>FIPS 197: Advanced Encryption Standard (AES)</em>. Available at: https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.197.pdf  </li>
+<li>VeraCrypt (2024). <em>Documentation</em>. Available at: https://www.veracrypt.fr/en/Documentation.html  </li>
+<li>Microsoft (2024). <em>BitLocker Overview</em>. Available at: https://learn.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-overview  </li>
+<li>Linux Foundation (2023). <em>LUKS/dm-crypt project</em>. Available at: https://gitlab.com/cryptsetup/cryptsetup</li>
+</ul>
+<p><a href="../index.html">← Zpět na přehled</a></p>
+</body>
+</html>

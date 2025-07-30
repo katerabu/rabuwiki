@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Cybersecurity – Přehled doporučení a hrozeb (z přednášky / školení)</title></head>
+<body>
+<h1>🛡️ Cybersecurity – Přehled doporučení a hrozeb</h1>
+<h2>📡 Domácí síť a routery</h2>
+<ul>
+<li><strong>Uzamknout přístup ke správě routeru přes Wi-Fi</strong></li>
+<li>Vypni vzdálenou správu (remote admin)</li>
+<li>Používej kabel pro správu nebo whitelist IP adres</li>
+<li>
+<p>Změň výchozí hesla a přihlašovací jméno</p>
+</li>
+<li>
+<p><strong>Použít silné a složité heslo k Wi-Fi AP</strong></p>
+</li>
+<li>Použij WPA3, případně WPA2 s dlouhou frází (alespoň 16 znaků)</li>
+<li>
+<p>Nepoužívej jméno nebo adresu v SSID</p>
+</li>
+<li>
+<p><strong>Mazat uložené Wi-Fi sítě</strong></p>
+</li>
+<li>Staré sítě mohou být zneužity (tzv. evil twin útoky)</li>
+<li>Např. přes <code>Settings &gt; Wi-Fi &gt; Known Networks</code> ve Windows</li>
+</ul>
+<hr />
+<h2>🔒 Přihlašování a ověřování</h2>
+<ul>
+<li><strong>Dvoufázové ověření (2FA) – např. Google Authenticator</strong></li>
+<li>Ověřovací aplikace generují časově omezené kódy (TOTP)</li>
+<li>Doporučené appky: <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2">Google Authenticator</a>, <a href="https://authy.com">Authy</a>, <a href="https://getaegis.app">Aegis</a></li>
+<li>
+<p>Nikdy neukládej záložní kódy nezabezpečeně</p>
+</li>
+<li>
+<p><strong>Používat dlouhou přístupovou frázi pro odemknutí správce hesel</strong></p>
+</li>
+<li>Délka je důležitější než složitost</li>
+<li>
+<p>Např.: <code>Můj_úžasný_správce_hesel_je_bezpečný_123!</code></p>
+</li>
+<li>
+<p><strong>Nepoužívat "Přihlásit se pomocí Google/Facebook"</strong></p>
+</li>
+<li>Centralizuje přístup → větší riziko kompromitace</li>
+<li>Nedostatek kontroly nad oprávněními</li>
+</ul>
+<hr />
+<h2>📲 Mobilní a osobní zařízení</h2>
+<ul>
+<li><strong>Herní elektroniku dětem nedarovat, ale půjčovat</strong></li>
+<li>Umožňuje zachovat rodičovskou kontrolu a pravidla</li>
+<li>
+<p>Pomáhá budovat digitální odpovědnost</p>
+</li>
+<li>
+<p><strong>Signal místo WhatsAppu</strong></p>
+</li>
+<li>Signal je open source a neukládá metadata (vhodnější pro soukromí)</li>
+<li>
+<p>Více o srovnání: <a href="https://www.eff.org/pages/secure-messaging-scorecard">Secure Messaging Comparison by EFF</a></p>
+</li>
+<li>
+<p><strong>Zabezpečující aplikace pro Android</strong></p>
+</li>
+<li>Např. <a href="https://www.bitdefender.com/solutions/mobile-security-android.html">Bitdefender Mobile Security</a></li>
+<li>Další: Norton, Kaspersky, Avast Mobile Security</li>
+</ul>
+<hr />
+<h2>🧠 Sociální inženýrství</h2>
+<ul>
+<li><strong>Typy útoků</strong>:</li>
+<li>Phishing (e-mail, SMS)</li>
+<li>Vishing (hlasové podvody)</li>
+<li>Baiting (návnady, např. flash disk na zemi)</li>
+<li>
+<p>Pretexting (vydávání se za autoritu)</p>
+</li>
+<li>
+<p><strong>Příklad: Flashdisk se může chovat jako klávesnice</strong></p>
+</li>
+<li>Útoky typu "Rubber Ducky"</li>
+<li>
+<p>Vloží skripty a zadá je jako by byly psané klávesnicí</p>
+</li>
+<li>
+<p><strong>Kabel k nabíječce může fungovat jako Wi-Fi AP</strong></p>
+</li>
+<li>Např. <strong>OMG Cable</strong> – upravený USB kabel s vestavěným čipem</li>
+<li>Viz <a href="https://mg.lol/blog/omg-cable/">https://mg.lol/blog/omg-cable/</a></li>
+</ul>
+<hr />
+<h2>🌐 Web, odkazy a prohlížeče</h2>
+<ul>
+<li><strong>Zkrácené odkazy – přidáním <code>+</code> zjistíš cílovou adresu</strong></li>
+<li>Např.: <code>bit.ly/xyz123+</code></li>
+<li>
+<p>Ověříš před kliknutím, kam vede</p>
+</li>
+<li>
+<p><strong>Mazat staré záložky bez kontroly obsahu</strong></p>
+</li>
+<li>
+<p>Doména může být prodána a vést na škodlivý obsah</p>
+</li>
+<li>
+<p><strong>Nepoužívat SSD pro zálohování – proč?</strong></p>
+</li>
+<li>SSD nemají garantovanou datovou retenci bez napájení</li>
+<li>HDD (3.5") a optická média jako <a href="https://www.verbatim.com/subcat/optical-media/m-disc/">M-DISC</a> jsou lepší na dlouhodobé uložení</li>
+</ul>
+<hr />
+<h2>🧯 Zálohování</h2>
+<ul>
+<li><strong>Používej zálohovací strategii 3-2-1</strong></li>
+<li>3 kopie dat</li>
+<li>2 různá média</li>
+<li>
+<p>1 mimo pracovní prostor (např. externí disk mimo domov)</p>
+</li>
+<li>
+<p><strong>Zálohy nešifrovat (v některých scénářích)</strong></p>
+</li>
+<li>
+<p>U důležitých záloh může být výhodnější čitelnost bez softwaru</p>
+</li>
+<li>
+<p><strong>Zálohovat na 3,5" HDD nebo M-DISC</strong></p>
+</li>
+<li>Nejodolnější média pro archivní uložení</li>
+<li>M-DISC garantuje uchování dat až 1 000 let (dle výrobce)</li>
+</ul>
+<hr />
+<h2>💻 Práce s počítačem</h2>
+<ul>
+<li><strong>Zaheslování pracovní stanice s Linuxem</strong></li>
+<li>Použij LUKS pro šifrování disku + heslo k systému</li>
+<li>
+<p>Heslo uložit do zalepené obálky v trezoru</p>
+</li>
+<li>
+<p><strong>U malých zařízení (např. Raspberry Pi)</strong>:</p>
+</li>
+<li>Vymazat historii prohlížeče a uložená hesla</li>
+<li>V prohlížeči (např. Firefox, Chromium) nastav:<ul>
+<li>Nepamatovat historii (<code>Nastavení &gt; Soukromí &gt; Nepamatovat si historii</code>)</li>
+<li>Zakázat ukládání hesel</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2>🔐 Ochrana osobních údajů</h2>
+<ul>
+<li><strong>Neukládat platební karty v e-shopu</strong></li>
+<li>Při úniku dat může být zneužita</li>
+<li>
+<p>Případně používat virtuální kartu (např. Revolut, Apple Pay)</p>
+</li>
+<li>
+<p><strong>Nechlubit se nastavením zabezpečení</strong></p>
+</li>
+<li>Můžeš se stát cílem (např. motivace útočníků)</li>
+<li>
+<p>Platí zásada: „bezpečnost je jako cibule – vrstvy a diskrétnost“</p>
+</li>
+<li>
+<p><strong>Zveřejňování přes messengery = veřejná komunikace</strong></p>
+</li>
+<li>Data mohou být uchovávána, analyzována nebo zneužita</li>
+<li>Věř pouze end-to-end šifrovaným aplikacím (např. Signal)</li>
+<li>Citace: „Anything you send online can be made public – assume it will.“</li>
+</ul>
+<hr />
+<h2>📚 Citace a odkazy</h2>
+<ul>
+<li><a href="https://www.eff.org/pages/secure-messaging-scorecard">EFF Secure Messaging Guide</a></li>
+<li><a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2">Google Authenticator</a></li>
+<li><a href="https://mg.lol/blog/omg-cable/">OMG Cable – Wi-Fi útoky přes kabel</a></li>
+<li><a href="https://www.bitdefender.com/solutions/mobile-security-android.html">Bitdefender Mobile Security</a></li>
+<li><a href="https://www.verbatim.com/subcat/optical-media/m-disc/">M-DISC archivní média</a></li>
+</ul>
+<hr />
+<p><em>Autor poznámek: školení Cybersecurity – přeformátováno a doplněno AI.</em></p>
+<p><a href="../index.html">← Zpět na přehled</a></p>
+</body>
+</html>

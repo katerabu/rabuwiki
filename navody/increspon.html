@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Incident Response (reakce na bezpečnostní incidenty)</title></head>
+<body>
+<h2>🧯 Incident Response (reakce na bezpečnostní incidenty)</h2>
+<h3>🧭 Co je Incident Response?</h3>
+<p>Incident Response (IR) je strukturovaný a systematický proces, který organizace používá k <strong>identifikaci, analýze a řešení bezpečnostních incidentů</strong>. Cílem je minimalizovat škody, obnovit normální provoz a zabránit opakování incidentů.</p>
+<blockquote>
+<p>„Preparation and timely response are critical to reduce the impact of cybersecurity incidents.“<br />
+– NIST SP 800-61 Revision 2 (2012)</p>
+</blockquote>
+<hr />
+<h3>📋 Fáze Incident Response podle NIST</h3>
+<pre><code>+-------------------+
+| 1. Preparation    |
++-------------------+
+         ↓
++-------------------+
+| 2. Detection &amp;    |
+|    Analysis       |
++-------------------+
+         ↓
++-------------------+
+| 3. Containment,   |
+|    Eradication &amp;  |
+|    Recovery       |
++-------------------+
+         ↓
++-------------------+
+| 4. Post-Incident  |
+|    Activity       |
++-------------------+
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Fáze</th>
+<th>Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Preparation</strong></td>
+<td>Školení týmů, definice nástrojů a postupů, prevence</td>
+</tr>
+<tr>
+<td><strong>Detection &amp; Analysis</strong></td>
+<td>Identifikace incidentu, určení rozsahu a dopadů</td>
+</tr>
+<tr>
+<td><strong>Containment, Eradication &amp; Recovery</strong></td>
+<td>Zastavení šíření, odstranění příčiny, obnova systémů</td>
+</tr>
+<tr>
+<td><strong>Post-Incident Activity</strong></td>
+<td>Vyhodnocení incidentu, dokumentace, zlepšení procesů</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>🔥 Typy bezpečnostních incidentů</h3>
+<ul>
+<li>Malware a ransomware útoky  </li>
+<li>Neoprávněný přístup (průnik)  </li>
+<li>Únik citlivých dat (data breach)  </li>
+<li>Phishingové a sociálně-inženýrské útoky  </li>
+<li>DDoS útoky  </li>
+<li>Fyzická kompromitace zařízení  </li>
+</ul>
+<hr />
+<h3>🛠️ Klíčové nástroje a technologie pro Incident Response</h3>
+<table>
+<thead>
+<tr>
+<th>Nástroj</th>
+<th>Účel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SIEM (Security Information and Event Management)</td>
+<td>Centralizovaná detekce a korelace událostí</td>
+</tr>
+<tr>
+<td>EDR (Endpoint Detection and Response)</td>
+<td>Analýza a reakce na koncových bodech</td>
+</tr>
+<tr>
+<td>Forenzní nástroje (FTK, EnCase)</td>
+<td>Sběr a analýza digitálních důkazů</td>
+</tr>
+<tr>
+<td>Sandbox nástroje (Cuckoo Sandbox)</td>
+<td>Izolace a analýza malware</td>
+</tr>
+<tr>
+<td>Komunikační kanály (ticketing, Slack, email)</td>
+<td>Koordinace týmu a evidence incidentů</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>🔐 Incident Response pro mobilní flotilu</h3>
+<p>Mobilní zařízení představují specifické výzvy v oblasti IR díky jejich mobilitě, heterogenním platformám a často BYOD (Bring Your Own Device) scénářům.</p>
+<h4>Klíčové body pro Incident Response mobilních zařízení:</h4>
+<ul>
+<li><strong>Detekce kompromitace:</strong> Monitoring root/jailbreak, neobvyklé chování aplikací a změny konfigurace.  </li>
+<li><strong>Dálkové zabezpečení:</strong> Možnost rychlého dálkového uzamčení nebo smazání zařízení pomocí MDM nástrojů.  </li>
+<li><strong>Forenzní zachování dat:</strong> Zajištění integrity dat a logů pro pozdější analýzu.  </li>
+<li><strong>Oddělení dat:</strong> Jasné rozdělení firemních a osobních dat (sandboxing/profilování).  </li>
+<li><strong>Reakce na phishing a malware:</strong> Aktivní vzdělávání uživatelů a rychlá blokace škodlivých aplikací.  </li>
+</ul>
+<hr />
+<h3>🔄 Příklad procesu Incident Response pro mobilní zařízení</h3>
+<pre><code>+----------------------------+
+| Detekce incidentu (MDM/UEM) |
++-------------+--------------+
+              ↓
++-------------+--------------+
+| Izolace zařízení (remote lock/wipe) |
++-------------+--------------+
+              ↓
++-------------+--------------+
+| Forenzní sběr a analýza dat  |
++-------------+--------------+
+              ↓
++-------------+--------------+
+| Obnova a náprava            |
++-------------+--------------+
+              ↓
++-------------+--------------+
+| Vyhodnocení a zlepšení procesů |
++----------------------------+
+</code></pre>
+<hr />
+<h3>📝 Doporučení pro efektivní Incident Response</h3>
+<table>
+<thead>
+<tr>
+<th>Doporučení</th>
+<th>Důvod</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅ Vypracovat a pravidelně testovat IR plán</td>
+<td>Připravenost na různé typy incidentů</td>
+</tr>
+<tr>
+<td>✅ Pravidelně školit zaměstnance</td>
+<td>Prevence a rychlá reakce na sociální inženýrství</td>
+</tr>
+<tr>
+<td>✅ Používat monitoring a SIEM/EDR</td>
+<td>Včasná detekce a rychlá reakce</td>
+</tr>
+<tr>
+<td>✅ Zálohovat data a používat šifrování</td>
+<td>Rychlá obnova a ochrana integrity dat</td>
+</tr>
+<tr>
+<td>✅ Definovat jasné role a odpovědnosti</td>
+<td>Efektivní koordinace týmu při incidentu</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>📚 Důležité standardy a doporučení</h3>
+<ul>
+<li><strong>NIST SP 800-61 Revision 2 (2012)</strong> – <em>Computer Security Incident Handling Guide</em><br />
+<a href="https://doi.org/10.6028/NIST.SP.800-61r2">🔗 https://doi.org/10.6028/NIST.SP.800-61r2</a>  </li>
+<li><strong>ISO/IEC 27035:2016</strong> – <em>Information security incident management</em><br />
+<a href="https://www.iso.org/standard/60803.html">🔗 https://www.iso.org/standard/60803.html</a>  </li>
+<li><strong>SANS Incident Handler’s Handbook</strong><br />
+<a href="https://www.sans.org/reading-room/whitepapers/incident/incident-handlers-handbook-33901">🔗 https://www.sans.org/reading-room/whitepapers/incident/incident-handlers-handbook-33901</a></li>
+</ul>
+<hr />
+<h3>📚 Citace (Harvard)</h3>
+<ul>
+<li>NIST (2012). <em>SP 800-61 Revision 2 – Computer Security Incident Handling Guide</em>.  </li>
+<li>ISO (2016). <em>ISO/IEC 27035:2016 – Information security incident management</em>.  </li>
+<li>SANS Institute (2020). <em>Incident Handler’s Handbook</em>. Available at: https://www.sans.org/reading-room/whitepapers/incident/incident-handlers-handbook-33901  </li>
+<li>Gartner (2023). <em>Magic Quadrant for Security Information and Event Management</em>.  </li>
+</ul>
+<p><a href="../index.html">← Zpět na přehled</a></p>
+</body>
+</html>

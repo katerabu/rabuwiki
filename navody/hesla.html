@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Hesla a autentizace</title></head>
+<body>
+<h2>🔐 Hesla a autentizace</h2>
+<h3>🧠 Základní principy</h3>
+<p>Autentizace je proces ověření identity uživatele. V běžné praxi jde o kombinaci něčeho, co <strong>znáš</strong> (heslo), <strong>máš</strong> (telefon, token) nebo <strong>jsi</strong> (biometrie).</p>
+<p>Heslo je nejčastější, ale zároveň nejslabší metoda. Špatně vytvořené nebo opakovaně použité heslo bývá nejsnazším cílem útoků jako jsou:</p>
+<ul>
+<li>Slovníkový útok (<em>dictionary attack</em>)</li>
+<li>Hrubá síla (<em>brute-force</em>)</li>
+<li>Phishing</li>
+<li>Úniky z databází třetích stran</li>
+</ul>
+<hr />
+<h3>📋 Doporučené zásady pro hesla</h3>
+<table>
+<thead>
+<tr>
+<th>Doporučení</th>
+<th>Poznámka</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅ Používej <strong>dlouhé heslové fráze</strong></td>
+<td>min. 16+ znaků, např. "mokrá‑židle‑tráva‑kostka"</td>
+</tr>
+<tr>
+<td>✅ Nepoužívej stejné heslo vícekrát</td>
+<td>Unikátní pro každý účet</td>
+</tr>
+<tr>
+<td>✅ Nepamatuj si je – <strong>používej správce hesel</strong></td>
+<td>Viz níže</td>
+</tr>
+<tr>
+<td>✅ Zapni <strong>dvoufázové ověření (MFA)</strong></td>
+<td>Např. TOTP, U2F, push notifikace</td>
+</tr>
+<tr>
+<td>❌ Nepoužívej jména, data narození, qwerty, 123456</td>
+<td>Snadno uhodnutelné</td>
+</tr>
+<tr>
+<td>❌ Nepřihlašuj se pomocí „Sign in with Google / FB“</td>
+<td>Může narušit oddělení identit</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>🔑 Správci hesel (password managers)</h3>
+<table>
+<thead>
+<tr>
+<th>Nástroj</th>
+<th>Typ</th>
+<th>Poznámka</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Bitwarden</strong></td>
+<td>Open-source, cloud / self-hosted</td>
+<td>End-to-end šifrování</td>
+</tr>
+<tr>
+<td><strong>KeePassXC</strong></td>
+<td>Offline</td>
+<td>Ukládá do .kdbx, ideální pro paranoidní uživatele</td>
+</tr>
+<tr>
+<td><strong>1Password</strong></td>
+<td>Komerční</td>
+<td>Silná MFA, integrace s firmami</td>
+</tr>
+<tr>
+<td><strong>Pass (Linux)</strong></td>
+<td>CLI-based</td>
+<td>GPG šifrování, Unix-friendly</td>
+</tr>
+</tbody>
+</table>
+<p>📌 Hlavní heslo správce: použij <strong>dlouhou unikátní frázi</strong>, např. 6–8 náhodných slov</p>
+<hr />
+<h3>🛡️ Dvoufaktorová autentizace (2FA/MFA)</h3>
+<pre><code>    +-----------------------------+
+    |     MFA – 3 faktory        |
+    +-----------------------------+
+    | 1. Něco, co ZNÁŠ            |
+    |    (heslo, PIN)             |
+    | 2. Něco, co MÁŠ             |
+    |    (telefon, token, YubiKey)|
+    | 3. Něco, čím JSI            |
+    |    (otisk, obličej)         |
+    +-----------------------------+
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Typ MFA</th>
+<th>Příklady</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>TOTP (časové kódy)</strong></td>
+<td>Google Authenticator, Authy, Aegis</td>
+</tr>
+<tr>
+<td><strong>Push notifikace</strong></td>
+<td>Duo, Okta, Microsoft Authenticator</td>
+</tr>
+<tr>
+<td><strong>Fyzické klíče</strong></td>
+<td>YubiKey, SoloKey (FIDO2 / U2F)</td>
+</tr>
+<tr>
+<td><strong>Biometrie</strong></td>
+<td>Otisk, Face ID, Windows Hello</td>
+</tr>
+</tbody>
+</table>
+<p>📌 Nejbezpečnější: <strong>fyzický bezpečnostní klíč</strong> (FIDO2) + silné heslo</p>
+<hr />
+<h3>🔍 Jak funguje ověřovací aplikace (např. TOTP)</h3>
+<ol>
+<li>Při aktivaci MFA se vygeneruje sdílený tajný klíč (QR kód).</li>
+<li>Ten je uložen v aplikaci (např. Aegis).</li>
+<li>Algoritmus HMAC s časovým razítkem generuje každých 30 sekund nové číslo.</li>
+<li>Server ověří, zda kód odpovídá očekávanému časovému oknu.</li>
+</ol>
+<p>Standard: <strong>RFC 6238</strong> (TOTP) a <strong>RFC 4226</strong> (HOTP)<br />
+Ověřitelné např. open-source knihovnou: <a href="https://pyauth.github.io/pyotp/">pyotp</a></p>
+<hr />
+<h3>🧰 Nástroje pro testování hesel</h3>
+<ul>
+<li><strong>Have I Been Pwned</strong> – zjistí, zda se heslo objevilo v úniku: https://haveibeenpwned.com  </li>
+<li><strong>Zxcvbn</strong> – knihovna pro měření síly hesla od Dropboxu  </li>
+<li><strong>CrackStation</strong> – seznam běžně cracknutelných hesel: https://crackstation.net  </li>
+</ul>
+<hr />
+<h3>📚 Citace (Harvard)</h3>
+<ul>
+<li>Vacca, J.R. (2020). <em>Computer and Information Security Handbook</em>. 3rd ed. Elsevier.  </li>
+<li>NIST (2020). <em>SP 800-63B: Digital Identity Guidelines</em>. Available at: https://pages.nist.gov/800-63-3/sp800-63b.html  </li>
+<li>Hunt, T. (2024). <em>Have I Been Pwned?</em>. Available at: https://haveibeenpwned.com  </li>
+<li>Dropbox (2021). <em>Zxcvbn: realistic password strength estimator</em>. GitHub repo: https://github.com/dropbox/zxcvbn  </li>
+<li>RFC 6238: <em>TOTP – Time-Based One-Time Password Algorithm</em>. IETF.  </li>
+</ul>
+<p><a href="../index.html">← Zpět na přehled</a></p>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Zálohování a obnova dat (Backup & Recovery)</title></head>
+<body>
+<h2>💾 Zálohování a obnova dat (Backup &amp; Recovery)</h2>
+<h3>📘 Co je zálohování?</h3>
+<p>Zálohování je proces kopírování dat do jiného umístění za účelem jejich obnovy v případě ztráty, poškození nebo kybernetického útoku (např. ransomware).</p>
+<blockquote>
+<p>„There are two kinds of people: those who back up, and those who have never lost all their data yet.“<br />
+– Phil Karlton (cit. v Vacca, 2020)</p>
+</blockquote>
+<hr />
+<h3>🔁 Základní strategie: Pravidlo 3–2–1</h3>
+<pre><code>        +-----------------------------+
+        |         PRAVIDLO 3–2–1     |
+        +-----------------------------+
+        | 3 kopie dat                 |
+        | 2 různá média               |
+        | 1 kopie off-site (mimo firmu) |
+        +-----------------------------+
+</code></pre>
+<ul>
+<li><strong>3 kopie</strong>: originál + 2 záložní kopie  </li>
+<li><strong>2 různá média</strong>: např. disk + páska, nebo NAS + cloud  </li>
+<li><strong>1 mimo lokalitu</strong>: pro případ požáru, krádeže, ransomwaru  </li>
+</ul>
+<p>📌 Doplněk: Pravidlo <strong>3–2–1–1–0</strong><br />
+- +1 offline (air-gap)<br />
+- +0 chyb ve verifikaci (test obnovy)  </p>
+<p>Zdroj: Veeam (2023), NIST (2021)</p>
+<hr />
+<h3>🗂️ Typy záloh</h3>
+<table>
+<thead>
+<tr>
+<th>Typ</th>
+<th>Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Full</strong></td>
+<td>Celá kopie dat; pomalé, velké</td>
+</tr>
+<tr>
+<td><strong>Incremental</strong></td>
+<td>Jen změny od poslední zálohy</td>
+</tr>
+<tr>
+<td><strong>Differential</strong></td>
+<td>Vše změněné od poslední <strong>plné</strong> zálohy</td>
+</tr>
+</tbody>
+</table>
+<p>📌 Doporučeno: denní <strong>inkrementální</strong>, týdenní <strong>plná</strong></p>
+<hr />
+<h3>🗃️ Typy úložišť</h3>
+<table>
+<thead>
+<tr>
+<th>Úložiště</th>
+<th>Výhody / Nevýhody</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Externí HDD</strong></td>
+<td>Dostupné, ale méně spolehlivé pro dlouhodobou archivaci</td>
+</tr>
+<tr>
+<td><strong>3,5" disky</strong></td>
+<td>Vyšší odolnost, vhodné pro studené zálohy</td>
+</tr>
+<tr>
+<td><strong>NAS</strong></td>
+<td>Centralizované, podporuje verze</td>
+</tr>
+<tr>
+<td><strong>Cloud</strong></td>
+<td>Rychlý přístup, ale dražší při obnově</td>
+</tr>
+<tr>
+<td><strong>Magnetická páska</strong></td>
+<td>Odolnost &gt;30 let, vhodné pro offline</td>
+</tr>
+</tbody>
+</table>
+<p>📌 SSD <strong>není vhodné</strong> pro dlouhodobé zálohování kvůli degradaci buněk při nečinnosti<br />
+Zdroj: Backblaze (2023), CSIS (2022)</p>
+<hr />
+<h3>🔒 Bezpečnost záloh</h3>
+<ul>
+<li><strong>Zálohy by měly být chráněny stejně jako produkční data</strong></li>
+<li>Šifrování AES-256 (při přenosu i v klidu)</li>
+<li>MFA pro přístup k cloudovým zálohám</li>
+<li>
+<p>Fyzická ochrana offline médií (trezor, sejf)</p>
+</li>
+<li>
+<p><strong>Testování obnovy</strong> alespoň čtvrtletně (disaster recovery drill)</p>
+</li>
+</ul>
+<p>📌 Nepodléhej falešnému pocitu bezpečí – záloha je k ničemu, pokud nejde obnovit<br />
+Zdroj: SANS Institute (2022)</p>
+<hr />
+<h3>🧰 Doporučené nástroje</h3>
+<table>
+<thead>
+<tr>
+<th>Nástroj</th>
+<th>Platforma</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Veeam</strong></td>
+<td>Windows, Linux, VMware</td>
+</tr>
+<tr>
+<td><strong>Restic</strong></td>
+<td>Open source CLI, šifrování by default</td>
+</tr>
+<tr>
+<td><strong>BorgBackup</strong></td>
+<td>Deduplication, Linux-friendly</td>
+</tr>
+<tr>
+<td><strong>Duplicati</strong></td>
+<td>GUI, šifrování, pro domácí použití</td>
+</tr>
+<tr>
+<td><strong>Timeshift</strong></td>
+<td>Snapshoty systému (Linux)</td>
+</tr>
+<tr>
+<td><strong>Rsync + Cron</strong></td>
+<td>Vlastní skripty pro pokročilé</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>🧭 ASCII diagram – Zálohovací topologie</h3>
+<pre><code>    +-------------+
+    |  Produkční  |
+    |    server   |
+    +------+------+
+           |
+        (Backup job)
+           ↓
+    +------+------+
+    |  Lokální    |  &lt;--- první kopie (např. NAS)
+    |  záloha     |
+    +------+------+
+           |
+        (Sync/Push)
+           ↓
+    +------+------+
+    |  Off-site    |  &lt;--- druhá kopie (cloud, offline disk, páska)
+    |  záloha      |
+    +-------------+
+</code></pre>
+<hr />
+<h3>📚 Citace a zdroje (Harvard)</h3>
+<ul>
+<li>Vacca, J.R. (2020). <em>Computer and Information Security Handbook</em>. 3rd ed. Elsevier.</li>
+<li>Veeam (2023). <em>What Is the 3-2-1 Backup Rule?</em> [online] Available at: https://www.veeam.com/blog/3-2-1-rule.html</li>
+<li>NIST (2021). <em>SP 800-209 – Security Guidelines for Storage Infrastructure</em></li>
+<li>Backblaze (2023). <em>SSD vs HDD reliability</em>. Available at: https://www.backblaze.com/blog/how-long-do-ssds-last/</li>
+<li>SANS Institute (2022). <em>Backup and Restore Strategies</em>. https://www.sans.org/white-papers/backup-strategies/</li>
+</ul>
+<p><a href="../index.html">← Zpět na přehled</a></p>
+</body>
+</html>

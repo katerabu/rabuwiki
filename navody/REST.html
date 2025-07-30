@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Přehled REST API – jednoduchý průvodce</title></head>
+<body>
+<h1>🧭 Přehled REST API – jednoduchý průvodce</h1>
+<h2>🌐 Co je REST API?</h2>
+<p>REST (Representational State Transfer) je architektonický styl API, který definuje, jak komunikovat mezi klientem a serverem přes internet. REST se zaměřuje na <strong>práci se zdroji (resources)</strong> pomocí standardních HTTP metod a podporuje:<br />
+- 🌀 bezstavovost<br />
+- ⚙️ škálovatelnost<br />
+- 🔄 snadnou rozšiřitelnost  </p>
+<p>Na rozdíl od SOAP nebo RPC neorientuje komunikaci na volání funkcí, ale na práci s daty.
+Pro REST pravděpodobně nenajdeme žádnou normu, ale vřele se doporučuje níže uvedené dodržovat.</p>
+<h2>🏗️ Úrovně REST API (Richardsonova škála)</h2>
+<h3>0️⃣ Nultá úroveň – Přenos dat</h3>
+<ul>
+<li>Přenos dat bez jasně definovaného API.  </li>
+<li>REST není limitován pouze HTTP, ale dnes je HTTP dominantní protokol díky dostupnosti a vlastnostem.</li>
+</ul>
+<h3>1️⃣ První úroveň – Zdroje (Resources)</h3>
+<ul>
+<li>Každý zdroj má unikátní URL.  </li>
+<li>Příklad:  </li>
+<li><code>GET /articles</code> – seznam článků  </li>
+<li><code>GET /articles/1/comments</code> – komentáře ke článku s ID 1  </li>
+<li>Důležité je konzistentní pojmenování (např. množné číslo).</li>
+</ul>
+<h3>2️⃣ Druhá úroveň – HTTP metody (Verbs)</h3>
+<ul>
+<li>Akce se vyjadřují pomocí HTTP metod, nikoli v URL.  </li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>🔹 Metoda</th>
+<th>🎯 Účel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td>Načtení dat</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>Vytvoření nového zdroje</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td>Kompletní aktualizace zdroje</td>
+</tr>
+<tr>
+<td>PATCH</td>
+<td>Částečná aktualizace</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>Smazání zdroje</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>PATCH snižuje datový tok, přenáší jen změněná data.</li>
+</ul>
+<h3>3️⃣ Třetí úroveň – Stavové kódy HTTP</h3>
+<ul>
+<li>Informují o výsledku požadavku. Nejčastější:  </li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>🏷️ Kód</th>
+<th>Význam</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>OK – požadavek úspěšný</td>
+</tr>
+<tr>
+<td>201</td>
+<td>Created – nový zdroj vytvořen</td>
+</tr>
+<tr>
+<td>204</td>
+<td>No Content – bez obsahu</td>
+</tr>
+<tr>
+<td>400</td>
+<td>Bad Request – špatný požadavek</td>
+</tr>
+<tr>
+<td>401</td>
+<td>Unauthorized – neautorizovaný</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Forbidden – přístup zakázán</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Not Found – zdroj nenalezen</td>
+</tr>
+<tr>
+<td>405</td>
+<td>Method Not Allowed – metoda nepovolená</td>
+</tr>
+<tr>
+<td>415</td>
+<td>Unsupported Media Type – nepodporovaný formát</td>
+</tr>
+<tr>
+<td>429</td>
+<td>Too Many Requests – překročen limit požadavků</td>
+</tr>
+</tbody>
+</table>
+<h3>4️⃣ Čtvrtá úroveň – Bezstavovost</h3>
+<ul>
+<li>Server nesmí uchovávat stav klienta mezi požadavky.  </li>
+<li>Každý požadavek musí obsahovat potřebná ověřovací data (např. token).</li>
+</ul>
+<h3>5️⃣ Pátá úroveň – HATEOAS (Hypermedia as the Engine of Application State)</h3>
+<ul>
+<li>Server ve své odpovědi poskytuje klientovi <strong>odkazy na další akce a zdroje</strong>.  </li>
+<li>Klient zná pouze základní URL a dále „kliká“ na odkazy, které API vrací.  </li>
+<li>Výhody:  </li>
+<li>URL se mohou měnit bez nutnosti měnit klienta  </li>
+<li>Snadná rozšiřitelnost  </li>
+<li>V praxi zatím méně rozšířené kvůli složitosti a nedostatku nástrojů.</li>
+</ul>
+<h2>🛠️ Praktické tipy pro implementaci REST API</h2>
+<h3>💨 Komprese a formáty</h3>
+<ul>
+<li>Používejte <strong>GZIP</strong> pro snížení objemu dat až o 80 %.  </li>
+<li>Preferujte <strong>JSON</strong> jako hlavní formát, ale podporujte i XML či jiné dle hlavičky <code>Content-Type</code>.  </li>
+<li>Možné detekce formátu i přes URL přípony (<code>.json</code>, <code>.xml</code>), ale hlavička je čistší řešení.</li>
+</ul>
+<h3>🗃️ Cacheování</h3>
+<ul>
+<li>Využívejte HTTP hlavičky <strong>ETag</strong> a <strong>Last-Modified</strong> pro efektivní cache (snížení zátěže serveru).</li>
+</ul>
+<h3>🔗 URL design a relace</h3>
+<ul>
+<li>Intuitivní URL s jasnou hierarchií, např.:  </li>
+<li><code>GET /articles/1/comments</code> – komentáře ke článku 1  </li>
+<li><code>DELETE /articles/1/comments/5</code> – smaže komentář 5 u článku 1  </li>
+</ul>
+<h3>📄 Stránkování</h3>
+<ul>
+<li>Používejte HTTP hlavičku <strong>Link</strong> pro navigaci mezi stránkami a <strong>X-Total-Count</strong> pro počet všech položek.</li>
+</ul>
+<h3>🔤 Styl pojmenování polí</h3>
+<ul>
+<li>Používejte jednotný styl (snake_case, camelCase či PascalCase).</li>
+<li><code>snake_case</code> (lépe čitelný)  </li>
+<li><code>camelCase</code> (přirozenější pro JavaScript) </li>
+<li>Umožněte klientům volbu, pokud to vaše API podporuje (Fielding, 2000).</li>
+</ul>
+<h2>Praktické ukázky HTTP požadavků</h2>
+<h3>Načtení seznamu článků</h3>
+<p>GET /articles HTTP/1.1<br />
+Host: example.com<br />
+Accept: application/json<br />
+Authorization: Bearer <token></p>
+<h3>Vytvoření nového článku</h3>
+<p>POST /articles HTTP/1.1<br />
+Host: example.com<br />
+Content-Type: application/json<br />
+Authorization: Bearer <token>  </p>
+<p>{<br />
+  "title": "Nový článek",<br />
+  "content": "Obsah článku..."<br />
+}</p>
+<h3>Aktualizace existujícího článku (kompletní)</h3>
+<p>PUT /articles/1 HTTP/1.1<br />
+Host: example.com<br />
+Content-Type: application/json<br />
+Authorization: Bearer <token>  </p>
+<p>{<br />
+  "title": "Aktualizovaný titul",<br />
+  "content": "Aktualizovaný obsah..."<br />
+}</p>
+<h3>Částečná aktualizace článku</h3>
+<p>PATCH /articles/1 HTTP/1.1<br />
+Host: example.com<br />
+Content-Type: application/json<br />
+Authorization: Bearer <token>  </p>
+<p>{<br />
+  "title": "Částečně aktualizovaný titul"<br />
+}</p>
+<h3>Smazání článku</h3>
+<p>DELETE /articles/1 HTTP/1.1<br />
+Host: example.com<br />
+Authorization: Bearer <token></p>
+<h2>Vývoj a testování REST API</h2>
+<ul>
+<li>Apiary.io – návrh a mockování API (https://apiary.io).  </li>
+<li>cURL – příkazový nástroj pro testování HTTP požadavků, např.<br />
+  curl -X GET https://example.com/articles -H "Authorization: Bearer <token>"  </li>
+<li>Postman – uživatelsky přívětivý nástroj pro testování a dokumentaci API (https://www.postman.com).</li>
+</ul>
+<h2>Známé technologie používající REST API</h2>
+<ul>
+<li>CouchDB – NoSQL databáze přístupná přes REST (https://couchdb.apache.org).  </li>
+<li>ElasticSearch – fulltextový vyhledávač s REST rozhraním (https://www.elastic.co/elasticsearch).</li>
+</ul>
+<h2>Závěr</h2>
+<p>REST API je efektivní a standardizovaný způsob, jak zpřístupnit data a funkce přes internet. 
+Díky:
+🔄 bezstavovosti
+📡 standardním HTTP metodám
+🌍 široké podpoře
+je REST vhodný pro webové, mobilní i další aplikace.</p>
+<h2>📚 Literatura a odkazy</h2>
+<p>Fielding, R.T. (2000). Architectural Styles and the Design of Network-based Software Architectures [online]. [cit. 2025-07-29]. Dostupné z: https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm<br />
+Hanák, D. (2025). Stopařův průvodce REST API. ITnetwork.cz [online]. [cit. 2025-07-29]. Dostupné z: https://www.itnetwork.cz/programovani/nezarazene/stoparuv-pruvodce-rest-api<br />
+Apiary.io. (n.d.). API design platform. Dostupné z: https://apiary.io<br />
+Postman. (n.d.). API Development Environment. Dostupné z: https://www.postman.com<br />
+Apache CouchDB. (n.d.). The CouchDB Project. Dostupné z: https://couchdb.apache.org<br />
+Elastic. (n.d.). Elasticsearch. Dostupné z: https://www.elastic.co/elasticsearch</p>
+<p><em>Text je upravený a doplněný na základě původního článku Drahomíra Hanáka pro potřeby této wiki.</em></p>
+<p><a href="../index.html">← Zpět na přehled</a></p>
+</body>
+</html>

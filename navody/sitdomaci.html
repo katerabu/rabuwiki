@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Domácí síť – firewall, segmentace, DNS ochrana</title></head>
+<body>
+<h2>🏠 Domácí síť – firewall, segmentace, DNS ochrana</h2>
+<p>Domácí síť je často nejzranitelnějším místem v zabezpečení IT prostředí, zejména pokud je připojena k internetu a obsahuje více zařízení. Správné nastavení firewallu, segmentace sítě a DNS ochrana výrazně zvyšují bezpečnost.</p>
+<hr />
+<h3>🔥 Firewall v domácí síti</h3>
+<ul>
+<li><strong>Co je firewall?</strong><br />
+  Firewall je zařízení nebo software, které kontroluje příchozí a odchozí síťový provoz podle bezpečnostních pravidel (Carlson, 2022).  </li>
+<li><strong>Typy firewallů:</strong>  </li>
+<li><strong>Hardwarový firewall:</strong> Vestavěný do routeru nebo samostatné zařízení.  </li>
+<li><strong>Softwarový firewall:</strong> Na jednotlivých zařízeních (např. Windows Defender Firewall).  </li>
+<li><strong>Doporučení:</strong>  </li>
+<li>Aktivuj firewall v routeru i na všech koncových zařízeních.  </li>
+<li>Pravidelně aktualizuj firmware routeru pro opravy bezpečnostních chyb.  </li>
+<li>Blokuj nepotřebné porty a služby (např. UPnP, Telnet).  </li>
+</ul>
+<hr />
+<h3>🌐 Segmentace domácí sítě</h3>
+<ul>
+<li><strong>Co je segmentace?</strong><br />
+  Rozdělení sítě na menší izolované části, které spolu mají omezenou komunikaci (NIST, 2023).  </li>
+<li><strong>Výhody:</strong>  </li>
+<li>Omezení šíření malware a útoků mezi zařízeními.  </li>
+<li>Zvýšení kontroly a sledovatelnosti provozu.  </li>
+<li><strong>Praktická implementace:</strong>  </li>
+<li>Vytvoř samostatnou VLAN nebo Wi-Fi síť pro IoT zařízení (chytré žárovky, kamery apod.).  </li>
+<li>Pro rodinné počítače a telefony použij jinou VLAN nebo SSID s odlišným heslem.  </li>
+<li>Routery s podporou více SSID a VLAN toto umožňují (např. Ubiquiti, MikroTik, Asus).  </li>
+</ul>
+<hr />
+<h3>🛡️ DNS ochrana</h3>
+<ul>
+<li><strong>Úloha DNS:</strong><br />
+  DNS (Domain Name System) převádí domény na IP adresy, klíčová služba pro přístup na internet.  </li>
+<li><strong>Rizika:</strong>  </li>
+<li>Útoky typu DNS spoofing nebo cache poisoning mohou směrovat na škodlivé stránky.  </li>
+<li><strong>Ochrana DNS:</strong>  </li>
+<li>Používej zabezpečené DNS služby s podporou DNS-over-HTTPS (DoH) nebo DNS-over-TLS (DoT).  </li>
+<li>Doporučené veřejné DNS servery:  <ul>
+<li>Cloudflare (1.1.1.1) – DoH/DoT podpora  </li>
+<li>Google DNS (8.8.8.8)  </li>
+<li>Quad9 (9.9.9.9) – filtrování škodlivých domén  </li>
+</ul>
+</li>
+<li>Konfiguruj router i zařízení na použití těchto DNS serverů.  </li>
+<li>Některé routery a zařízení umožňují nastavit rodičovskou kontrolu nebo blokování škodlivých domén (např. OpenDNS).</li>
+</ul>
+<hr />
+<h3>🛠️ Praktické tipy a konfigurace</h3>
+<ul>
+<li>Aktualizace firmware routeru: Pravidelně kontroluj a instaluj bezpečnostní aktualizace.  </li>
+<li>Změna výchozího hesla routeru: Použij silné a unikátní heslo.  </li>
+<li>Zakázání vzdálené správy (Remote Management): Zabraňuje přístupu k routeru z internetu.  </li>
+<li>Povolení WPA3 nebo WPA2 šifrování pro Wi-Fi: WPA3 je novější a bezpečnější (v závislosti na podpoře zařízení).  </li>
+<li>Vytvoření guest Wi-Fi sítě: Oddělená síť pro návštěvy bez přístupu k hlavní domácí síti.  </li>
+<li>Použití zařízení s podporou firewallu s pokročilými funkcemi: Například blokování útoků typu DoS, filtrování paketů.  </li>
+</ul>
+<hr />
+<h3>📊 ASCII diagram domácí sítě s segmentací a DNS ochranou</h3>
+<pre><code>         [Internet]
+             |
+        [Modem/ISP]
+             |
+         [Router]
+      /            \
+ [VLAN1]          [VLAN2]
+</code></pre>
+<p>(PC, notebook)  (IoT zařízení)
+      |                |
+  [Firewall]       [Firewall]
+      |                |
+  [Switch/Wi-Fi]   [Switch/Wi-Fi]</p>
+<p>DNS ochrana: Router používá DNS-over-HTTPS (DoH) s Cloudflare 1.1.1.1</p>
+<hr />
+<h3>📚 Citace (Harvard)</h3>
+<ul>
+<li>Carlson, M. (2022). <em>Network Firewalls Explained</em>. Cybersecurity Journal, 15(3), pp. 45-53.  </li>
+<li>NIST (2023). <em>Guide to Network Segmentation</em>. NIST Special Publication 800-125B. [online] Available at: https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-125b.pdf [Accessed 2025].  </li>
+<li>Cloudflare (2024). <em>What is DNS over HTTPS (DoH)?</em> [online] Available at: https://developers.cloudflare.com/1.1.1.1/dns-over-https/ [Accessed 2025].  </li>
+</ul>
+<hr />
+<h3>🔗 Doporučené zdroje a návody</h3>
+<ul>
+<li><a href="https://www.cisa.gov/news-events/news/securing-your-home-router">Router security best practices – CISA</a>  </li>
+<li><a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-125b.pdf">NIST Guide to Network Segmentation</a>  </li>
+<li><a href="https://1.1.1.1/">Cloudflare 1.1.1.1 DNS</a>  </li>
+<li><a href="https://www.opendns.com/setupguide/">OpenDNS FamilyShield</a> – rodičovská kontrola a blokování malwaru  </li>
+<li><a href="https://help.ui.com/hc/en-us/articles/204909754-UniFi-How-to-Create-a-VLAN">Ubiquiti UniFi VLAN Setup Guide</a>  </li>
+</ul>
+<hr />
+<p>Správné nastavení domácí sítě je základem bezpečné práce z domova i ochrany všech připojených zařízení. Segmentace a DNS ochrana pomáhají minimalizovat dopad potenciálních útoků a zvyšují kontrolu nad síťovým provozem.</p>
+<p><a href="../index.html">← Zpět na přehled</a></p>
+</body>
+</html>

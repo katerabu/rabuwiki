@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Sociální inženýrství (Social Engineering)</title></head>
+<body>
+<h2>🕵️‍♂️ Sociální inženýrství (Social Engineering)</h2>
+<h3>🤔 Co je sociální inženýrství?</h3>
+<p>Sociální inženýrství je technika manipulace s lidmi, jejímž cílem je získat důvěrné informace, přístup nebo způsobit určitou akci. Nezáleží na síle hesla, pokud útočník přesvědčí člověka, aby ho prozradil.</p>
+<blockquote>
+<p>“The weakest link in the security chain is the human.”<br />
+– Mitnick, K. (2002). <em>The Art of Deception</em></p>
+</blockquote>
+<hr />
+<h3>🧪 Typy útoků sociálního inženýrství</h3>
+<pre><code>    +-------------------------------+
+    |      Nejčastější techniky     |
+    +-------------------------------+
+    | 📧 Phishing                   |
+    | 📱 Vishing (hlasové volání)   |
+    | 💬 Smishing (SMS podvody)     |
+    | 🎣 Spear phishing             |
+    | 🎁 Pretexting (falešný scénář)|
+    | 📦 Baiting (nástražný flashdisk)|
+    | 🧍 Tailgating (vstup do budovy)|
+    +-------------------------------+
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Typ útoku</th>
+<th>Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Phishing</strong></td>
+<td>Podvodné e-maily imitující např. banku</td>
+</tr>
+<tr>
+<td><strong>Spear phishing</strong></td>
+<td>Cílený phishing na konkrétní osobu</td>
+</tr>
+<tr>
+<td><strong>Pretexting</strong></td>
+<td>Útočník si vymyslí důvěryhodný příběh</td>
+</tr>
+<tr>
+<td><strong>Baiting</strong></td>
+<td>Flashdisk „nalezený“ v okolí firmy</td>
+</tr>
+<tr>
+<td><strong>Vishing</strong></td>
+<td>Telefonát s cílem vylákat informace</td>
+</tr>
+<tr>
+<td><strong>Smishing</strong></td>
+<td>SMS s odkazem na škodlivý web</td>
+</tr>
+<tr>
+<td><strong>Tailgating</strong></td>
+<td>Neoprávněný vstup za oprávněnou osobou</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>🎭 Příklady z praxe</h3>
+<ul>
+<li>USB flashdisk vydávající se za <strong>klávesnici</strong> – po připojení simuluje zadávání příkazů (tzv. BadUSB)</li>
+<li>Nabíjecí kabel s integrovaným <strong>Wi-Fi čipem</strong> pro vzdálené ovládání zařízení</li>
+<li>Podvodný telefonát z „banky“, který tlačí na strach nebo čas</li>
+</ul>
+<p>📌 Lidé jsou zranitelní, když jsou pod tlakem: spěch, panika, autorita, zvědavost, pomoc</p>
+<hr />
+<h3>🧰 Ochrana proti sociálnímu inženýrství</h3>
+<table>
+<thead>
+<tr>
+<th>Opatření</th>
+<th>Doporučení</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🎓 Školení a osvěta</td>
+<td>Pravidelné simulace phishingu</td>
+</tr>
+<tr>
+<td>🧠 Kritické myšlení</td>
+<td>Nedůvěřuj nevyžádaným žádostem</td>
+</tr>
+<tr>
+<td>🛠️ MFA</td>
+<td>I při prozrazení hesla zabrání přístupu</td>
+</tr>
+<tr>
+<td>🔌 Nepřipojuj neznámá zařízení</td>
+<td>Flashdisk = vektor útoku</td>
+</tr>
+<tr>
+<td>👁️‍🗨️ Fyzická bezpečnost</td>
+<td>Vstupy do budov, hosté, zamčené PC</td>
+</tr>
+<tr>
+<td>🔒 Minimální oprávnění</td>
+<td>Princip „nejmenších práv“ (least privilege)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>🧭 ASCII schéma – Fáze útoku sociálního inženýrství</h3>
+<pre><code>        +------------------------+
+        |    1. Průzkum         |
+        |  (sběr informací)     |
+        +----------+------------+
+                   ↓
+        +----------+------------+
+        |   2. Navázání důvěry  |
+        | (např. přes LinkedIn) |
+        +----------+------------+
+                   ↓
+        +----------+------------+
+        |   3. Útok               |
+        | (např. phishing e-mail)|
+        +----------+------------+
+                   ↓
+        +----------+------------+
+        |   4. Získání přístupu |
+        | (heslo, přístup do sítě) |
+        +----------+------------+
+                   ↓
+        +----------+------------+
+        |   5. Únik dat / škoda |
+        +------------------------+
+</code></pre>
+<hr />
+<h3>📚 Citace a doporučená literatura</h3>
+<ul>
+<li>Mitnick, K.D. (2002). <em>The Art of Deception: Controlling the Human Element of Security</em>. Wiley.</li>
+<li>Hadnagy, C. (2021). <em>Human Hacking: Win Friends, Influence People, and Leave Them Better Off</em>. Harper Business.</li>
+<li>CISA (2022). <em>Social Engineering Tactics</em>. Available at: https://www.cisa.gov/news-events/news/protect-against-social-engineering  </li>
+<li>SANS Institute (2023). <em>Phishing Simulation Toolkit</em>. https://www.sans.org/security-awareness-training/phishing/</li>
+<li>CERT-EU (2024). <em>Threat Landscape Report – Human Exploitation Techniques</em>. https://cert.europa.eu</li>
+</ul>
+<hr />
+<h3>🛑 Pamatuj: Největší zbraní útočníka je tvoje důvěra.</h3>
+<p>Pokud něco vypadá podezřele, zeptej se.<br />
+Pokud někdo spěchá, zdrž ho.<br />
+Pokud máš pochybnosti, <strong>neklikej</strong>.</p>
+<p><a href="../index.html">← Zpět na přehled</a></p>
+</body>
+</html>
