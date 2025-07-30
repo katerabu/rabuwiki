@@ -1,3 +1,10 @@
+---
+title: Kompaktní IFAK – Individual First Aid Kit
+category: Cestování
+tags: [festival, výprava, dovolena, stanování, výbava]
+last_update: 2025-07-30
+---
+
 # 🩺 Kompaktní IFAK – Individual First Aid Kit
 
 Tento repozitář dokumentuje obsah, doporučení a organizační tipy pro sestavení **kompaktního IFAK (Individual First Aid Kit)** do pouzdra o rozměrech **180 × 120 × 40 mm**.  
