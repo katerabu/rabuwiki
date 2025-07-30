@@ -4,6 +4,7 @@ category: Počítače
 tags: [linux, zalohovani, RPi, kyberbezpečnost]
 last_update: 2025-07-19
 ---
+
 # README: Šifrované zálohování ze dvou Windows 11 notebooků na Raspberry Pi 5 s NVMe 2TB 🔐💾🖥️
 
 ---
