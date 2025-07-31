@@ -1,3 +1,14 @@
+### Vytvoření uživatelských účtů pro Samba
+
+    sudo adduser backupuser1
+    sudo smbpasswd -a backupuser1
+
+    sudo adduser backupuser2
+    sudo smbpasswd -a backupuser2
+
+---
+
+
 # 🛠️ Instalace potřebných balíčků
 sudo apt update
 sudo apt install mutt gnupg gpg-agent msmtp ca-certificates mbsync
