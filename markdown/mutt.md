@@ -1,3 +1,15 @@
+---
+title: MUTT - konfigurace, šifrování, autentizace a synchronizace
+category: Počítače
+tags: [linux, zpravy, e-mail, kyberbezpečnost]
+last_update: 2025-07-31
+---
+
+
+
+Tento návod popisuje, jak nakonfigurovat Mutt pro bezpečné odesílání a přijímání e-mailů s podporou GPG šifrování, autentizace přes OAuth2 a automatickou synchronizaci pomocí mbsync a cron.
+
+
 ### 🛠️ Instalace potřebných balíčků
     sudo apt update
     sudo apt install mutt gnupg gpg-agent msmtp ca-certificates mbsync python3-requests python3-oauthlib python3-keyring
