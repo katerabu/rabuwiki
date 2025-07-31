@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>MUTT - konfigurace, šifrování, autentizace a synchronizace</title></head>
+<body>
+<p>Tento návod popisuje, jak nakonfigurovat Mutt pro bezpečné odesílání a přijímání e-mailů s podporou GPG šifrování, autentizace přes OAuth2 a automatickou synchronizaci pomocí mbsync a cron.</p>
+<h3>🛠️ Instalace potřebných balíčků</h3>
+<pre><code>sudo apt update
+sudo apt install mutt gnupg gpg-agent msmtp ca-certificates mbsync python3-requests python3-oauthlib python3-keyring
+</code></pre>
+<h3>📁 Vytvoření potřebných adresářů a souborů</h3>
+<pre><code>mkdir -p ~/.mutt/cache ~/.mail/{INBOX,Sent,Drafts} ~/.mutt-oauth2
+touch ~/.mutt/muttrc ~/.mailpw.gpg ~/.mutt-oauth2/token.gpg
+chmod 600 ~/.mailpw.gpg ~/.mutt-oauth2/token.gpg
+</code></pre>
+<h3>🧩 Konfigurace Mutt (~/.mutt/muttrc)</h3>
+<pre><code>set realname = "Tvůj Nick"
+set from = "[email protected]"
+set use_from = yes
+set envelope_from = yes
+set sendmail="/usr/bin/msmtp"
+set editor="nano"
+set charset="utf-8"
+set folder = "~/.mail"
+set spoolfile = "+INBOX"
+set record = "+Sent"
+set postponed = "+Drafts"
+set imap_authenticators = "oauthbearer"
+set smtp_authenticators = "oauthbearer"
+set imap_oauth_refresh_command = "python3 ~/.mutt-oauth2/mutt_oauth2.py ~/.mutt-oauth2/token.gpg"
+set smtp_oauth_refresh_command = "python3 ~/.mutt-oauth2/mutt_oauth2.py ~/.mutt-oauth2/token.gpg"
+</code></pre>
+<h3>🎨 Barvy pro index view</h3>
+<pre><code>color index brightcyan default ~N  # Nové zprávy
+color index brightyellow default ~F  # Flagged zprávy
+color index green default ~T  # Odeslané zprávy
+color index brightred default ~D  # Smazané zprávy
+mono index bold ~N  # Zvýraznění nových zpráv
+mono index bold ~F  # Zvýraznění flagovaných zpráv
+mono index bold ~T  # Zvýraznění odeslaných zpráv
+mono index bold ~D  # Zvýraznění smazaných zpráv
+
+color index brightgreen default ~f"odesílatel@example.com" # Tato konfigurace zvýrazní zprávy od odesílatele odesílatel@example.com zeleně.
+</code></pre>
+<h3>🔐 GPG šifrování a podpis</h3>
+<pre><code>set crypt_use_gpgme = yes
+set crypt_autosign = yes
+set crypt_autoencrypt = yes
+set crypt_replyencrypt = yes
+set crypt_replysign = yes
+set crypt_replysignencrypted = yes
+</code></pre>
+<h3>🔄 Volitelné: spustit gpg-agent při startu Mutt</h3>
+<pre><code>set my_msmtp_pass=`gpg --quiet --no-tty --for-your-eyes-only --decrypt ~/.mailpw.gpg`
+</code></pre>
+<h3>📧 Konfigurace msmtp (~/.msmtprc)</h3>
+<pre><code>defaults
+auth on
+tls on
+tls_starttls on
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+
+account default
+host smtp.example.com
+port 587
+from [email protected]
+user [email protected]
+passwordeval "gpg --quiet --no-tty --for-your-eyes-only --decrypt ~/.mailpw.gpg"
+</code></pre>
+<h3>🔐 Uložení hesla SMTP</h3>
+<pre><code>echo "TvojeSMTP_Heslo" | gpg --default-recipient-self --encrypt &gt; ~/.mailpw.gpg
+chmod 600 ~/.mailpw.gpg
+</code></pre>
+<h3>🧪 Konfigurace gpg-agent (např. v ~/.bashrc)</h3>
+<pre><code>eval $(gpg-agent --daemon --enable-ssh-support --write-env-file ~/.gpg-agent-info)
+export GPG_AGENT_INFO
+export SSH_AUTH_SOCK=$(grep -R SSH_AUTH_SOCK ~/.gpg-agent-info | cut -d'=' -f2-)
+export GPG_TTY=$(tty)
+</code></pre>
+<h3>📥 Konfigurace mbsync (~/.mbsyncrc)</h3>
+<pre><code>IMAPAccount account
+Host imap.example.com
+User [email protected]
+PassCmd "gpg --quiet --decrypt ~/.mailpw.gpg"
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore store account
+MaildirStore local ~/.mail/
+Channel sync
+Master :account:
+Slave local
+Patterns *
+Create Slave
+Sync Pull
+</code></pre>
+<h3>🔄 Spuštění synchronizace</h3>
+<pre><code>mbsync sync
+</code></pre>
+<h3>📬 Spuštění Mutt</h3>
+<pre><code>mutt
+</code></pre>
+<h3>🕒 Automatická synchronizace pomocí cron</h3>
+<pre><code>crontab -e
+# Přidejte následující řádek pro synchronizaci každých 15 minut
+*/15 * * * * mbsync sync
+</code></pre>
+<h3>🔑 Generování a správa OAuth2 tokenu</h3>
+<pre><code>wget https://gitlab.com/muttmua/mutt/-/raw/master/contrib/mutt_oauth2.py -O ~/.mutt-oauth2/mutt_oauth2.py
+chmod +x ~/.mutt-oauth2/mutt_oauth2.py
+python3 ~/.mutt-oauth2/mutt_oauth2.py ~/.mutt-oauth2/token.gpg --authorize
+
+# Pro obnovení tokenu
+python3 ~/.mutt-oauth2/mutt_oauth2.py ~/.mutt-oauth2/token.gpg --refresh
+</code></pre>
+<h3>🧠 Tipy a triky</h3>
+<ul>
+<li><strong>Klávesové zkratky v Mutt</strong>:</li>
+<li><code>m</code> = napsat zprávu</li>
+<li><code>c</code> = změna složky</li>
+<li><code>g</code> = načíst novou poštu po mbsync</li>
+<li>
+<p><code>q</code> = ukončení</p>
+</li>
+<li>
+<p><strong>Bezpečnostní tip</strong>: Používej <code>passwordeval</code> s GPG pro šifrované heslo místo ukládání v plaintextu. <a href="https://wiki.archlinux.org/title/MSMTP">wiki.archlinux.org</a></p>
+</li>
+<li>
+<p><strong>Synchronizace s IMAP</strong>: <code>mbsync</code> efektivně synchronizuje složky mezi serverem a lokálním Maildir. <a href="https://isync.sourceforge.io/mbsync.html">isync.sourceforge.io</a></p>
+</li>
+<li>
+<p><strong>Automatické spuštění gpg-agent</strong>: Použití <code>eval $(gpg-agent --daemon ...)</code> v <code>~/.bashrc</code> zajistí, že gpg-agent bude spuštěn při každém přihlášení. <a href="https://cryptomonkeys.com/2015/09/mutt-and-msmtp-on-osx/">cryptomonkeys.com</a></p>
+</li>
+<li>
+<p><strong>OAuth2 s Gmail</strong>: Pro Gmail použij <code>oauthbearer</code> autentizaci. <a href="https://wiki.archlinux.org/title/MSMTP">wiki.archlinux.org</a></p>
+</li>
+<li>
+<p>**OAuth2 s Microsoft
+::contentReference[oaicite:5]{index=5}</p>
+</li>
+</ul>
+<p><a href="../index.html">← Zpět na přehled</a></p>
+</body>
+</html>
