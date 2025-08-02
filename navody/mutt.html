@@ -5,7 +5,7 @@
 <p>Tento návod popisuje, jak nakonfigurovat Mutt pro bezpečné odesílání a přijímání e-mailů s podporou GPG šifrování, autentizace přes OAuth2 a automatickou synchronizaci pomocí mbsync a cron.</p>
 <h3>🛠️ Instalace potřebných balíčků</h3>
 <pre><code>sudo apt update
-sudo apt install mutt gnupg gpg-agent msmtp ca-certificates mbsync python3-requests python3-oauthlib python3-keyring
+sudo apt install mutt gnupg gpg-agent msmtp ca-certificates isync python3-requests python3-oauthlib python3-keyring
 </code></pre>
 <h3>📁 Vytvoření potřebných adresářů a souborů</h3>
 <pre><code>mkdir -p ~/.mutt/cache ~/.mail/{INBOX,Sent,Drafts} ~/.mutt-oauth2
@@ -39,7 +39,7 @@ mono index bold ~F  # Zvýraznění flagovaných zpráv
 mono index bold ~T  # Zvýraznění odeslaných zpráv
 mono index bold ~D  # Zvýraznění smazaných zpráv
 
-color index brightgreen default ~f"odesílatel@example.com" # Tato konfigurace zvýrazní zprávy od odesílatele odesílatel@example.com zeleně.
+NEFUNGOVALO TOTO: color index brightgreen default ~f"odesílatel@example.com" # Tato konfigurace zvýrazní zprávy od odesílatele odesílatel@example.com zeleně.
 </code></pre>
 <h3>🔐 GPG šifrování a podpis</h3>
 <pre><code>set crypt_use_gpgme = yes
@@ -96,6 +96,12 @@ Sync Pull
 <h3>🔄 Spuštění synchronizace</h3>
 <pre><code>mbsync sync
 </code></pre>
+<h3>🔄 Spuštění mutt-oauth2</h3>
+<p>$ mutt-oauth2 --authorize
+OAuth2 registration (google, microsoft) [google]:   stiskni ENTER    <br />
+Account e-mail address: rabukate@gmail.com
+Client ID:  56508150926.apps.googleusercontent.com
+Client Secret:  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</p>
 <h3>📬 Spuštění Mutt</h3>
 <pre><code>mutt
 </code></pre>

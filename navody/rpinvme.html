@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>rpinvme</title></head>
+<body>
+<h1>🛡️ Raspberry Pi 5: Přesun systému na NVMe + Šifrované zálohovací kontejnery</h1>
+<h2>🧾 Cíl</h2>
+<ul>
+<li>Přesunout systém ze SD karty na NVMe disk (Raspberry Pi 5).</li>
+<li>Nastavit dva šifrované kontejnery na NVMe disku pro zálohování (např. přes <code>rsync</code> nebo <code>borg</code>).</li>
+<li>Provoz pouze v rámci lokální sítě, dva uživatelé, přístup přes SSH.</li>
+</ul>
+<hr />
+<h2>1️⃣ Příprava</h2>
+<h3>Nutnosti:</h3>
+<ul>
+<li>Raspberry Pi 5 s bootloaderem podporujícím NVMe.</li>
+<li>Funkční systém na SD kartě (<code>Raspberry Pi OS</code> doporučeno).</li>
+<li>NVMe disk správně rozpoznán (<code>lsblk</code> / <code>blkid</code>).</li>
+<li>Záloha systému před jakoukoliv operací (např. pomocí <code>rpi-clone</code> nebo <code>dd</code>).</li>
+</ul>
+<hr />
+<h2>2️⃣ Přesun systému na NVMe</h2>
+<h3>a) Zjisti zařízení</h3>
+<pre><code class="language-bash">lsblk
+</code></pre>
+<p>SD karta bude např. <code>/dev/mmcblk0</code>, NVMe disk <code>/dev/nvme0n1</code>.</p>
+<h3>b) Zkopíruj celý systém</h3>
+<pre><code class="language-bash">sudo apt update &amp;&amp; sudo apt install rsync
+sudo mkdir /mnt/nvme
+sudo mount /dev/nvme0n1p1 /mnt/nvme   # případně vytvoř oddíl + fs
+sudo rsync -aAXv / /mnt/nvme --exclude={&quot;/dev/*&quot;,&quot;/proc/*&quot;,&quot;/sys/*&quot;,&quot;/tmp/*&quot;,&quot;/run/*&quot;,&quot;/mnt/*&quot;,&quot;/media/*&quot;,&quot;/lost+found&quot;}
+</code></pre>
+<h3>c) Aktualizuj <code>/mnt/nvme/etc/fstab</code></h3>
+<p>Uprav záznamy podle nového UUID disku (<code>sudo blkid</code>).</p>
+<pre><code class="language-bash">UUID=xxxxxx / ext4 defaults,noatime 0 1
+</code></pre>
+<h3>d) Nastav boot z NVMe</h3>
+<p>Pokud máš nový bootloader (2023+), stačí odpojit SD kartu. Pokud ne:
+- Nainstaluj <code>rpi-eeprom</code> a spusť <code>sudo raspi-config</code> &gt; Advanced &gt; Boot Order &gt; NVMe.</p>
+<hr />
+<h2>3️⃣ Vytvoření šifrovaných kontejnerů</h2>
+<h3>a) Instalace potřebných balíčků</h3>
+<pre><code class="language-bash">sudo apt install cryptsetup
+</code></pre>
+<h3>b) Vytvoření dvou šifrovaných souborů (např. 10 GB)</h3>
+<pre><code class="language-bash">cd /backup
+
+# Kontejner 1
+fallocate -l 10G container_user1.img
+cryptsetup luksFormat container_user1.img
+cryptsetup luksOpen container_user1.img user1_backup
+mkfs.ext4 /dev/mapper/user1_backup
+mkdir /mnt/user1_backup
+mount /dev/mapper/user1_backup /mnt/user1_backup
+
+# Kontejner 2
+fallocate -l 10G container_user2.img
+cryptsetup luksFormat container_user2.img
+cryptsetup luksOpen container_user2.img user2_backup
+mkfs.ext4 /dev/mapper/user2_backup
+mkdir /mnt/user2_backup
+mount /dev/mapper/user2_backup /mnt/user2_backup
+</code></pre>
+<p>Po připojení:</p>
+<pre><code class="language-bash"># Přístup k nim přes mountpoint
+/mnt/user1_backup
+/mnt/user2_backup
+</code></pre>
+<h3>c) Zapsání automount skriptu (volitelně)</h3>
+<p>Vytvoř skript pro ruční připojení:</p>
+<pre><code class="language-bash">sudo nano /usr/local/bin/mount_backups.sh
+</code></pre>
+<pre><code class="language-bash">#!/bin/bash
+cryptsetup luksOpen /backup/container_user1.img user1_backup
+mount /dev/mapper/user1_backup /mnt/user1_backup
+
+cryptsetup luksOpen /backup/container_user2.img user2_backup
+mount /dev/mapper/user2_backup /mnt/user2_backup
+</code></pre>
+<pre><code class="language-bash">sudo chmod +x /usr/local/bin/mount_backups.sh
+</code></pre>
+<hr />
+<h2>4️⃣ Nastavení zálohování</h2>
+<h3>Možnost A: Rsync přes SSH</h3>
+<p>Na klientu (např. pracovní stanice):</p>
+<pre><code class="language-bash">rsync -a --delete /data/ user@raspberrypi:/mnt/user1_backup/
+</code></pre>
+<h3>Možnost B: BorgBackup</h3>
+<p>Na RPi:</p>
+<pre><code class="language-bash">sudo apt install borgbackup
+</code></pre>
+<p>Na klientu:</p>
+<pre><code class="language-bash">borg init --encryption=repokey-blake2 user@raspberrypi:/mnt/user1_backup
+borg create -v --stats ::{hostname}-{now:%Y-%m-%d} /data
+</code></pre>
+<hr />
+<h2>5️⃣ Uživatelé a přístup</h2>
+<p>Přístup přes SSHFS nebo rsync přes SSH — není potřeba nic dalšího, stačí zajistit:
+- Uživatel má přístup na <code>/mnt/userX_backup</code>.
+- Autentizace klíčem, zamykání kontejnerů dle potřeby.</p>
+<hr />
+<h2>6️⃣ Zabezpečení</h2>
+<ul>
+<li>LUKS šifrování — AES-XTS-PLAIN64, silné heslo nebo klíč.</li>
+<li>NVMe lze i plně zašifrovat (LUKS přes celý disk), ale zde je zvolen kontejner pro flexibilitu.</li>
+<li>Pravidelné zálohování <code>mount + rsync/borg</code> jako cronjob (spuštěno jen když mount existuje).</li>
+</ul>
+<hr />
+<h2>✅ Hotovo</h2>
+<p>Systém běží na NVMe, zálohování je šifrované, dostupné pouze přes LAN a chráněné pomocí LUKS.</p>
+<p><a href="../index.html">← Zpět na přehled</a></p>
+</body>
+</html>
