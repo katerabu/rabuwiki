@@ -106,8 +106,122 @@ borg create -v --stats ::{hostname}-{now:%Y-%m-%d} /data
 <li>Pravidelné zálohování <code>mount + rsync/borg</code> jako cronjob (spuštěno jen když mount existuje).</li>
 </ul>
 <hr />
-<h2>✅ Hotovo</h2>
-<p>Systém běží na NVMe, zálohování je šifrované, dostupné pouze přes LAN a chráněné pomocí LUKS.</p>
+<h2>7️⃣ Automatické připojování kontejnerů pomocí systemd</h2>
+<p>Pro pohodlné připojení kontejnerů po startu nebo ručně přes <code>systemctl</code>, vytvoř dva <code>systemd</code> jednotkové soubory pro šifrované kontejnery.</p>
+<h3>a) <code>cryptsetup</code> jednotky</h3>
+<pre><code class="language-bash">sudo nano /etc/crypttab
+</code></pre>
+<p>Přidej:</p>
+<pre><code>user1_backup /backup/container_user1.img none luks
+user2_backup /backup/container_user2.img none luks
+</code></pre>
+<blockquote>
+<p>⚠️ <code>none</code> znamená ruční zadání hesla při připojování. Můžeš nahradit cestou ke klíči, např. <code>/etc/keys/user1.key</code>.</p>
+</blockquote>
+<h3>b) Mount jednotky</h3>
+<p>Vytvoř mount jednotky, které se aktivují až po odemčení.</p>
+<pre><code class="language-bash">sudo nano /etc/systemd/system/mnt-user1_backup.mount
+</code></pre>
+<pre><code class="language-ini">[Unit]
+Description=Mount user1 backup container
+Requires=dev-mapper-user1_backup.device
+After=dev-mapper-user1_backup.device
+
+[Mount]
+What=/dev/mapper/user1_backup
+Where=/mnt/user1_backup
+Type=ext4
+Options=defaults
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<p>Totéž pro <code>user2_backup</code>:</p>
+<pre><code class="language-bash">sudo nano /etc/systemd/system/mnt-user2_backup.mount
+</code></pre>
+<p>Potom:</p>
+<pre><code class="language-bash">sudo systemctl daemon-reexec
+sudo systemctl daemon-reload
+sudo systemctl enable mnt-user1_backup.mount
+sudo systemctl enable mnt-user2_backup.mount
+</code></pre>
+<p>Připojení provedeno ručně (např. po rebootu):</p>
+<pre><code class="language-bash">sudo systemctl start mnt-user1_backup.mount
+sudo systemctl start mnt-user2_backup.mount
+</code></pre>
+<hr />
+<h2>8️⃣ Cron zálohování v noci</h2>
+<p>Naplánujeme denní noční zálohu v <code>crontab</code>. Např. ve 2:00 ráno.</p>
+<h3>a) Rsync varianta</h3>
+<p>Spusť:</p>
+<pre><code class="language-bash">crontab -e
+</code></pre>
+<p>Přidej:</p>
+<pre><code>0 2 * * * /usr/local/bin/zalohuj_user1.sh
+</code></pre>
+<p>Vytvoř skript:</p>
+<pre><code class="language-bash">sudo nano /usr/local/bin/zalohuj_user1.sh
+</code></pre>
+<pre><code class="language-bash">#!/bin/bash
+cryptsetup luksOpen /backup/container_user1.img user1_backup
+mount /dev/mapper/user1_backup /mnt/user1_backup
+rsync -a --delete /data/ /mnt/user1_backup/
+umount /mnt/user1_backup
+cryptsetup luksClose user1_backup
+</code></pre>
+<p>Udělej spustitelný:</p>
+<pre><code class="language-bash">sudo chmod +x /usr/local/bin/zalohuj_user1.sh
+</code></pre>
+<p>Totéž můžeš udělat pro <code>user2</code>.</p>
+<h3>b) BorgBackup varianta</h3>
+<p>Skript:</p>
+<pre><code class="language-bash">sudo nano /usr/local/bin/borg_zalohuj_user1.sh
+</code></pre>
+<pre><code class="language-bash">#!/bin/bash
+export BORG_REPO=/mnt/user1_backup
+export BORG_PASSPHRASE='TVOJE_HESLO'  # nebo použij environment file
+
+cryptsetup luksOpen /backup/container_user1.img user1_backup
+mount /dev/mapper/user1_backup /mnt/user1_backup
+
+borg create --compression zstd,5 --stats ::'{hostname}-{now:%Y-%m-%d}' /data
+
+borg prune -v --keep-daily=7 --keep-weekly=4 --keep-monthly=6
+
+umount /mnt/user1_backup
+cryptsetup luksClose user1_backup
+</code></pre>
+<p>Přidáš opět do <code>crontab</code>:</p>
+<pre><code>0 2 * * * /usr/local/bin/borg_zalohuj_user1.sh
+</code></pre>
+<blockquote>
+<p>⚠️ Lepší zabezpečení: hesla uchovávej mimo skript, např. v <code>~/.borg-passphrase</code>.</p>
+</blockquote>
+<hr />
+<h2>🔐 Bonus: Použití klíčových souborů místo hesel</h2>
+<p>Místo ručního zadávání hesla můžeš pro LUKS použít klíč:</p>
+<pre><code class="language-bash">sudo dd if=/dev/urandom of=/etc/keys/user1.key bs=4096 count=1
+sudo chmod 400 /etc/keys/user1.key
+cryptsetup luksAddKey /backup/container_user1.img /etc/keys/user1.key
+</code></pre>
+<p>Pak aktualizuj <code>/etc/crypttab</code>:</p>
+<pre><code>user1_backup /backup/container_user1.img /etc/keys/user1.key luks
+</code></pre>
+<hr />
+<h2>🧼 Úklid a testování</h2>
+<ul>
+<li>Otestuj ručně: <code>sudo systemctl start mnt-user1_backup.mount</code></li>
+<li>Otestuj cron job pomocí <code>sudo run-parts /etc/cron.daily/</code> nebo simuluj pomocí <code>at</code>.</li>
+</ul>
+<hr />
+<h2>✅ Celkový stav</h2>
+<ul>
+<li>Systém běží z NVMe disku.</li>
+<li>Zálohy probíhají automaticky v noci.</li>
+<li>Jsou šifrované a bezpečné.</li>
+<li>Můžeš kdykoliv zálohovat ručně nebo automaticky.</li>
+<li>Přístup možný pouze z LAN (např. přes SSH).</li>
+</ul>
 <p><a href="../index.html">← Zpět na přehled</a></p>
 </body>
 </html>

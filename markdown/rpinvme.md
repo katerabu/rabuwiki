@@ -155,6 +155,178 @@ Přístup přes SSHFS nebo rsync přes SSH — není potřeba nic dalšího, sta
 
 ---
 
-## ✅ Hotovo
+## 7️⃣ Automatické připojování kontejnerů pomocí systemd
 
-Systém běží na NVMe, zálohování je šifrované, dostupné pouze přes LAN a chráněné pomocí LUKS.
+Pro pohodlné připojení kontejnerů po startu nebo ručně přes `systemctl`, vytvoř dva `systemd` jednotkové soubory pro šifrované kontejnery.
+
+### a) `cryptsetup` jednotky
+
+```bash
+sudo nano /etc/crypttab
+```
+
+Přidej:
+
+```
+user1_backup /backup/container_user1.img none luks
+user2_backup /backup/container_user2.img none luks
+```
+
+> ⚠️ `none` znamená ruční zadání hesla při připojování. Můžeš nahradit cestou ke klíči, např. `/etc/keys/user1.key`.
+
+### b) Mount jednotky
+
+Vytvoř mount jednotky, které se aktivují až po odemčení.
+
+```bash
+sudo nano /etc/systemd/system/mnt-user1_backup.mount
+```
+
+```ini
+[Unit]
+Description=Mount user1 backup container
+Requires=dev-mapper-user1_backup.device
+After=dev-mapper-user1_backup.device
+
+[Mount]
+What=/dev/mapper/user1_backup
+Where=/mnt/user1_backup
+Type=ext4
+Options=defaults
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Totéž pro `user2_backup`:
+
+```bash
+sudo nano /etc/systemd/system/mnt-user2_backup.mount
+```
+
+Potom:
+
+```bash
+sudo systemctl daemon-reexec
+sudo systemctl daemon-reload
+sudo systemctl enable mnt-user1_backup.mount
+sudo systemctl enable mnt-user2_backup.mount
+```
+
+Připojení provedeno ručně (např. po rebootu):
+
+```bash
+sudo systemctl start mnt-user1_backup.mount
+sudo systemctl start mnt-user2_backup.mount
+```
+
+---
+
+## 8️⃣ Cron zálohování v noci
+
+Naplánujeme denní noční zálohu v `crontab`. Např. ve 2:00 ráno.
+
+### a) Rsync varianta
+
+Spusť:
+
+```bash
+crontab -e
+```
+
+Přidej:
+
+```
+0 2 * * * /usr/local/bin/zalohuj_user1.sh
+```
+
+Vytvoř skript:
+
+```bash
+sudo nano /usr/local/bin/zalohuj_user1.sh
+```
+
+```bash
+#!/bin/bash
+cryptsetup luksOpen /backup/container_user1.img user1_backup
+mount /dev/mapper/user1_backup /mnt/user1_backup
+rsync -a --delete /data/ /mnt/user1_backup/
+umount /mnt/user1_backup
+cryptsetup luksClose user1_backup
+```
+
+Udělej spustitelný:
+
+```bash
+sudo chmod +x /usr/local/bin/zalohuj_user1.sh
+```
+
+Totéž můžeš udělat pro `user2`.
+
+### b) BorgBackup varianta
+
+Skript:
+
+```bash
+sudo nano /usr/local/bin/borg_zalohuj_user1.sh
+```
+
+```bash
+#!/bin/bash
+export BORG_REPO=/mnt/user1_backup
+export BORG_PASSPHRASE='TVOJE_HESLO'  # nebo použij environment file
+
+cryptsetup luksOpen /backup/container_user1.img user1_backup
+mount /dev/mapper/user1_backup /mnt/user1_backup
+
+borg create --compression zstd,5 --stats ::'{hostname}-{now:%Y-%m-%d}' /data
+
+borg prune -v --keep-daily=7 --keep-weekly=4 --keep-monthly=6
+
+umount /mnt/user1_backup
+cryptsetup luksClose user1_backup
+```
+
+Přidáš opět do `crontab`:
+
+```
+0 2 * * * /usr/local/bin/borg_zalohuj_user1.sh
+```
+
+> ⚠️ Lepší zabezpečení: hesla uchovávej mimo skript, např. v `~/.borg-passphrase`.
+
+---
+
+## 🔐 Bonus: Použití klíčových souborů místo hesel
+
+Místo ručního zadávání hesla můžeš pro LUKS použít klíč:
+
+```bash
+sudo dd if=/dev/urandom of=/etc/keys/user1.key bs=4096 count=1
+sudo chmod 400 /etc/keys/user1.key
+cryptsetup luksAddKey /backup/container_user1.img /etc/keys/user1.key
+```
+
+Pak aktualizuj `/etc/crypttab`:
+
+```
+user1_backup /backup/container_user1.img /etc/keys/user1.key luks
+```
+
+---
+
+## 🧼 Úklid a testování
+
+- Otestuj ručně: `sudo systemctl start mnt-user1_backup.mount`
+- Otestuj cron job pomocí `sudo run-parts /etc/cron.daily/` nebo simuluj pomocí `at`.
+
+---
+
+## ✅ Celkový stav
+
+- Systém běží z NVMe disku.
+- Zálohy probíhají automaticky v noci.
+- Jsou šifrované a bezpečné.
+- Můžeš kdykoliv zálohovat ručně nebo automaticky.
+- Přístup možný pouze z LAN (např. přes SSH).
+
