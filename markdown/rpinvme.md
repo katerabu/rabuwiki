@@ -1,65 +1,99 @@
-# 🛡️ Raspberry Pi 5: Přesun systému na NVMe + Šifrované zálohovací kontejnery
-
-## 🧾 Cíl
-- Přesunout systém ze SD karty na NVMe disk (Raspberry Pi 5).
-- Nastavit dva šifrované kontejnery na NVMe disku pro zálohování (např. přes `rsync` nebo `borg`).
-- Provoz pouze v rámci lokální sítě, dva uživatelé, přístup přes SSH.
+## 🛡️ Raspberry Pi 5: Přesun systému na NVMe + Šifrované zálohovací kontejnery
 
 ---
 
-## 1️⃣ Příprava
+### 📢 Úvodní banner
 
-### Nutnosti:
-- Raspberry Pi 5 s bootloaderem podporujícím NVMe.
-- Funkční systém na SD kartě (`Raspberry Pi OS` doporučeno).
-- NVMe disk správně rozpoznán (`lsblk` / `blkid`).
-- Záloha systému před jakoukoliv operací (např. pomocí `rpi-clone` nebo `dd`).
+> **Pozor:** Tento návod předpokládá základní znalost Linuxu, práce s terminálem a zálohování dat.  
+> Před zahájením operací vždy proveď kompletní zálohu stávajícího systému.  
+> Nesprávné použití může vést ke ztrátě dat!
 
 ---
 
-## 2️⃣ Přesun systému na NVMe
+### 📦 Seznam nutných balíčků
 
-### a) Zjisti zařízení
+Instaluj je předem, pokud ještě nejsou:
+
+```bash
+sudo apt update
+sudo apt install rsync cryptsetup borgbackup parted
+```
+
+---
+
+### 1️⃣ Příprava
+
+#### Nutnosti:
+- Raspberry Pi 5 s bootloaderem podporujícím NVMe (většina po roce 2023).
+- Funkční systém na SD kartě (`Raspberry Pi OS` 64bit doporučeno).
+- NVMe disk fyzicky připojen a správně detekován (`lsblk`, `blkid`).
+- Záloha systému před jakoukoliv operací: např. pomocí `rpi-clone`, `dd` nebo externí kopie na jiný disk.
+- Počítej s potřebou jednoho restartu po změně diskových oddílů (kvůli informování kernelu).
+
+---
+
+### 2️⃣ Přesun systému na NVMe
+
+#### a) Ověř připojení zařízení
 
 ```bash
 lsblk
 ```
 
-SD karta bude např. `/dev/mmcblk0`, NVMe disk `/dev/nvme0n1`.
+Hledej:
+- SD karta = `/dev/mmcblk0`
+- NVMe = `/dev/nvme0n1`
 
-### b) Zkopíruj celý systém
+#### b) Vymaž a znovu vytvoř oddíly na NVMe
 
 ```bash
-sudo apt update && sudo apt install rsync
+sudo umount /dev/nvme0n1*
+sudo parted /dev/nvme0n1 mklabel gpt
+sudo parted /dev/nvme0n1 mkpart primary ext4 0% 100%
+sudo mkfs.ext4 /dev/nvme0n1p1
+```
+
+#### c) Připoj nový oddíl a zkopíruj systém
+
+```bash
 sudo mkdir /mnt/nvme
-sudo mount /dev/nvme0n1p1 /mnt/nvme   # případně vytvoř oddíl + fs
+sudo mount /dev/nvme0n1p1 /mnt/nvme
 sudo rsync -aAXv / /mnt/nvme --exclude={"/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/lost+found"}
 ```
 
-### c) Aktualizuj `/mnt/nvme/etc/fstab`
+#### d) Aktualizuj `fstab` v novém systému
 
-Uprav záznamy podle nového UUID disku (`sudo blkid`).
+Zjisti UUID:
 
 ```bash
-UUID=xxxxxx / ext4 defaults,noatime 0 1
+sudo blkid
 ```
 
-### d) Nastav boot z NVMe
+Pak uprav `/mnt/nvme/etc/fstab`:
 
-Pokud máš nový bootloader (2023+), stačí odpojit SD kartu. Pokud ne:
-- Nainstaluj `rpi-eeprom` a spusť `sudo raspi-config` > Advanced > Boot Order > NVMe.
+```
+UUID=XXXX-XXXX / ext4 defaults,noatime 0 1
+```
+
+#### e) Aktivuj boot z NVMe
+
+Buď:
+- Odpoj SD kartu a restartuj (funguje u nového bootloaderu),
+nebo:
+- Spusť `sudo raspi-config` > Advanced Options > Boot Order > NVMe
+- Případně nainstaluj `rpi-eeprom` a zkontroluj firmware
 
 ---
 
-## 3️⃣ Vytvoření šifrovaných kontejnerů
+### 3️⃣ Vytvoření šifrovaných zálohovacích kontejnerů
 
-### a) Instalace potřebných balíčků
+#### a) Instaluj `cryptsetup`
 
 ```bash
 sudo apt install cryptsetup
 ```
 
-### b) Vytvoření dvou šifrovaných souborů (např. 10 GB)
+#### b) Vytvoř šifrované soubory
 
 ```bash
 cd /backup
@@ -81,17 +115,7 @@ mkdir /mnt/user2_backup
 mount /dev/mapper/user2_backup /mnt/user2_backup
 ```
 
-Po připojení:
-
-```bash
-# Přístup k nim přes mountpoint
-/mnt/user1_backup
-/mnt/user2_backup
-```
-
-### c) Zapsání automount skriptu (volitelně)
-
-Vytvoř skript pro ruční připojení:
+#### c) Volitelný ruční mount skript
 
 ```bash
 sudo nano /usr/local/bin/mount_backups.sh
@@ -101,7 +125,6 @@ sudo nano /usr/local/bin/mount_backups.sh
 #!/bin/bash
 cryptsetup luksOpen /backup/container_user1.img user1_backup
 mount /dev/mapper/user1_backup /mnt/user1_backup
-
 cryptsetup luksOpen /backup/container_user2.img user2_backup
 mount /dev/mapper/user2_backup /mnt/user2_backup
 ```
@@ -112,17 +135,15 @@ sudo chmod +x /usr/local/bin/mount_backups.sh
 
 ---
 
-## 4️⃣ Nastavení zálohování
+### 4️⃣ Zálohování
 
-### Možnost A: Rsync přes SSH
-
-Na klientu (např. pracovní stanice):
+#### a) Rsync (klient → RPi)
 
 ```bash
 rsync -a --delete /data/ user@raspberrypi:/mnt/user1_backup/
 ```
 
-### Možnost B: BorgBackup
+#### b) BorgBackup (moderní způsob)
 
 Na RPi:
 
@@ -139,44 +160,52 @@ borg create -v --stats ::{hostname}-{now:%Y-%m-%d} /data
 
 ---
 
-## 5️⃣ Uživatelé a přístup
+### 5️⃣ Přístup uživatelů
 
-Přístup přes SSHFS nebo rsync přes SSH — není potřeba nic dalšího, stačí zajistit:
-- Uživatel má přístup na `/mnt/userX_backup`.
-- Autentizace klíčem, zamykání kontejnerů dle potřeby.
-
----
-
-## 6️⃣ Zabezpečení
-
-- LUKS šifrování — AES-XTS-PLAIN64, silné heslo nebo klíč.
-- NVMe lze i plně zašifrovat (LUKS přes celý disk), ale zde je zvolen kontejner pro flexibilitu.
-- Pravidelné zálohování `mount + rsync/borg` jako cronjob (spuštěno jen když mount existuje).
+- Přístup přes SSH.
+- Uživatel má právo číst/zapisovat do `/mnt/userX_backup`.
+- Používej klíčovou autentizaci.
 
 ---
 
-## 7️⃣ Automatické připojování kontejnerů pomocí systemd
+### 6️⃣ Bezpečnost
 
-Pro pohodlné připojení kontejnerů po startu nebo ručně přes `systemctl`, vytvoř dva `systemd` jednotkové soubory pro šifrované kontejnery.
+- AES-XTS 512bit pomocí LUKS.
+- Kontejnery = snadno přenositelné + flexibilní.
+- Lze použít celý disk (LUKS přes `/dev/nvme0n1`), ale méně flexibilní.
+- Doporučujeme zálohovat mimo RPi (např. NAS).
 
-### a) `cryptsetup` jednotky
+---
+
+### 7️⃣ Automount přes systemd
+
+#### a) crypttab
 
 ```bash
 sudo nano /etc/crypttab
 ```
-
-Přidej:
 
 ```
 user1_backup /backup/container_user1.img none luks
 user2_backup /backup/container_user2.img none luks
 ```
 
-> ⚠️ `none` znamená ruční zadání hesla při připojování. Můžeš nahradit cestou ke klíči, např. `/etc/keys/user1.key`.
+Pokud chceš použít klíčový soubor:
 
-### b) Mount jednotky
+```bash
+sudo mkdir -p /etc/keys
+sudo dd if=/dev/urandom of=/etc/keys/user1.key bs=4096 count=1
+sudo chmod 400 /etc/keys/user1.key
+cryptsetup luksAddKey /backup/container_user1.img /etc/keys/user1.key
+```
 
-Vytvoř mount jednotky, které se aktivují až po odemčení.
+Pak do `crypttab`:
+
+```
+user1_backup /backup/container_user1.img /etc/keys/user1.key luks
+```
+
+#### b) mount jednotky
 
 ```bash
 sudo nano /etc/systemd/system/mnt-user1_backup.mount
@@ -198,13 +227,13 @@ Options=defaults
 WantedBy=multi-user.target
 ```
 
-Totéž pro `user2_backup`:
+Totéž pro user2:
 
 ```bash
 sudo nano /etc/systemd/system/mnt-user2_backup.mount
 ```
 
-Potom:
+Aktivace:
 
 ```bash
 sudo systemctl daemon-reexec
@@ -213,34 +242,11 @@ sudo systemctl enable mnt-user1_backup.mount
 sudo systemctl enable mnt-user2_backup.mount
 ```
 
-Připojení provedeno ručně (např. po rebootu):
-
-```bash
-sudo systemctl start mnt-user1_backup.mount
-sudo systemctl start mnt-user2_backup.mount
-```
-
 ---
 
-## 8️⃣ Cron zálohování v noci
+### 8️⃣ Cron noční zálohy
 
-Naplánujeme denní noční zálohu v `crontab`. Např. ve 2:00 ráno.
-
-### a) Rsync varianta
-
-Spusť:
-
-```bash
-crontab -e
-```
-
-Přidej:
-
-```
-0 2 * * * /usr/local/bin/zalohuj_user1.sh
-```
-
-Vytvoř skript:
+#### Rsync varianta
 
 ```bash
 sudo nano /usr/local/bin/zalohuj_user1.sh
@@ -255,17 +261,16 @@ umount /mnt/user1_backup
 cryptsetup luksClose user1_backup
 ```
 
-Udělej spustitelný:
-
 ```bash
 sudo chmod +x /usr/local/bin/zalohuj_user1.sh
+crontab -e
 ```
 
-Totéž můžeš udělat pro `user2`.
+```
+0 2 * * * /usr/local/bin/zalohuj_user1.sh
+```
 
-### b) BorgBackup varianta
-
-Skript:
+#### BorgBackup varianta
 
 ```bash
 sudo nano /usr/local/bin/borg_zalohuj_user1.sh
@@ -274,59 +279,73 @@ sudo nano /usr/local/bin/borg_zalohuj_user1.sh
 ```bash
 #!/bin/bash
 export BORG_REPO=/mnt/user1_backup
-export BORG_PASSPHRASE='TVOJE_HESLO'  # nebo použij environment file
+export BORG_PASSPHRASE='TVE_HESLO'
 
 cryptsetup luksOpen /backup/container_user1.img user1_backup
 mount /dev/mapper/user1_backup /mnt/user1_backup
 
 borg create --compression zstd,5 --stats ::'{hostname}-{now:%Y-%m-%d}' /data
-
 borg prune -v --keep-daily=7 --keep-weekly=4 --keep-monthly=6
 
 umount /mnt/user1_backup
 cryptsetup luksClose user1_backup
 ```
 
-Přidáš opět do `crontab`:
+Přidání do crontab:
 
 ```
 0 2 * * * /usr/local/bin/borg_zalohuj_user1.sh
 ```
 
-> ⚠️ Lepší zabezpečení: hesla uchovávej mimo skript, např. v `~/.borg-passphrase`.
+> ⚠️ Uchovávej hesla odděleně – např. `~/.borg-passphrase` s `chmod 600`.
 
 ---
 
-## 🔐 Bonus: Použití klíčových souborů místo hesel
+### 🧼 Úklid & testování
 
-Místo ručního zadávání hesla můžeš pro LUKS použít klíč:
-
-```bash
-sudo dd if=/dev/urandom of=/etc/keys/user1.key bs=4096 count=1
-sudo chmod 400 /etc/keys/user1.key
-cryptsetup luksAddKey /backup/container_user1.img /etc/keys/user1.key
-```
-
-Pak aktualizuj `/etc/crypttab`:
-
-```
-user1_backup /backup/container_user1.img /etc/keys/user1.key luks
-```
+- Testuj ruční mount: `sudo systemctl start mnt-user1_backup.mount`
+- Testuj cron pomocí `sudo run-parts /etc/cron.daily/` nebo naplánuj `at now + 1 minute`
+- Sleduj logy: `journalctl -xe`, `dmesg`, `systemctl status`
 
 ---
 
-## 🧼 Úklid a testování
+### 9️⃣ Časté problémy a řešení
 
-- Otestuj ručně: `sudo systemctl start mnt-user1_backup.mount`
-- Otestuj cron job pomocí `sudo run-parts /etc/cron.daily/` nebo simuluj pomocí `at`.
+#### Problém: NVMe disk není detekován nebo boot nefunguje  
+- Zkontroluj, zda máš aktuální bootloader (příkaz `vcgencmd bootloader_version`) a firmware ([Raspberry Pi Documentation, 2024]).  
+- Ujisti se, že NVMe disk je správně zapojený a napájený (některé NVMe vyžadují externí napájení).  
+- Pokud nefunguje automatický boot, zkus bootovat ze SD a změnit boot order pomocí `raspi-config`.
+
+#### Problém: Nelze připojit šifrovaný kontejner  
+- Ověř heslo nebo klíčový soubor.  
+- Zkontroluj, zda není kontejner poškozen (`cryptsetup luksDump container_user1.img`).  
+- Pokud jsi použil klíčový soubor, ověř správnou cestu v `crypttab`.
+
+#### Problém: Borg backup hlásí chybu přístupu  
+- Zkontroluj práva přístupu ke složkám a správnost proměnných prostředí.  
+- Heslo Borgu musí být správně nastaveno a dostupné během zálohy.
+
+#### Problém: Cron joby neprobíhají správně  
+- Podívej se do logů `journalctl -u cron` nebo `syslog`.  
+- Cron nevidí některé proměnné prostředí – definuj je explicitně v skriptech.
 
 ---
 
-## ✅ Celkový stav
+### 🔗 Oficiální zdroje a další čtení
 
-- Systém běží z NVMe disku.
-- Zálohy probíhají automaticky v noci.
-- Jsou šifrované a bezpečné.
-- Můžeš kdykoliv zálohovat ručně nebo automaticky.
-- Přístup možný pouze z LAN (např. přes SSH).
+- Raspberry Pi Foundation (2024) *Bootloader and EEPROM*. Dostupné z: https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#bootloader-and-eeprom [Cit. 2025-08-03].  
+- Raspberry Pi OS Documentation (2024) *Using NVMe Storage*. Dostupné z: https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#nvme-storage [Cit. 2025-08-03].  
+- BorgBackup (2023) *Official Documentation*. Dostupné z: https://borgbackup.readthedocs.io/en/stable/ [Cit. 2025-08-03].  
+- Cryptsetup (2023) *LUKS Disk Encryption*. Dostupné z: https://gitlab.com/cryptsetup/cryptsetup/-/wikis/Home [Cit. 2025-08-03].  
+- Linux man pages (2025) *rsync(1), cryptsetup(8), systemd.mount(5)*. Dostupné z: https://man7.org/linux/man-pages/ [Cit. 2025-08-03].
+
+---
+
+### ✅ Celkový výsledek
+
+- ✅ Systém běží z NVMe  
+- ✅ Data zálohována denně a šifrovaně  
+- ✅ Přístup přes SSH z LAN  
+- ✅ Možnost použít i ruční zálohy  
+- ✅ Bezpečné a snadno přenositelné kontejnery
 
