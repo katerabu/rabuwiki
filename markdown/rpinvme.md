@@ -767,8 +767,9 @@ hmm to by slo, me jeste napadlo ze si bude malina tahat data k sobe sama, naprik
 
 To je fakt fajn nápad — Malina si automaticky tahá zálohy z Windows (třeba přes SMB/Samba) a zároveň jiný uživatel může přes SSHFS přistupovat z Linuxu a zálohy taky ukládat přímo do šifrovaného kontejneru.
 
-Když to rozepisu podrobněji:
-1) Tahání dat z Windows do Raspberry (maliny)
+### Když to rozepisu podrobněji:
+
+## 1) Tahání dat z Windows do Raspberry (maliny)
 Pro Windows sdílení (Samba)
 
 Nastavit na Windows sdílenou složku s uživatelem + heslem.
@@ -783,12 +784,12 @@ Připojení přes CIFS není šifrované, ale SMB3 už má šifrování na proto
 
 Další možnost je přes VPN — aby byl SMB provoz uvnitř privátní sítě.
 
-2) SSHFS přístup pro jiného uživatele (např. z Linux klienta)
+## 2) SSHFS přístup pro jiného uživatele (např. z Linux klienta)
 Přes SSHFS připojí /mnt/liko_backup (kontejner) jako virtuální disk.
 
 Bude to šifrované díky LUKS, takže data na disku jsou bezpečně uložena.
 
-3) Jak to dát dohromady
+## 3) Jak to dát dohromady
 Na Raspberry:
 
 Automatický skript, co:
@@ -805,7 +806,7 @@ Odpojí SMB share a kontejner bezpečně zamkne, pokud je neaktivní.
 
 Současně může běžet sshd na Raspberry pro připojení jiných uživatelů přes SSHFS.
 
-4) Několik tipů jak to zabezpečit
+## 4) Několik tipů jak to zabezpečit
 Na Windows používat silné heslo pro SMB share.
 
 Využít firewall na Raspberry a Windows, aby SMB port nebyl přístupný z internetu.
@@ -814,9 +815,7 @@ Pokud je Raspberry na veřejné síti, zvážit VPN mezi Windows a Raspberry.
 
 Uchovávat LUKS passphrase mimo Raspberry (např. ručně zadávat nebo v bezpečném hardware tokenu).
 
-5) Ukázkový mini-plán pro skript na Raspberry (pseudo):
-
-
+## 5) Ukázkový mini-plán pro skript na Raspberry (pseudo):
 
 #!/bin/bash
 
@@ -838,9 +837,7 @@ sudo umount /mnt/windows_backup
 
 Závěr
 Záloha z Windows na Raspberry v šifrovaném kontejneru — bezpečné a pohodlné.
-
 Přístup přes SSHFS pro další uživatele.
-
 Můžeš to celé automatizovat, sledovat aktivitu a bezpečně zamykat.
 
 
