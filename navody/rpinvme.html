@@ -252,6 +252,372 @@ cryptsetup luksClose user1_backup
 <li>✅ Možnost použít i ruční zálohy  </li>
 <li>✅ Bezpečné a snadno přenositelné kontejnery</li>
 </ul>
+<p>Jak dal pokracovat -&gt;&gt; mozne promprty pro AI:</p>
+<p>A) autounmount vse s radnymi komentari hlavne co jaka metoda presne dela a proc</p>
+<h1>!/bin/bash</h1>
+<h1>!/bin/bash</h1>
+<h1>==== KONFIGURACE ====</h1>
+<h1>Cesta ke sifrovanemu LUKS kontejneru</h1>
+<p>CONTAINER_IMG="/home/liko/backup/container_liko.img"</p>
+<h1>Kam se kontejner pripoji (mount point)</h1>
+<p>MOUNT_POINT="/mnt/liko_backup"</p>
+<h1>Jmeno mapperu (jak bude dostupny pres /dev/mapper/)</h1>
+<p>MAPPER_NAME="liko_backup"</p>
+<h1>Maximalni doba cekani na ukonceni aktivity (napr. 2 hodiny = 7200 sekund)</h1>
+<p>MAX_WAIT=7200</p>
+<h1>Interval mezi kontrolami, zda kontejner nekdo pouziva (v sekundach)</h1>
+<p>CHECK_INTERVAL=30</p>
+<h1>Promenna, do ktere se bude scitat cas cekani</h1>
+<p>ELAPSED=0</p>
+<h1>==== FUNKCE ====</h1>
+<h1>Funkce pro zobrazeni aktualniho casu (v logu u kazde zpravy)</h1>
+<p>timestamp() {
+  date +"%Y-%m-%d %H:%M:%S"
+}</p>
+<h1>==== START ====</h1>
+<p>echo "[$(timestamp)] [INFO] Sleduji aktivitu v $MOUNT_POINT..."
+echo "[$(timestamp)] [INFO] Skript ukonci mount a zamkne kontejner, az nebude nikdo pracovat s daty."</p>
+<h1>Nekonecny cyklus – sleduje aktivitu v mount pointu</h1>
+<p>while true; do</p>
+<p># Kontrola, zda nekdo pracuje se soubory uvnitr mount pointu
+  # <code>lsof +D</code> vypise vsechny otevrene soubory v dane slozce
+  if sudo lsof +D "$MOUNT_POINT" &gt; /dev/null 2&gt;&1; then
+    echo "[$(timestamp)] [WAIT] Kontejner stale pouzivan – aktivni. Dalsi kontrola za $CHECK_INTERVAL s..."
+    sleep "$CHECK_INTERVAL"
+    ELAPSED=$((ELAPSED + CHECK_INTERVAL))</p>
+<pre><code># Pokud jsme cekali dele nez MAX_WAIT, skript se ukonci
+if [ "$ELAPSED" -ge "$MAX_WAIT" ]; then
+  echo "[$(timestamp)] [WARN] Maximalni cekani $MAX_WAIT s bylo prekroceno. Skript se ukoncuje."
+  exit 1
+fi
+</code></pre>
+<p>else
+    # Pokud neni zadna aktivita, pokusime se kontejner odpojit a zamknout
+    echo "[$(timestamp)] [INFO] Aktivita ustala. Pokousim se odpojit a zamknout..."</p>
+<pre><code># Pokus o odpojeni mount pointu
+if sudo umount "$MOUNT_POINT"; then
+  echo "[$(timestamp)] [OK] Filesystem odpojen."
+
+  # Pokud odpojeni probehne uspesne, pokusime se zavrit sifrovany kontejner
+  if sudo cryptsetup luksClose "$MAPPER_NAME"; then
+    echo "[$(timestamp)] [OK] Kontejner zamcen. Hotovo."
+    exit 0
+  else
+    echo "[$(timestamp)] [ERR] Chyba pri zamykani kontejneru!"
+    exit 2
+  fi
+
+else
+  # Pokud nelze odpojit (napr. soubor je stale otevreny), cekame a zkusime znovu
+  echo "[$(timestamp)] [ERR] Odpojeni selhalo! Zkusim znovu za $CHECK_INTERVAL s..."
+  sleep "$CHECK_INTERVAL"
+fi
+</code></pre>
+<p>fi
+done</p>
+<p>B) spusteni jako systemd sluzba</p>
+<p>spusteni jako systemd sluzba?
+systemd je init system a spravce sluzeb v modernich Linuxech (v Raspbianu a vetsine distribuci je to systemd). Umoznuje automaticky spoustet skripty/sluzby pri startu systemu, sledovat je, znovu je spoustet, nebo je zastavit.</p>
+<p>Systemd sluzba je konfiguracni soubor, ktery popisuje, jak a kdy se ma neco spustit.</p>
+<p>Vyhody:</p>
+<p>automaticke spousteni pri startu RPi</p>
+<p>snadna sprava (start/stop/status)</p>
+<p>systemd pohlida, aby se sluzba nezasekla, a muze ji znovu spustit</p>
+<p>Priklad systemd sluzby pro tvuj backup skript:</p>
+<p>/etc/systemd/system/backup-watch.service</p>
+<p>ini
+Zkopírovat
+Upravit
+[Unit]
+Description=Automaticke odpojeni a zamknuti sifrovaneho backup kontejneru</p>
+<p>[Service]
+Type=simple
+ExecStart=/home/liko/auto_unmount_backup.sh
+Restart=on-failure
+User=liko</p>
+<p>[Install]
+WantedBy=multi-user.target
+Pak:</p>
+<p>bash
+Zkopírovat
+Upravit
+sudo systemctl daemon-reload
+sudo systemctl enable backup-watch.service
+sudo systemctl start backup-watch.service</p>
+<p>Takhle se skript spusti pri startu a bezi na pozadi.</p>
+<p>C) podporu pro vic kontejneru - klidne at zjisti jake kde jsou kontejnery a da na vyber - a pokud je uzamceny tak da na vyber odemceni</p>
+<p>Podpora pro vic kontejneru a interaktivni vyber
+Idea: Skript automaticky vyhleda vsechny .img soubory v adresari /home/liko/backup/, nabidne uzivateli, co chce:</p>
+<p>pokud je kontejner odemceny a pripojen, nabidne ho odpojit a zamknout</p>
+<p>pokud je kontejner zamceny (uzavreny), nabidne ho odemknout a pripojit</p>
+<p>Navrh skriptu
+najde vsechny kontejnery (napr. container_*.img)</p>
+<p>zjisti, jestli jsou pres cryptsetup status <mapper_name> odemceny</p>
+<p>dle stavu nabidne menu (pomoci select v bash)</p>
+<p>podle volby odemkne/pripoji nebo odpoji/zamkne</p>
+<p>Ukazkovy skript (hodne zjednoduseny, bez pokrocilych kontrol):</p>
+<h1>!/bin/bash</h1>
+<p>BACKUP_DIR="/home/liko/backup"
+MOUNT_BASE="/mnt"</p>
+<h1>Funkce pro zobrazeni casu v logu</h1>
+<p>timestamp() {
+  date +"%Y-%m-%d %H:%M:%S"
+}</p>
+<h1>Najdeme vsechny kontejnery .img</h1>
+<p>containers=($(ls "$BACKUP_DIR"/container_*.img 2&gt;/dev/null))</p>
+<p>if [ ${#containers[@]} -eq 0 ]; then
+  echo "[$(timestamp)] [ERR] Neni nalezen zadny kontejner v $BACKUP_DIR"
+  exit 1
+fi</p>
+<p>echo "Vyberte kontejner:"</p>
+<p>select container_path in "${containers[@]}" "Konec"; do
+  if [ "$container_path" == "Konec" ]; then
+    echo "Konec vyberu."
+    exit 0
+  elif [ -n "$container_path" ]; then
+    container_name=$(basename "$container_path" .img)
+    mapper_name="${container_name}_backup"
+    mount_point="$MOUNT_BASE/${container_name}_backup"</p>
+<pre><code># Zjistime stav kontejneru (odkryty nebo ne)
+if sudo cryptsetup status "$mapper_name" &amp;&gt;/dev/null; then
+  status="opened"
+else
+  status="closed"
+fi
+
+echo "Konainer '$container_name' je $status."
+
+if [ "$status" == "closed" ]; then
+  # Odemknuti + mount
+  echo "Odemknuti a pripojeni kontejneru..."
+
+  sudo cryptsetup luksOpen "$container_path" "$mapper_name" || {
+    echo "Chyba pri odemykani kontejneru"
+    exit 1
+  }
+
+  sudo mkdir -p "$mount_point"
+
+  sudo mount "/dev/mapper/$mapper_name" "$mount_point" || {
+    echo "Chyba pri mountovani"
+    sudo cryptsetup luksClose "$mapper_name"
+    exit 1
+  }
+
+  sudo chown liko:liko "$mount_point"
+
+  echo "Konainer odemcen a pripojen na $mount_point."
+
+else
+  # Odpojeni + zamknuti
+  echo "Odpojuji a zamykam kontejner..."
+
+  sudo umount "$mount_point" || {
+    echo "Chyba pri odpojeni mountpointu"
+    exit 1
+  }
+
+  sudo cryptsetup luksClose "$mapper_name" || {
+    echo "Chyba pri zamykani kontejneru"
+    exit 1
+  }
+
+  echo "Konainer odpojen a zamcen."
+fi
+
+break
+</code></pre>
+<p>else
+    echo "Neplatna volba, zkuste to prosim znovu."
+  fi
+done
+D) USERCASE po spusteni scriptu: list nalezenych kontejneru a jejich stav, nabidnout odemceni uzamcenych s tim, ze musi zacit kopirovat do nebo z nej do 30 sekund jinak automaticky uzavira... 
+Jasne, to je super usercase — kombinuje interaktivitu i automatizaci. Tady je, jak bych to viděl krok po kroku:</p>
+<p>Usecase:
+Skript spustíš — automaticky najde všechny kontejnery (např. container_*.img).</p>
+<p>Ukáže ti list kontejnerů s jejich stavem (opened/closed).</p>
+<p>Ty vybereš kontejner, co chceš odemknout, nebo se připojit/odpojit.</p>
+<p>Pokud je kontejner zamčený, po odemčení se spustí 30 sekundová doba, během které bys měl začít kopírovat data (třeba přes sshfs, scp nebo jinak).</p>
+<p>Pokud do 30 sekund nedojde k žádné aktivitě v připojeném mountpointu, kontejner se automaticky zamkne a odpojí — aby zbytečně nezůstal otevřený.</p>
+<p>Pokud aktivita probíhá, skript to pozná a bude čekat, dokud aktivita neskončí — pak taky bezpečně odpojí a zamkne.</p>
+<p>Co všechno to bude potřebovat:
+Skenování kontejnerů</p>
+<p>Zjištění jejich stavu (cryptsetup status)</p>
+<p>Interaktivní výběr (bash select)</p>
+<p>Funkci na odemknutí/mount</p>
+<p>Funkci na sledování aktivity (lsof +D nebo inotifywait)</p>
+<p>Časovač pro 30s “startovací okno” pro aktivitu</p>
+<p>Bezpečné odpojení a zamčení</p>
+<p>Mám pro tebe základní prototyp s komentáři a funkcemi, co to dělají:</p>
+<h1>!/bin/bash</h1>
+<p>BACKUP_DIR="/home/liko/backup"
+MOUNT_BASE="/mnt"
+IDLE_LIMIT=30  # cekani 30s na start aktivity po odemceni</p>
+<p>timestamp() {
+  date +"%Y-%m-%d %H:%M:%S"
+}</p>
+<h1>Zkontroluje, jestli je kontejner otevren</h1>
+<p>is_opened() {
+  sudo cryptsetup status "$1" &amp;&gt;/dev/null
+  return $?
+}</p>
+<h1>Odemkne a pripoji kontejner</h1>
+<p>unlock_and_mount() {
+  local container_path="$1"
+  local mapper_name="$2"
+  local mount_point="$3"</p>
+<p>echo "[$(timestamp)] Odemykam kontejner $mapper_name..."
+  sudo cryptsetup luksOpen "$container_path" "$mapper_name" || {
+    echo "Chyba pri odemykani!"
+    return 1
+  }</p>
+<p>sudo mkdir -p "$mount_point"</p>
+<p>echo "[$(timestamp)] Pripojuji filesystem..."
+  sudo mount "/dev/mapper/$mapper_name" "$mount_point" || {
+    echo "Chyba pri mountovani!"
+    sudo cryptsetup luksClose "$mapper_name"
+    return 2
+  }</p>
+<p>sudo chown liko:liko "$mount_point"
+  echo "[$(timestamp)] Kontejner odemcen a pripojen na $mount_point."
+  return 0
+}</p>
+<h1>Odpoji a zamkne kontejner</h1>
+<p>unmount_and_lock() {
+  local mapper_name="$1"
+  local mount_point="$2"</p>
+<p>echo "[$(timestamp)] Odpojuji $mount_point..."
+  sudo umount "$mount_point" || {
+    echo "Chyba pri odpojeni mountpointu."
+    return 1
+  }</p>
+<p>echo "[$(timestamp)] Zamykam kontejner $mapper_name..."
+  sudo cryptsetup luksClose "$mapper_name" || {
+    echo "Chyba pri zamykani kontejneru."
+    return 2
+  }</p>
+<p>echo "[$(timestamp)] Kontejner odpojen a zamcen."
+  return 0
+}</p>
+<h1>Sledovani aktivity v mountpointu, vraci 0, kdyz je aktivita, jinak 1</h1>
+<p>wait_for_activity() {
+  local mount_point="$1"
+  local timeout="$2"
+  local interval=3
+  local elapsed=0</p>
+<p>echo "[$(timestamp)] Cekam na aktivitu v $mount_point po dobu $timeout sekund..."</p>
+<p>while (( elapsed &lt; timeout )); do
+    if sudo lsof +D "$mount_point" &gt; /dev/null 2&gt;&1; then
+      echo "[$(timestamp)] Aktivita detekovana!"
+      return 0
+    fi
+    sleep $interval
+    ((elapsed+=interval))
+  done</p>
+<p>echo "[$(timestamp)] Aktivita neprobehla."
+  return 1
+}</p>
+<h1>Hlavni skript</h1>
+<p>containers=($(ls "$BACKUP_DIR"/container_*.img 2&gt;/dev/null))</p>
+<p>if [ ${#containers[@]} -eq 0 ]; then
+  echo "[$(timestamp)] [ERR] Neni nalezen zadny kontejner v $BACKUP_DIR"
+  exit 1
+fi</p>
+<p>echo "Vyberte kontejner:"</p>
+<p>select container_path in "${containers[@]}" "Konec"; do
+  if [ "$container_path" == "Konec" ]; then
+    echo "Konec vyberu."
+    exit 0
+  elif [ -n "$container_path" ]; then
+    container_name=$(basename "$container_path" .img)
+    mapper_name="${container_name}_backup"
+    mount_point="$MOUNT_BASE/${container_name}_backup"</p>
+<pre><code>if is_opened "$mapper_name"; then
+  echo "[$(timestamp)] Kontejner '$container_name' je odemceny."
+  read -p "Chcete ho odpojit a zamknout? (a/n) " yn
+  if [[ "$yn" =~ ^[Yy]$ ]]; then
+    unmount_and_lock "$mapper_name" "$mount_point"
+  else
+    echo "Akce zrusena."
+  fi
+else
+  echo "[$(timestamp)] Kontejner '$container_name' je zamceny."
+  read -p "Chcete ho odemknout a pripojit? (a/n) " yn
+  if [[ "$yn" =~ ^[Yy]$ ]]; then
+    if unlock_and_mount "$container_path" "$mapper_name" "$mount_point"; then
+      if wait_for_activity "$mount_point" $IDLE_LIMIT; then
+        echo "[$(timestamp)] Sledovani aktivity, cekam nez aktivita skonci..."
+        # Tady muzeme pridat dalsi cekani na ukonceni aktivity nebo dalsi logiku
+        echo "Prozatim skoncime."
+      else
+        echo "[$(timestamp)] Zadne kopirovani neprobehlo, automaticky zamykam."
+        unmount_and_lock "$mapper_name" "$mount_point"
+      fi
+    else
+      echo "Chyba pri odemykani a pripajeni."
+    fi
+  else
+    echo "Akce zrusena."
+  fi
+fi
+break
+</code></pre>
+<p>else
+    echo "Neplatna volba, zkuste to prosim znovu."
+  fi
+done
+Jak to funguje:</p>
+<p>Po spusteni ti vypise vsechny kontejnery.</p>
+<p>Pokud je kontejner zamceny, umozni ho odemknout a pripojit.</p>
+<p>Po odemceni ceká 30s, jestli zacnes nejakou aktivitu (napr. kopirovani).</p>
+<p>Pokud ano, muzeme to prozatim ukoncit (do budoucna muzeme pridat dalsi cekani, aby to automaticky odpojilo po ukonceni prace).</p>
+<p>Pokud ne, kontejner se zamkne automaticky.</p>
+<p>Pokud je kontejner uz odemceny, nabidne se moznost ho zamknout.</p>
+<p>Co rikas? Chces, abych to jeste dopracoval treba o dlouhodobe sledovani aktivity, nebo rovnou systemd integraci?</p>
+<p>hmm to by slo, me jeste napadlo ze si bude malina tahat data k sobe sama, napriklad z win11 nejakeho backup adresare (samba asi neni moc bezpecna ale co uz jineho na windows) do kontejneru a druhy user pres sshfs z linux masiny nejaky backup adresar....</p>
+<p>To je fakt fajn nápad — Malina si automaticky tahá zálohy z Windows (třeba přes SMB/Samba) a zároveň jiný uživatel může přes SSHFS přistupovat z Linuxu a zálohy taky ukládat přímo do šifrovaného kontejneru.</p>
+<h3>Když to rozepisu podrobněji:</h3>
+<h2>1) Tahání dat z Windows do Raspberry (maliny)</h2>
+<p>Pro Windows sdílení (Samba)</p>
+<p>Nastavit na Windows sdílenou složku s uživatelem + heslem.</p>
+<p>Na Raspberry připojit sdílenou složku přes mount.cifs s šifrovaným kontejnerem připojeným jako target pro zálohy.</p>
+<p>Malina může mít skript, co třeba jednou denně připojí ten SMB share, zkopíruje nové soubory do kontejneru a zase odpojí.</p>
+<p>Bezpečnost</p>
+<p>Připojení přes CIFS není šifrované, ale SMB3 už má šifrování na protokolové úrovni, takže pokud je vše aktuální, je to OK.</p>
+<p>Další možnost je přes VPN — aby byl SMB provoz uvnitř privátní sítě.</p>
+<h2>2) SSHFS přístup pro jiného uživatele (např. z Linux klienta)</h2>
+<p>Přes SSHFS připojí /mnt/liko_backup (kontejner) jako virtuální disk.</p>
+<p>Bude to šifrované díky LUKS, takže data na disku jsou bezpečně uložena.</p>
+<h2>3) Jak to dát dohromady</h2>
+<p>Na Raspberry:</p>
+<p>Automatický skript, co:</p>
+<p>Odemkne kontejner (případně na požádání, nebo podle plánu).</p>
+<p>Připojí kontejner k /mnt/liko_backup.</p>
+<p>Připojí SMB share z Windows (např. do /mnt/windows_backup).</p>
+<p>Spustí synchronizaci (např. rsync nebo cp).</p>
+<p>Odpojí SMB share a kontejner bezpečně zamkne, pokud je neaktivní.</p>
+<p>Současně může běžet sshd na Raspberry pro připojení jiných uživatelů přes SSHFS.</p>
+<h2>4) Několik tipů jak to zabezpečit</h2>
+<p>Na Windows používat silné heslo pro SMB share.</p>
+<p>Využít firewall na Raspberry a Windows, aby SMB port nebyl přístupný z internetu.</p>
+<p>Pokud je Raspberry na veřejné síti, zvážit VPN mezi Windows a Raspberry.</p>
+<p>Uchovávat LUKS passphrase mimo Raspberry (např. ručně zadávat nebo v bezpečném hardware tokenu).</p>
+<h2>5) Ukázkový mini-plán pro skript na Raspberry (pseudo):</h2>
+<h1>!/bin/bash</h1>
+<h1>Odemknout kontejner</h1>
+<p>./unlock_container.sh</p>
+<h1>Připojit SMB share z Windows</h1>
+<p>sudo mount.cifs //WIN_IP/backup /mnt/windows_backup -o user=winuser,password=winpass</p>
+<h1>Synchronizace do kontejneru</h1>
+<p>rsync -av --delete /mnt/windows_backup/ /mnt/liko_backup/</p>
+<h1>Odpojit SMB</h1>
+<p>sudo umount /mnt/windows_backup</p>
+<h1>Bezpečně odpojit a zamknout kontejner</h1>
+<p>./auto_unmount_backup.sh</p>
+<p>Závěr
+Záloha z Windows na Raspberry v šifrovaném kontejneru — bezpečné a pohodlné.
+Přístup přes SSHFS pro další uživatele.
+Můžeš to celé automatizovat, sledovat aktivitu a bezpečně zamykat.</p>
 <p><a href="../index.html">← Zpět na přehled</a></p>
 </body>
 </html>
