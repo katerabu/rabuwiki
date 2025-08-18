@@ -2,12 +2,158 @@
 title: Rozšíření - větší auto / dodávku
 category: Cestování
 tags: [festival, výprava, dovolena, stanování, výbava]
-last_update: 2025-07-09
+last_update: 2025-08-18
 ---
 
 ## Rozšíření - na festivaly, výpravy, dovolene potřebujeme větší auto, nejlíp dodávku
 
-Je potřeba větší auto než RAV4, tak jaké? Jed az dolu a zjistis ze to bude asi Ford Transit Custom 2.2 TDCi 92Kw 6-Míst Long, Caravelle je moc draha totiz...
+Je potřeba větší auto než RAV4, tak jaké? Jed az dolu a zjistis ze to bude asi Ford Transit Custom 2.2 TDCi 92Kw 6-Míst Long, Caravelle / Vito je moc drahy totiz. Nyní ale rozdělení na skupiny podle platforem:
+
+# Přehled skupin mikrobusů a dodávek (6–9 míst)
+
+Tento přehled uvádí základní skupiny vozidel vhodných pro přepravu osob a sportovního vybavení. Skupiny jsou řazeny dle technické příbuznosti (platforma, karoserie, motorizace).
+
+---
+
+## 🔹 1. Renault Trafic / Opel Vivaro / Fiat Talento / Nissan NV300
+
+- **Sdílená platforma:** Renault
+- **Typické motory:** 1.6 dCi, 2.0 dCi
+- **Využití:** Univerzální – osobní přeprava, náklad, sportovní výbava
+- **Modely:**
+  - Renault Trafic (III – od 2014)
+  - Opel Vivaro B (2014–2018)
+  - Fiat Talento (2016–2020)
+  - Nissan NV300
+
+---
+
+## 🔹 2. Peugeot Traveller / Citroën Spacetourer / Opel Zafira Life / Toyota Proace Verso
+
+- **Sdílená platforma:** PSA EMP2
+- **Typické motory:** 1.5 BlueHDi, 2.0 BlueHDi
+- **Využití:** Komfortní osobní přeprava, často VIP shuttle
+- **Modely:**
+  - Peugeot Traveller
+  - Citroën Spacetourer
+  - Opel Zafira Life (od 2019)
+  - Toyota Proace Verso (2. generace)
+
+---
+
+## 🔹 3. Volkswagen Transporter / Caravelle / Multivan / California
+
+- **Sdílená platforma:** VW T6 / T6.1
+- **Typické motory:** 2.0 TDI (více výkonových variant)
+- **Využití:** Shuttle, kemping, pracovní nasazení
+- **Modely:**
+  - VW Transporter T6 / T6.1
+  - VW Caravelle (osobní verze)
+  - VW Multivan (komfortní verze)
+  - VW California (kempovací verze)
+
+---
+
+## 🔹 4. Mercedes-Benz Vito / V-Class
+
+- **Sdílená platforma:** Mercedes W447
+- **Typické motory:** 2.1 CDI, 2.0 CDI (OM 654)
+- **Využití:**
+  - **Vito:** Pracovní a smíšené využití
+  - **V-Class:** Prémiová osobní přeprava
+- **Modely:**
+  - Mercedes-Benz Vito
+  - Mercedes-Benz V-Class
+
+---
+
+## 🔹 5. Ford Tourneo Custom / Transit Custom
+
+- **Sdílená platforma:** Ford
+- **Typické motory:** 2.2 TDCi (dříve), 2.0 EcoBlue (nověji), plug-in hybridní verze
+- **Využití:**
+  - **Tourneo Custom:** Osobní přeprava
+  - **Transit Custom:** Nákladní/pracovní varianta
+- **Modely:**
+  - Ford Tourneo Custom
+  - Ford Transit Custom
+
+---
+
+*Poznámka:* Všechna uvedená vozidla jsou k dispozici v různých délkách (L1, L2, L3), s různým počtem sedadel a ve verzích s možností tažného zařízení či úprav pro sportovní vybavení (např. držáky kol, lyží, vodácké úchyty atd.).
+
+A teď přehled automatických převodovek:
+
+# Přehled automatických převodovek u mikrobusů/dodávek
+
+Tento přehled shrnuje typy automatických převodovek dostupných u jednotlivých skupin mikrobusů (6–9 míst), které jsou vhodné pro přepravu osob a sportovního vybavení.
+
+---
+
+## 🔹 1. Renault Trafic / Opel Vivaro B / Fiat Talento / Nissan NV300
+
+- **Platforma:** Renault (Trafic III)
+- **Automatická převodovka:**
+  - **6stupňová robotizovaná převodovka (EDC)** – dvojspojková
+  - **Dostupná u motorů 2.0 dCi (od cca 2019)**
+- **Poznámka:** Starší modely měly pouze manuál, EDC přišla později a nabízí hladký chod, ale menší robustnost než klasický automat.
+
+---
+
+## 🔹 2. Peugeot Traveller / Citroën Spacetourer / Opel Zafira Life / Toyota Proace Verso
+
+- **Platforma:** PSA EMP2
+- **Automatická převodovka:**
+  - **8stupňový hydrodynamický automat (EAT8)** – od Aisin
+  - **Dostupná u motorů 2.0 BlueHDi (180k)**
+- **Poznámka:** EAT8 je velmi plynulá a spolehlivá převodovka, vhodná i pro delší trasy nebo časté popojíždění. Výborná volba pro více řidičů.
+
+---
+
+## 🔹 3. Volkswagen Transporter / Caravelle / Multivan / California
+
+- **Platforma:** VW T6 / T6.1
+- **Automatická převodovka:**
+  - **7stupňová DSG (dvojspojková převodovka)** – převážně pro 2.0 TDI
+- **Poznámka:** DSG nabízí rychlé a hladké řazení, ale citlivější na zatížení a servis. Komfortní pro městský i dálniční provoz.
+
+---
+
+## 🔹 4. Mercedes-Benz Vito / V-Class
+
+- **Platforma:** Mercedes W447
+- **Automatická převodovka:**
+  - **7G-Tronic (7stupňový automat)** – starší modely
+  - **9G-Tronic (9stupňový automat)** – novější modely s motorem OM 654
+- **Poznámka:** Tradiční hydrodynamický automat, velmi hladké řazení, vysoká spolehlivost. Prémiový pocit z jízdy.
+
+---
+
+## 🔹 5. Ford Tourneo Custom / Transit Custom
+
+- **Platforma:** Ford
+- **Automatická převodovka:**
+  - **6stupňový hydrodynamický automat (SelectShift)** – s motorem 2.0 EcoBlue
+  - **10stupňový automat (novější verze, hybridní)** – plug-in hybrid
+- **Poznámka:** Klasický měničový automat, robustní a spolehlivý, vhodný pro časté použití i více řidičů.
+
+---
+
+### ✅ Shrnutí – Přehled typů převodovek
+
+| Skupina vozidel | Typ převodovky | Převodovka | Poznámka |
+|-----------------|----------------|------------|----------|
+| Renault/Fiat/Nissan/Opel (Trafic) | Dvojspojková | EDC (6DCT) | Pouze novější roky, není hydroměnič |
+| PSA (Peugeot, Citroën, Opel, Toyota) | Hydroměnič | EAT8 | Velmi komfortní, spolehlivá |
+| Volkswagen T6/T6.1 | Dvojspojková | DSG | Rychlá, ale citlivější na zatížení |
+| Mercedes Vito/V-Class | Hydroměnič | 7G-Tronic / 9G-Tronic | Prémiová, hladká, spolehlivá |
+| Ford Transit/Tourneo Custom | Hydroměnič | 6AT / 10AT | Robustní, vhodné pro zátěž |
+
+---
+
+*Poznámka:* Pokud je klíčové, aby mohli řídit i méně zkušení řidiči, je vhodnější volit **klasický hydrodynamický automat** (např. EAT8, 9G-Tronic, Ford 6AT). Dvojspojkové převodovky (DSG, EDC) jsou rychlé, ale náročnější na údržbu a zatížení.
+
+
 
 # 🚐 Srovnání rodinných vanů a SUV – rozměry a využitelnost
 | Parametr                                            | **Toyota RAV4 (2015)** | **Ford Tourneo Custom L2** | **Toyota Proace Verso Long** | **VW T6 Caravelle LWB** | **Mercedes Vito Tourer Long** |
@@ -28,6 +174,30 @@ Je potřeba větší auto než RAV4, tak jaké? Jed az dolu a zjistis ze to bude
 | **Cenové rozpětí (ojetiny)**                        | cca 350–450k Kč        | cca 600–800k Kč             | cca 700–900k Kč             | cca 750–1 100k Kč       | cca 750–1 000k Kč             |
 | **VIN / Poznámka**                                 | standardní VIN, neověřuje LONG | VIN 10.–11. znak = L2/Long, kontrola u Fordu | Délka > 5,3 m značí LONG, není vždy jasné v VIN | VIN 10. znak značí LWB (Long) | VIN 10. znak značí dlouhou verzi |
 ---
+
+## Upravená tabulka: 
+
+| Parametr                                           | **Ford Tourneo Custom L2** | **Opel Vivaro B (2017)** | **Toyota Proace Verso Long** | **VW T6 Caravelle Long** | **Mercedes Vito Tourer Long** | **Toyota RAV4 (2015)** |
+|----------------------------------------------------|-----------------------------|---------------------------|-------------------------------|----------------------------|-------------------------------|------------------------|
+| **Platforma / technická skupina**                 | Ford Transit Custom         | Renault X82 (Trafic, Talento) | PSA EMP2 (Peugeot/Citroën)    | VW T6 (MQB-like)           | Mercedes W447 (V-Class)       | Toyota (TNGA)          |
+| **Délka**                                          | 5 340 mm                    | 5 399 mm                  | 5 309 mm                      | 5 304 mm                   | 5 140 mm                      | 4 605 mm               |
+| **Šířka (bez zrcátek)**                            | 1 986 mm                    | 1 956 mm                  | 1 920 mm                      | 1 904 mm                   | 1 928 mm                      | 1 845 mm               |
+| **Výška (vnější)**                                 | 1 975 mm                    | 1 971 mm                  | 1 910 mm                      | 1 990 mm                   | 1 910 mm                      | 1 685 mm               |
+| **Vnitřní výška (přibl.)**                         | cca 1 350 mm                | cca 1 350 mm              | cca 1 350 mm                  | cca 1 400 mm               | cca 1 350 mm                  | cca 1 050 mm           |
+| **Rozvor**                                         | 3 300 mm                    | 3 498 mm                  | 3 275 mm                      | 3 400 mm                   | 3 200 mm                      | 2 660 mm               |
+| **Počet míst (běžně)**                             | 8–9                         | 8–9                       | 7–9                           | 7–9                        | 7–9                           | 5                      |
+| **Délka ložné plochy (3 řady sedadel)**            | cca 800 mm                  | cca 700 mm                | cca 700 mm                    | cca 700 mm                 | cca 750 mm                    | cca 300–400 mm         |
+| **Délka za 2. řadou (bez 3. řady)**                | cca 1 250 mm                | cca 1 200 mm              | cca 1 150 mm                  | cca 1 200 mm               | cca 1 300 mm                  | cca 800 mm             |
+| **Délka ložné plochy (bez 2. a 3. řady)**          | až 2 800 mm                 | až 2 750 mm               | až 2 750 mm                   | až 2 700 mm                | až 2 600 mm                   | cca 1 700 mm           |
+| **Šířka ložné plochy za 2. řadou**                 | cca 1 400 mm                | cca 1 380 mm              | cca 1 350 mm                  | cca 1 500 mm               | cca 1 450 mm                  | cca 1 100 mm           |
+| **Objem kufru (při 5 místech)**                    | cca 1 900 l                 | 1 400–1 900 l             | 1 400–2 000 l                 | 1 300–1 900 l              | 1 400–1 800 l                 | cca 547 l              |
+| **Automatická převodovka k dispozici**             | ✅ (6AT SelectShift)         | ✅ (6DCT Quickshift)       | ✅ (EAT8)                     | ✅ (DSG 7st)               | ✅ (7G/9G-Tronic)             | ✅ (CVT)               |
+| **Spaní uvnitř (bez úprav)**                       | ✅ pohodlně pro 2 osoby      | ✅ pro 2 osoby            | ✅ pro 2 osoby                | ✅ pro 2 osoby             | ✅ pro 2 osoby                | ❌ (max. dítě)          |
+| **Střešní nosič možný**                            | ✅                           | ✅                         | ✅                             | ✅                          | ✅                            | ✅                     |
+| **Cenové rozpětí (běžné ojetiny)**                 | cca 600–800k Kč             | cca 450–650k Kč           | cca 700–900k Kč               | cca 750–1 100k Kč          | cca 750–1 000k Kč             | cca 350–450k Kč        |
+| **Ceny ojetin (do r. 2017)**                       | 450–650k Kč                 | **280–350k Kč**           | 550–700k Kč                   | 600–900k Kč                | 620–900k Kč                   | 300–380k Kč            |
+| **VIN / Poznámka k určení délky**                  | VIN 10.–11. znak = L2/Long   | VIN 10. znak = LWB         | Délka > 5,3 m = Long           | VIN 10. znak = LWB         | VIN 10. znak = Long           | VIN neřeší délku       |
+
 
 ## Poznámky:
 - *Všechny údaje jsou orientační – konkrétní rozměry se mohou mírně lišit podle výbavy a roku výroby.*
