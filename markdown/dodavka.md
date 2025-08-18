@@ -1,13 +1,19 @@
 ---
-title: Rozšíření - větší auto / dodávku
+title: Větší auto / mikrobus / dodávka
 category: Cestování
 tags: [festival, výprava, dovolena, stanování, výbava]
 last_update: 2025-08-18
 ---
 
-## Rozšíření - na festivaly, výpravy, dovolene potřebujeme větší auto, nejlíp dodávku
+## Větší auto / mikrobus / dodávka - na festivaly, výpravy, dovolene potřebujeme větší auto, nejlíp dodávku s více sedadly čili mikrobus
 
-Je potřeba větší auto než RAV4, tak jaké? Jed az dolu a zjistis ze to bude asi Ford Transit Custom 2.2 TDCi 92Kw 6-Míst Long, Caravelle / Vito je moc drahy totiz. Nyní ale rozdělení na skupiny podle platforem:
+Je potřeba větší auto než RAV4, tak jaké? Jed az dolu a zjistis ze to bude asi Ford Transit Custom 2.2 TDCi 92Kw 6-Míst Long, Opel Vivaro L2, atd. protože  Caravelle / Vito je moc drahy totiz. 
+
+## Hlavní požadavky:
+### Automat
+### Dvoje šoupačky
+
+Nyní ale rozdělení na skupiny podle platforem:
 
 # Přehled skupin mikrobusů a dodávek (6–9 míst)
 
