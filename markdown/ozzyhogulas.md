@@ -1,5 +1,5 @@
 ---
-title: Ozzákův guláš: Metal v hrnci (hovězí na pivě)
+title: Ozzákův guláš
 category: Domácnost
 tags: [recept, guláš, hovězí, kuchyně]
 last_update: 2025-07-09
