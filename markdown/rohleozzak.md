@@ -31,3 +31,5 @@ Po vykynutí potřeme vejcem, sypneme hrubou solí a kmínem a upečeme ve vyhř
 Někdy se mi stává, že je i několikrát vyzkoušený recept malinko jiný – tužší nebo naopak řidší těsto.
 Je to tím, že i mouky používám různé – od několika výrobců, různé šarže. Recept je potřeba savosti mouky přizpůsobit. Je-li těsto hodně husté, hutné, tuhé, po kapkách přidávat a vpracovávat tekutinu (zde tedy pivo).
 A naopak – pokud je těsto i po chvíli odpočinku hodně řídké a lepí, po trochách zapracovat stejnou mouku, jako je použita v receptu.
+
+převzato z: https://www.pekarnomanie.cz/rohle-pro-ozzaka-pivni-rohliky/ 27.8.2025
