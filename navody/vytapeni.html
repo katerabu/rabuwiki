@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Vytápění domečku</title></head>
+<body>
+<h1>🏠 Srovnání způsobů vytápění: Hnědé uhlí vs. Plyn vs. Elektřina (invertorová klimatizace)</h1>
+<h2>Výchozí podmínky</h2>
+<ul>
+<li>Venkovní teplota: 0 °C</li>
+<li>Dům: slušně zateplený</li>
+<li>Spotřeba plynu za topnou sezónu: 1 600 m³</li>
+<li>Roční tepelná potřeba: 16 000 kWh</li>
+<li>Cena uhlí: 7 500 Kč/t (výhřevnost 18 MJ/kg ≈ 5 kWh/kg)</li>
+<li>Cena plynu: 2 034,28 Kč/MWh (2,03 Kč/kWh)</li>
+<li>Cena elektřiny: 7 454,56 Kč/MWh (7,45 Kč/kWh)</li>
+<li>Účinnost kotle uhlí: 84,7 %</li>
+<li>Účinnost kotle plyn: 91,2 %</li>
+<li>Klimatizace invertorová COP ~3 (účinnost 300 %)</li>
+</ul>
+<hr />
+<h2>⚙️ Vstupní parametry</h2>
+<table>
+<thead>
+<tr>
+<th>Parametr</th>
+<th>Hodnota</th>
+<th>💬 Popis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🔥 Roční tepelná potřeba</td>
+<td><code>16 000 kWh</code></td>
+<td>Odvozeno z průměrné spotřeby plynu (1600 m³)</td>
+</tr>
+<tr>
+<td>⛏️ Cena uhlí za 1 tunu</td>
+<td><code>7 500 Kč</code></td>
+<td>Hnědé uhlí s výhřevností 18 MJ/kg</td>
+</tr>
+<tr>
+<td>⛽ Cena plynu za 1 MWh</td>
+<td><code>2 034,28 Kč</code></td>
+<td>Cena dle MND (včetně DPH a poplatků)</td>
+</tr>
+<tr>
+<td>⚡ Cena elektřiny za 1 MWh</td>
+<td><code>7 454,56 Kč</code></td>
+<td>Elektřina MND (včetně všeho)</td>
+</tr>
+<tr>
+<td>🔋 Výhřevnost uhlí</td>
+<td><code>18 MJ/kg</code> (=5 kWh)</td>
+<td>Energetický obsah uhlí</td>
+</tr>
+<tr>
+<td>🛠️ Účinnost kotle na uhlí</td>
+<td><code>84,7 %</code></td>
+<td>Kotel IV. třídy</td>
+</tr>
+<tr>
+<td>🔧 Účinnost kotle na plyn</td>
+<td><code>91,2 %</code></td>
+<td>Atmosférický nový kotel</td>
+</tr>
+<tr>
+<td>❄️ COP klimatizace</td>
+<td><code>3.0</code> (300 %)</td>
+<td>Výkonový koeficient (účinnost vytápění)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>📐 Výpočty</h2>
+<h3>🔥 Uhlí</h3>
+<ul>
+<li>Roční spotřeba tepla: <code>16 000 kWh</code></li>
+<li>Výhřevnost uhlí: <code>5 kWh/kg</code></li>
+<li>Účinnost: <code>84,7 %</code>
+<strong>Výpočet spotřeby uhlí:</strong>
+Spotřeba = 16 000 ÷ (5 × 0,847) ≈ 3 778 kg
+<strong>Roční náklady:</strong>
+3 778 kg × (7 500 Kč ÷ 1 000) = 28 335 Kč
+<strong>Cena za 1 kWh tepla:</strong>
+28 335 Kč ÷ 16 000 kWh = 1,77 Kč/kWh</li>
+</ul>
+<hr />
+<h3>⛽ Plyn</h3>
+<ul>
+<li>Účinnost kotle: <code>91,2 %</code>
+<strong>Spotřeba plynu (v kWh):</strong>
+16 000 ÷ 0,912 ≈ 17 544 kWh
+<strong>Roční náklady:</strong>
+17 544 × 2,0343 = 35 688 Kč
+<strong>Cena za 1 kWh tepla:</strong>
+35 688 ÷ 16 000 = 2,23 Kč/kWh</li>
+</ul>
+<hr />
+<h3>⚡ Elektřina (klimatizace)</h3>
+<ul>
+<li>COP: <code>3.0</code> (účinnost 300 %)
+<strong>Spotřeba elektřiny:</strong>
+16 000 ÷ 3 = 5 333 kWh
+<strong>Roční náklady:</strong>
+5 333 × 7,45456 = 39 761 Kč
+<strong>Cena za 1 kWh tepla:</strong>
+39 761 ÷ 16 000 = 2,49 Kč/kWh</li>
+</ul>
+<hr />
+<h2>📊 Srovnávací tabulka - Výpočty spotřeby a nákladů</h2>
+<table>
+<thead>
+<tr>
+<th>💡 Palivo / systém</th>
+<th>⚙️ Účinnost / COP</th>
+<th>📦 Roční spotřeba</th>
+<th>🔥 Tepelná energie</th>
+<th>💰 Roční náklady</th>
+<th>📈 Cena za 1 kWh</th>
+<th>🌍 Emise CO₂</th>
+<th>💬 Poznámky</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>⛏️ Hnědé uhlí (kotel IV.)</td>
+<td>84,7 %</td>
+<td>3 778 kg (3,78 t)</td>
+<td>16 000 kWh</td>
+<td>28 335 Kč</td>
+<td><strong>1,77 Kč/kWh</strong></td>
+<td>Vysoké</td>
+<td>Obsluha, sklady, popel, nutná údržba</td>
+</tr>
+<tr>
+<td>⛽ Plyn (atmosférický kotel)</td>
+<td>91,2 %</td>
+<td>17 544 kWh (plyn)</td>
+<td>16 000 kWh</td>
+<td>35 688 Kč</td>
+<td><strong>2,23 Kč/kWh</strong></td>
+<td>Střední</td>
+<td>Komfortní, čistý, bezobslužný</td>
+</tr>
+<tr>
+<td>⚡ Elektřina (klimatizace)</td>
+<td>COP ~3.0</td>
+<td>5 333 kWh (elektřina)</td>
+<td>16 000 kWh</td>
+<td>39 761 Kč</td>
+<td><strong>2,49 Kč/kWh</strong></td>
+<td>Nízké</td>
+<td>Největší komfort, nejdražší</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>🧠 Závěry</h2>
+<ul>
+<li><strong>⛏️ Uhlí</strong> je nejlevnější varianta, ale vyžaduje práci, prostor a údržbu. Nejlevnější topení vychází z uhlí, pokud je k dispozici levné uhlí s vyšší výhřevností a dobrým kotlem.</li>
+<li><strong>⛽ Plyn</strong> je zlatá střední cesta – komfortní, čistý, ale ne nejlevnější. Plyn je dražší, ale nabízí vyšší komfort a méně starostí.</li>
+<li><strong>⚡ Elektřina</strong> (přes klimatizaci) je dražší, ale velmi pohodlná a bez starostí. Elektřina s invertorovou klimatizací je nejdražší varianta, ale nabízí nejvyšší komfort a jednoduchost obsluhy.</li>
+<li>Výběr závisí na prioritách: cena, pohodlí, ekologie a dostupnost paliva.</li>
+</ul>
+<hr />
+<h2>💡 Tipy</h2>
+<ul>
+<li>✅ Pokud máš levný noční proud, elektřina může být výhodnější.</li>
+<li>🔁 Kombinace dvou zdrojů (např. elektřina + plyn nebo uhlí + elektřina) může být flexibilní.</li>
+<li>🔧 Modernizací kotle (plynový kondenzační nebo automat na uhlí) lze výrazně zvýšit účinnost a pohodlí.</li>
+</ul>
+<hr />
+<h2>Další možnosti</h2>
+<ul>
+<li>Snížení nákladů na elektřinu například využitím nočního tarifu.</li>
+<li>Modernizace kotle na uhlí nebo plynový kondenzační kotel pro zvýšení účinnosti.</li>
+<li>Kombinace zdrojů tepla (např. elektřina + kotel na uhlí).</li>
+</ul>
+<hr />
+<h2>📎 Licence</h2>
+<p>Tato stránka je volně k použití a úpravám. Přidej své poznatky nebo uprav parametry podle reálné situace 💬.</p>
+<hr />
+<p><a href="../index.html">← Zpět na přehled</a></p>
+</body>
+</html>

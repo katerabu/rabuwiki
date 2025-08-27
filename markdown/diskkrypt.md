@@ -129,7 +129,7 @@ TPM (Trusted Platform Module) ukládá šifrovací klíč bezpečně a umožňuj
 
 ---
 
-### 📚 Citace (Harvard)
+### 📚 Citace
 
 - Schneier, B. (2015). *Data and Goliath: The Hidden Battles to Collect Your Data and Control Your World*. Norton & Company.  
 - NIST (2020). *FIPS 197: Advanced Encryption Standard (AES)*. Available at: https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.197.pdf  
