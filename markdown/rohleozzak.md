@@ -45,3 +45,10 @@ To je způsobeno rozdíly v moukách (různí výrobci, šarže). Recept je pot�
 ---
 
 *převzato z: [Pekárnománie – Rohle pro Ozzáka (pivní rohlíky)](https://www.pekarnomanie.cz/rohle-pro-ozzaka-pivni-rohliky/) – 27. 8. 2025*
+
+## Kontext: Ozzák a Comeback
+
+Ozzák je ikonická postava ze seriálu **Comeback**, kterou ztvárnil Martin Dejdar.  
+Je známý svou láskou k pivu, metalu a averzí ke všemu, co zní příliš roztomile – jako třeba "rohlíčky".  
+Proto vznikl tento recept jako pocta jeho stylu: **žádné zdrobněliny – prostě rohle.**
+
