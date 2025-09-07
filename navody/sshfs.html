@@ -72,6 +72,66 @@ sudo apt install sshfs</p>
 </ul>
 <hr />
 <p><em>Vytvořeno ChatGPT, 2025</em></p>
+<p>Původní návod již nedostupný, z https://wiki.ubuntu.cz/sshfs upravený zde: </p>
+<h1>Připojení vzdáleného souborového systému pomocí <strong>SSHFS</strong> 🔒🗂️</h1>
+<p><strong>SSH</strong> je bezpečnostní protokol, který se používá pro bezpečnou komunikaci mezi počítači. <strong>SSHFS</strong> je nástroj, který umožňuje připojení vzdáleného souborového systému k místnímu počítači pomocí SSH. Tento nástroj je ideální pro práci s distantními adresáři a soubory, jelikož:
+- <strong>Bezpečné připojení</strong>: SSH autentizuje připojení a šifruje komunikaci, takže vaše data jsou chráněna.
+- <strong>Jednoduché použití</strong>: S SSHFS se můžete snadno připojit k vzdálenému adresáři bez složité konfigurace.
+- <strong>Transparentní připojení</strong>: Systém se chová, jako by byl adresář místní, takže můžete pracovat s těmito soubory stejně jako s lokálními.</p>
+<h2>Co budete potřebovat 🔧</h2>
+<ol>
+<li><strong>Ubuntu</strong> (nebo jiné Linux distro).</li>
+<li><strong>SSH server</strong> spuštěný na vzdáleném počítači (předpokládáme, že už máte SSH přístup k vzdálenému stroji).</li>
+<li><strong>Práva pro instalaci a přidání uživatele do fuse skupiny</strong>.</li>
+</ol>
+<hr />
+<h2>Instalace SSHFS na Ubuntu 📦</h2>
+<p>Nejdříve nainstalujte balíček <strong><code>sshfs</code></strong>. Otevřete terminál a spusťte následující příkaz:</p>
+<p>sudo apt-get update<br />
+sudo apt-get install sshfs</p>
+<h3>Přidání uživatele do fuse skupiny 👥</h3>
+<p>Pro použití SSHFS musíte být členem <strong>fuse</strong> skupiny, aby bylo možné využívat <strong>fusermount</strong>. Tuto změnu je nutné provést, jinak se vám při pokusu o použití SSHFS zobrazí chybová hláška o oprávněních.</p>
+<p>Pro přidání uživatele do skupiny <strong>fuse</strong> použijte tento příkaz:</p>
+<p>sudo adduser $USER fuse</p>
+<p>Po přidání uživatele do skupiny se musíte <strong>odhlásit</strong> a <strong>znovu přihlásit</strong>, aby se změny projevily. 🔄</p>
+<hr />
+<h2>Použití SSHFS pro připojení vzdáleného adresáře 📂</h2>
+<p>Nyní, když máte SSHFS nainstalováno a vaše uživatelská práva jsou správně nastavena, můžete připojit vzdálený adresář. Předpokládejme, že chcete připojit vzdálený adresář <strong>/projekty</strong> z počítače <strong>vzdaleny</strong>. Tento adresář připojíte k místnímu adresáři <strong>~/projekty</strong>.</p>
+<h3>Příkaz pro připojení vzdáleného adresáře:</h3>
+<p>sshfs $USER@vzdaleny:/projekty ~/projekty</p>
+<ul>
+<li><strong>$USER</strong> – Vaše uživatelské jméno na vzdáleném počítači.</li>
+<li><strong>vzdaleny</strong> – Název nebo IP adresa vzdáleného počítače.</li>
+<li><strong>/projekty</strong> – Cesta k adresáři na vzdáleném počítači.</li>
+<li><strong>~/projekty</strong> – Místní adresář, kam bude vzdálený adresář připojen.</li>
+</ul>
+<hr />
+<h2>Odpojení vzdáleného adresáře 🚪</h2>
+<p>Pokud chcete odpojit vzdálený adresář, použijte následující příkaz:</p>
+<p>fusermount -u ~/projekty</p>
+<p>Tento příkaz odpojí vzdálený adresář a vrátí vás zpět na místní souborový systém.</p>
+<hr />
+<h2>Automatické připojení při startu pomocí /etc/fstab 📑</h2>
+<p>Pro automatické připojení vzdáleného adresáře při každém startu počítače můžete přidat záznam do souboru <strong>/etc/fstab</strong>. Příkaz vypadá takto:</p>
+<h3>Přidání do <code>/etc/fstab</code>:</h3>
+<p>sshfs#franta@vzdaleny:/projekty /home/franta/projekty fuse defaults 0 0</p>
+<ul>
+<li><strong>franta</strong> – Změňte na své uživatelské jméno.</li>
+<li><strong>vzdaleny</strong> – IP adresa nebo název vzdáleného počítače.</li>
+<li><strong>/projekty</strong> – Cesta k adresáři na vzdáleném počítači.</li>
+<li><strong>/home/franta/projekty</strong> – Místní adresář pro připojení.</li>
+</ul>
+<p>Tento zápis zajišťuje, že při každém startu systému se vzdálený adresář automaticky připojí.</p>
+<hr />
+<h2>Pozor na UID (Uživatelské identifikační číslo) ⚠️</h2>
+<p>U jednoho uživatele v systému může být UID odlišné na místním a vzdáleném počítači. <strong>UID</strong> je unikátní číslo přidělené každému uživatelskému účtu v systému, a může se lišit mezi počítači.</p>
+<p>Pokud máte například na místním počítači UID 1000 a na vzdáleném 1003, při použití příkazu <strong><code>ls -l</code></strong> uvidíte na vzdáleném systému jiný uživatelský název, ale to není problém. <strong>SSHFS</strong> stále používá správné UID na vzdáleném počítači, takže všechny změny budou provedeny správně, bez ohledu na to, jaký uživatelský název je zobrazen.</p>
+<p>Pokud chcete vidět UID, použijte příkaz:</p>
+<p>ls -l</p>
+<hr />
+<h2>Závěr ✨</h2>
+<p>SSHFS je skvělý nástroj pro bezpečné a jednoduché připojení vzdálených adresářů na Linuxových systémech. Využití SSH pro šifrování a autentizaci připojení znamená, že vaše data jsou chráněna a přenosy souborů jsou bezpečné.</p>
+<p>Teď víte, jak nainstalovat, nastavit a používat SSHFS na vašem Ubuntu stroji. Pokud máte jakékoliv dotazy nebo problémy, neváhejte se zeptat! 😊</p>
 <p><a href="../index.html">← Zpět na přehled</a></p>
 </body>
 </html>
