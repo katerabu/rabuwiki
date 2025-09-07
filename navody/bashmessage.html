@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>BashMessage – odesílání zpráv z příkazové řádky linuxu</title></head>
+<body>
+<h1>Odesílání a příjem zprávy pomocí <code>ncat</code> a <code>nc</code> s <code>tcpdump</code> 🚀</h1>
+<p>Tento návod ukazuje, jak používat <strong><code>tcpdump</code></strong> pro naslouchání a logování UDP paketů a jak odesílat zprávy pomocí <strong><code>ncat</code></strong> nebo <strong><code>nc</code></strong>. Vše s přidaným logováním do souboru pro snadnou kontrolu zpráv. 📂</p>
+<h2>Co budete potřebovat 🛠️</h2>
+<ol>
+<li><strong>Ubuntu</strong> (nebo jiné Linux distro, ale pro tento příklad předpokládáme Ubuntu 🐧).</li>
+<li><strong><code>tcpdump</code></strong> pro naslouchání a logování paketů.</li>
+<li><strong><code>ncat</code></strong> (součást balíku <strong>Nmap</strong>) pro odesílání zpráv přes UDP 📡.</li>
+<li><strong><code>nc</code></strong> pro odesílání zpráv (alternativa k <code>ncat</code>) 💬.</li>
+<li>Oprávnění pro spuštění <strong><code>tcpdump</code></strong> (obvykle jako root nebo pomocí <code>sudo</code>).</li>
+</ol>
+<h3>Instalace potřebných nástrojů (pro Ubuntu) 📦</h3>
+<p>Nejdříve je třeba nainstalovat <strong><code>tcpdump</code></strong>, <strong><code>nmap</code></strong> (pro <code>ncat</code>), a <strong><code>netcat</code></strong> (pro <code>nc</code>).</p>
+<p>Spusťte následující příkazy:</p>
+<p>sudo apt update<br />
+sudo apt install tcpdump nmap netcat  </p>
+<p>Tímto získáte všechny potřebné nástroje. ✅</p>
+<h2>1. Naslouchání s <code>tcpdump</code> 🔍</h2>
+<p>Na počítači, který bude přijímat zprávy, použijte následující příkaz pro naslouchání na specifikovaném UDP portu a IP adrese.</p>
+<h3>Příkaz pro naslouchání na UDP portu a IP:</h3>
+<p>sudo tcpdump -i eth0 -v -A udp and host 10.20.1.4 and port 4444</p>
+<h3>Vysvětlení parametrů:</h3>
+<ul>
+<li><code>-i eth0</code> – Určuje síťové rozhraní, na kterém <strong><code>tcpdump</code></strong> bude poslouchat. Na Ubuntu může být toto rozhraní různé, např. <code>enp3s0</code>, <code>wlan0</code> nebo jiný název. Zkontrolujte svůj název síťového rozhraní příkazem <code>ip a</code>.</li>
+<li><code>-v</code> – Verbózní režim pro zobrazení podrobností o každém zachyceném paketu.</li>
+<li><code>-A</code> – Zobrazuje obsah paketů v textovém (ASCII) formátu.</li>
+<li><code>udp</code> – Filtruje pouze UDP pakety.</li>
+<li><code>and host 10.20.1.4</code> – Filtruje provoz pouze z nebo na specifikovanou IP adresu (v tomto případě <code>10.20.1.4</code>).</li>
+<li><code>and port 4444</code> – Filtruje provoz pouze na UDP portu <strong>4444</strong>.</li>
+</ul>
+<h2>2. Odesílání zprávy (varianta 1: pomocí <code>ncat</code>) 📨</h2>
+<p>Tato varianta používá <strong><code>ncat</code></strong> k odeslání zprávy přes UDP protokol na specifikovaný port a IP adresu.</p>
+<h3>Příkaz pro odeslání zprávy:</h3>
+<p>echo -n "Ahoj, toto je testovací zpráva!" | ncat -vu 10.20.1.4 4444</p>
+<h3>Vysvětlení parametrů:</h3>
+<ul>
+<li><code>echo -n "Ahoj, toto je testovací zpráva!"</code> – Odesílá zprávu (s parametrem <code>-n</code> pro vynechání nového řádku na konci).</li>
+<li><code>ncat -vu</code> – Používá <strong><code>ncat</code></strong> pro odeslání zprávy. <code>-v</code> pro verbózní výstup a <code>-u</code> pro UDP komunikaci.</li>
+<li><code>10.20.1.4</code> – IP adresa cílového počítače.</li>
+<li><code>4444</code> – UDP port, na který se zpráva odesílá.</li>
+</ul>
+<h2>3. Odesílání zprávy (varianta 2: pomocí <code>nc</code>) 💬</h2>
+<p>Tato varianta používá <strong><code>nc</code></strong> pro odesílání zprávy na specifikovanou IP adresu a port. Pokud nemáte <strong><code>ncat</code></strong>, můžete použít <strong><code>nc</code></strong>, který je často předinstalován v systémech.</p>
+<h3>Příkaz pro odeslání zprávy:</h3>
+<p>echo -n "Ahoj, toto je testovací zpráva!" | nc -vu 10.20.1.4 4444</p>
+<h3>Vysvětlení parametrů:</h3>
+<ul>
+<li><code>echo -n "Ahoj, toto je testovací zpráva!"</code> – Odesílá zprávu.</li>
+<li><code>nc -vu</code> – Používá <strong><code>nc</code></strong> pro odesílání zprávy. <code>-v</code> pro verbózní výstup a <code>-u</code> pro UDP komunikaci.</li>
+<li><code>10.20.1.4</code> – IP adresa cílového počítače.</li>
+<li><code>4444</code> – UDP port, na který se zpráva odesílá.</li>
+</ul>
+<h2>4. Logování UDP zpráv do souboru 📜</h2>
+<p>Pro snadné logování přijatých zpráv použijeme <strong><code>tcpdump</code></strong> s přesměrováním výstupu do souboru. Tento soubor pak můžete použít pro kontrolu zpráv.</p>
+<h3>Příkaz pro logování zpráv do souboru:</h3>
+<p>sudo tcpdump -vAi eth0 host 10.20.1.4 and port 4444 &gt;&gt; $HOME/messagesncat.log</p>
+<h3>Vysvětlení parametrů:</h3>
+<ul>
+<li><code>-vA</code> – Verbózní režim pro podrobnosti o paketech a ASCII výstup pro textovou podobu dat.</li>
+<li><code>-i eth0</code> – Síťové rozhraní pro naslouchání (nahraďte <code>eth0</code> podle potřeby).</li>
+<li><code>&gt;&gt; $HOME/messagesncat.log</code> – Přesměruje výstup <strong><code>tcpdump</code></strong> do souboru <code>messagesncat.log</code> ve vašem domovském adresáři. <strong><code>&gt;&gt;</code></strong> znamená, že nové zprávy budou <strong>přidány</strong> k již existujícímu obsahu souboru. Pokud chcete soubor přepsat, použijte <strong><code>&gt;</code></strong> (např. <code>&gt; $HOME/messagesncat.log</code>).</li>
+</ul>
+<h3>Zobrazení logovaných zpráv:</h3>
+<p>Pokud chcete zobrazit obsah logu, použijte příkaz:</p>
+<p>cat $HOME/messagesncat.log</p>
+<p><strong>Důležité rozdíly mezi <code>&gt;</code> a <code>&gt;&gt;</code>:</strong>
+- <strong><code>&gt;</code></strong> přepíše obsah souboru (záznamy budou ztraceny).
+- <strong><code>&gt;&gt;</code></strong> přidá nové záznamy na konec souboru, aniž by přepsal jeho obsah.</p>
+<h2>5. Výstup z <code>tcpdump</code> 🎯</h2>
+<p>Pokud vše probíhá správně, <strong><code>tcpdump</code></strong> na serveru (počítá se, že server naslouchá na IP <code>10.20.1.4</code> a portu 4444) zachytí tento UDP paket a zobrazí výstup podobný tomuto:</p>
+<p>10:10:10.123456 IP (tos 0x0, ttl 64, id 12345, offset 0, flags [none], proto UDP (17), length 60)<br />
+    10.20.1.4.4444 &gt; 10.20.1.10.12345: [bad udp cksum 0x1234 -&gt; 0x4321!] UDP, length 32<br />
+        0x0000:  4500 003c 3039 4000 4011 0000 0a14 01f4<br />
+        0x0010:  0a14 01f6 01bb 1155 0016 89ab 6162 6364<br />
+        0x0020:  6869 2c20 746f 746f 2069 7320 7465 7374<br />
+        0x0030:  696e 6720 7a70 7261 7661 2100  </p>
+<h3>Vysvětlení výstupu:</h3>
+<ul>
+<li><strong><code>10:10:10.123456</code></strong> – Časový razítko, kdy paket přišel.</li>
+<li><strong><code>IP 10.20.1.4.4444 &gt; 10.20.1.10.12345</code></strong> – Zobrazuje zdrojovou a cílovou IP adresu a porty.</li>
+<li><strong><code>length 60</code></strong> – Délka dat v paketu.</li>
+<li><strong>Data (hexadecimální formát)</strong> – Hexadecimální reprezentace datového obsahu paketu.</li>
+</ul>
+<p><a href="../index.html">← Zpět na přehled</a></p>
+</body>
+</html>
