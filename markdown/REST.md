@@ -56,7 +56,11 @@ Pro REST pravděpodobně nenajdeme žádnou normu, ale vřele se doporučuje ní
 | 404    | Not Found – zdroj nenalezen     |  
 | 405    | Method Not Allowed – metoda nepovolená |  
 | 415    | Unsupported Media Type – nepodporovaný formát |  
-| 429    | Too Many Requests – překročen limit požadavků |  
+| 429    | Too Many Requests – překročen limit požadavků | 
+| 500    | Internal Server Error – to je asi jasné |
+| 503    | Service Unavailable – nedostupnost služby na kterou je zaslán požadavek (GET) |
+| 504    | Gateway Timeout – pravděpodobně odpojená (filtrovaná FW) URL  |
+| 501    | Not Implemented – nebyla rozpoznána metoda |
 
 ### 4️⃣ Čtvrtá úroveň – Bezstavovost  
 - Server nesmí uchovávat stav klienta mezi požadavky.  
