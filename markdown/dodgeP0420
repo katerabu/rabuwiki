@@ -53,9 +53,12 @@ Pokud se chování obou senzorů příliš podobá → **katalyzátor nic moc ne
 ## 🌡️ Měření teplot
 
 - **Vstup do katalyzátoru:** 110 °C  
-- **Výstup z katalyzátoru:** 170 °C
+- **Výstup z katalyzátoru:** 170 °C  
+- **Metoda měření:** bezdotykový infračervený teploměr  
+- **Podmínky měření:** motor na volnoběh po krátké jízdě, zahřátý na provozní teplotu
 
-> Poznámka: Za normálního provozu by měl být vstup 250–400 °C. Naměřené hodnoty mohou ukazovat na nízké zatížení nebo studený motor.
+> Poznámka: Za běžného provozu by měl být vstupní teplotní rozdíl vyšší.  
+> Katalyzátor se aktivuje při vyšší zátěži (typicky 250–400 °C), proto jsou nižší teploty na volnoběh po jízdě běžné.
 
 ---
 
