@@ -1,0 +1,206 @@
+---
+title: Diagnostika chyby P0420 u vozidla Dodge
+category: Cestování
+tags: [OBD2, auta, chyba, porucha, dodge, katalyzátor]
+last_update: 2025-10-05
+---
+  
+# 🧾 Diagnostika chyby P0420 u vozidla Dodge
+
+## 📌 Vstupní údaje od uživatele
+
+**Popis situace:**
+
+> Dodge vyhodil za klidné jízdy cca 80 km/h po rovince chybu: `grilované kuře`  
+> Chyba šla vymazat na poněkolikátý pokus. Po testovací jízdě ani po jízdě 50 km se znovu neobjevila.  
+> Měření teploty katalyzátor bezdotykovým teploměrem - vozidlo v klidu na volnoběh:  
+> - Před cca 110 °C  
+> - Za cca 170 °C  
+>  
+> Vytaženo a zahejbáno s čidlem co je na výstupu od filtru sání, i tam vše vypadá v pořádku.  
+> Vzduchový filtr je nový.
+
+---
+
+## 🧾 Výstup z diagnostiky (Car Scanner ELM OBD2)
+
+- **Verze aplikace:** 1.121.0/401210/GP
+- **Datum:** 05.10.2025 9:37:39
+- **VIN:** `2C4RDGBG9ER281324`
+
+### ❗ Detekovaný DTC kód
+| Kód | Popis |
+|-----|-------|
+| **P0420** | Catalytic converter system, bank 1 – efficiency below threshold |
+
+- **Stav:** Potvrzeno
+- **Poznámka ECU:** Test nebyl dokončen, ověřeno a uloženo v paměti, chyba byla přítomna během jízdního cyklu
+
+---
+
+## 🧠 Význam chyby P0420
+
+Kód P0420 znamená, že řídicí jednotka motoru zjistila **nízkou účinnost katalyzátoru** na **bance 1** (pravá strana motoru u V6/V8).
+
+ECU porovnává data ze **dvou lambda sond**:
+- `Sensor 1` – před katalyzátorem (měří výfukové plyny z motoru)
+- `Sensor 2` – za katalyzátorem (měří, co prošlo katem)
+
+Pokud se chování obou senzorů příliš podobá → **katalyzátor nic moc nečistí** → vyhodí se chyba.
+
+---
+
+## 🌡️ Měření teplot
+
+- **Vstup do katalyzátoru:** 110 °C  
+- **Výstup z katalyzátoru:** 170 °C
+
+> Poznámka: Za normálního provozu by měl být vstup 250–400 °C. Naměřené hodnoty mohou ukazovat na nízké zatížení nebo studený motor.
+
+---
+
+## 📋 Možné příčiny chyby P0420
+
+### 🟡 Pravděpodobné:
+1. **Ztráta účinnosti katalyzátoru (opotřebení, zanesení)**
+2. **Aftermarket / neoriginální katalyzátor nízké kvality**
+3. **Problém v zapalování / směsi** (špatná svíčka, lambda před katem, vstřik)
+4. **Slabý downstream O2 senzor (za katem)**
+
+### 🔴 Méně pravděpodobné:
+- Netěsnost výfuku (falešný vzduch → zkreslená měření)
+- Vadná řídicí jednotka
+- Chyba softwaru / zásah do ECU (tuning)
+
+---
+
+## 🛠️ Doporučené kroky
+
+### ✅ Krok 1: Monitorování
+- Pokud se chyba zatím nevrací, sleduj OBD live data
+- Zkontroluj reakci O2 senzorů při různých režimech jízdy:
+  - `Sensor 1` (před katem): rychlé kolísání 0.1–0.9 V
+  - `Sensor 2` (za katem): stabilní kolem 0.5 V  
+  → Pokud kopíruje senzor 1 → problém s katem
+
+### ✅ Krok 2: Aditivum do benzínu
+- Např. **Liqui Moly Catalytic System Cleaner**, **STP Cat Cleaner** apod.
+- Pomůže vyčistit katalyzátor, pokud je pouze zanesený
+
+### ✅ Krok 3: Kontrola downstream O2 senzoru
+- Pokud je starý, může být líný / reagovat špatně
+- Doporučeno preventivně vyměnit
+
+### ✅ Krok 4: Pravidelná kontrola
+- Sleduj, zda se chyba vrátí v dalších 100–200 km
+- Pokud ano, je pravděpodobně nutná výměna katalyzátoru
+
+---
+
+## 🚫 Co nedělat
+
+- ❌ Vypínat chybu v ECU (tuning, P0420 off) – **nelegální**
+- ❌ Používat lambda cheater bez řešení příčiny – jen maskuje problém
+
+---
+
+## 📝 Shrnutí
+
+Auto zatím vykazuje **mírně sníženou účinnost katalyzátoru**, ale **chyba se zatím nevrací** → sleduj a jednej až v případě opakovaného výskytu.
+
+---
+
+## 🔍 Metadata z ECU
+
+- **ECU**: PCM PowertrainCtrl
+- **ID kalibrace**: 68206610AG
+- **Počet zapalovacích cyklů**: 537
+- **Sledování katalyzátoru (Bank 1)**:
+  - Dokončené testy: 219
+  - Detekované podmínky: 167
+- **Sledování O2 senzorů (Bank 1)**:
+  - Dokončené testy: 219
+  - Detekované podmínky: 167
+
+---
+
+## 📌 Vozidlo
+
+| Parametr | Hodnota |
+|---------|---------|
+| VIN     | 2C4RDGBG9ER281324 |
+| Motor   | Benzínový |
+| Protokol ECU | ISO 15765-4 CAN (11 bit ID, 500 kbaud) |
+| OBD-II zařízení | Car Scanner ELM327 |
+
+---
+
+## ✅ Doporučený další postup
+
+| Úkon | Stav |
+|------|------|
+| Monitorovat výskyt chyby | ✅ |
+| Aditivum do paliva | ✅ (volitelné) |
+| Kontrola/výměna O2 senzoru za katem | 🔍 |
+| Live data O2 senzorů | 🔍 |
+| Kontrola netěsnosti výfuku | 🔍 |
+| Výměna katalyzátoru | ❌ (zatím ne) |
+
+---
+originál výstup z OBD:
+---
+Car Scanner ELM OBD2
+Version: 1.121.0/401210/GP
+DTC report
+Connection profile: Dodge OBD-II / EOBDDate: 05.10.2025 9:37:39
+VIN: 2C4RDGBG9ER281324
+============================
+OBD-IIOBD-II
+DTCs: 1
+----------------------------
+P0420 [0x0420]
+Catalytic converter system, bank 1 - efficiency below threshold
+Stav: Potvrzeno
+============================
+Řídicí jednotka motoruŘídicí jednotka motoru
+DTCs: 1
+----------------------------
+P0420 [0x0420]
+Catalytic converter system, bank 1 - efficiency below threshold
+Stav: Test nebyl dokončen, Ověřeno a uloženo v nevolatilní paměti, Ověřená porucha přítomna během tohoto jízdního cyklu
+
+---------------------------------
+OBD-II výstup ze scaneru
+---------------------------------
+
+OBD-II
+Protokol ECU: 6) ISO 15765-4 CAN (11 bit ID, 500 kbaud)
+ECU address/CAN Id: 7E8
+Název ECU: PCM PowertrainCtrl
+Čísla pro ověření kalibrace: 017DAC2E84
+ID kalibrace: 68206610AG
+VIN: 2C4RDGBG9ER281324
+Sledování výkonu zážehových motorů v provozu:
+Počet zjištěných sledovaných podmínek OBD: 167
+Počítadlo zapalovacích cyklů: 537
+Počet sledovaných dokončení katalyzátoru - banka 1: 219
+Počet sledovaných podmínek zjištěných na katalyzátoru - banka 1: 167
+Počet sledovaných dokončení katalyzátoru - banka 2: 216
+Počet sledovaných podmínek zjištěných na katalyzátoru - banka 2: 167
+Počet sledovaných dokončení senzoru O2 - banka 1: 219
+Počet sledovaných podmínek zjištěných na senzoru O2 - banka 1: 167
+Počet sledovaných dokončení senzoru O2 - banka 2: 216
+Počet sledovaných podmínek zjištěných na senzoru O2 - banka 2: 167
+Řídicí jednotka motoru
+VIN: 2C4RDGBG9ER281324
+VIN: 2C4RDGBG9ER281324
+Regulace výfuku nebo číslo schválení typu:: 68206610AG
+Název systému nebo typ motoru:: }.
+ECU Ident: 023625C4FF112F08110136383230363631304147
+ECU Ident: 0E140404
+ECU Ident: 0A21D0000067005B000103C020000000080000000000000003030000000A0001000100000008
+ECU Ident: 3243345244474247394552323831333234
+ECU Ident: 3243345244474247394552323831333234
+ECU Ident: 02023625C4FF081101363832303636313041473625C4FF08110136383230363631304147
+ECU Ident: 3243345244474247394552323831333234
+> 📅 **Aktualizace**: Poslední chyba P0420 zaznamenána 05.10.2025
