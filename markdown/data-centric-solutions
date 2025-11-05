@@ -253,5 +253,134 @@ Data‑centric přístup vyžaduje disciplínu, automatizaci a jasný provozní 
 - Wilkinson, M.D., Dumontier, M., Aalbersberg, I.J., Appleton, G., Axton, M. et al. (2016) The FAIR Guiding Principles for scientific data management and stewardship. Scientific Data 3, 160018. Available at: https://www.nature.com/articles/sdata201618 (Accessed: 5 November 2025).
 - ISO/IEC (2008) 25012:2008 Systems and software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — Data quality model. International Organization for Standardization. Available at: https://www.iso.org/standard/35736.html (Accessed: 5 November 2025).
 
+Doplnění od AI:
+
+Data-centric solution je přístup, který staví data do středu všech operací firmy, namísto toho, aby je považoval jen za vedlejší produkt. To znamená, že se firmy zaměřují na kvalitu a organizaci dat jako na klíčový majetek pro rozhodování, optimalizaci procesů a zlepšování výkonnosti. V praxi to může znamenat například přístup data-centric AI, kde se zlepšuje výkonnost umělé inteligence prostřednictvím systematického vylepšování kvality dat, nikoli pouze úpravou kódu modelu. 
+Klíčové aspekty
+
+Data jako primární majetek: Data jsou vnímána jako trvalá hodnota, na které závisí celý podnik.
+Zaměření na kvalitu: Prioritou je kvalita, přesnost a konzistence dat, protože i méně složitý model s kvalitními daty může být výkonnější než složitější model s nekvalitními daty.
+Architektura orientovaná na data: Architektura je navržena tak, aby data byla primární a trvalou součástí, zatímco aplikace se mohou a často mění.
+Široké uplatnění: Tento přístup se používá v různých oblastech, například ve finančních službách pro řízení rizik nebo v umělé inteligenci pro zajištění spolehlivých výsledků. 
+Další oblasti uplatnění
+
+Bezpečnost (Data-Centric Security): Bezpečnost se zaměřuje na ochranu samotných dat v celém jejich životním cyklu, nikoli pouze na zabezpečení infrastruktury.
+Výpočty (Data-Centric Computing): Tato oblast kombinuje hardware a software tak, aby data byla považována za stálý zdroj hodnoty a aby se maximalizovala jejich hodnota. 
+Data-centric computing - Wikipedia
+Data-centric computing is an approach that merges innovative hardware and software to treat data, not applications, as the permane...
+
+---
+
+# Data‑centric solutions a Federated Mission Networking (FMN) v NATO: vazby, mapování a doporučení
+
+## Abstrakt
+Data‑centric přístup je v přirozeném souladu s principy Federated Mission Networking (FMN) v rámci NATO. FMN buduje schopnost rychle zřizovat a provozovat federované, standardy‑řízené, bezpečné a interoperabilní mise a prostředí pro sdílení informací (Mission Partner Environment, MPE). Data‑centric řešení přináší disciplinovaný model práce s daty (datové produkty, smlouvy nad daty, měřitelná kvalita, metadata, bezpečnost a governance), který zapadá do FMN spiral specifikací, NISP profilů a datově‑centrické bezpečnosti (STANAG 4774/4778). Tento dokument shrnuje spojitosti, praktické mapování a kroky zavedení (NATO, 2021; NCI Agency, 2023; NSO, 2015; NIST, 2020).
+
+## Co je FMN a proč je relevantní pro data‑centric přístup
+- FMN: iniciativa NATO pro federované mise s důrazem na interoperabilitu, standardy a „mission threads“. Opírá se o spirálový model specifikací (FMN Spiral Specifications), výběr profilů interoperabilních standardů (NISP) a jádrové služby (identity, PKI, katalog, messaging, collaboration) (NATO, 2021; NCI Agency, 2023).
+- Data‑centric relevance: federace partnerů, rozdílné bezpečnostní domény a dynamické sdílení informací vyžadují přesné sémantické smlouvy, kvalitní metadata, označování citlivosti, měřitelnou kvalitu a pozorovatelnost – to jsou základní kameny data‑centric přístupu.
+
+## Klíčové pojítko: „data jako produkt“ ve federaci partnerů
+- FMN vyžaduje jasně popsané schopnosti a informační produkty. Data‑centric přístup formalizuje „datové produkty“ se smlouvami (schéma, sémantika, SLO), vlastníky, katalogizací a bezpečnostním označením. To umožňuje:
+  - interoperabilní publikaci a konzumaci dat mezi národními/dresortními doménami,
+  - řízené změny (versioning) bez narušení mise,
+  - auditovatelnost a měření kvality v čase.
+
+## Mapování principů data‑centric na FMN stavební bloky
+1. Smlouvy nad daty (data contracts) a schémata
+   - FMN/NISP vyžaduje standardizované formáty; použijte STANAG schémata, kde existují (např. ISR: STANAG 4559 – NATO ISR Library, STANAG 4609 – Motion Imagery, STANAG 4607 – GMTI) a doplňte je o kontrakty na úrovni eventů/API/tabulek (NATO, 2021; NSO, 2015).
+   - Politika verzování a „backward compatibility“ je klíčová pro heterogenní partnery.
+2. Metadata a bezpečnostní označování
+   - Zaveďte povinné bezpečnostní a releasability tagy v metadatech dle STANAG 4774/4778 (confidentiality metadata a vazba na obsah) tak, aby bylo možné vynucovat politiky sdílení napříč doménami (NSO, 2015).
+   - Kromě klasifikace (např. NATO SECRET) používejte releasability (např. REL TO) a caveats v metadatech.
+3. Federovaná governance a odpovědnosti
+   - FMN podporuje federaci – každá strana spravuje své produkty v rámci společných minimálních standardů (profilů). Data‑centric governance zavádí minimální „computational“ standardy: katalog, kvalita, lineage, bezpečnost, smlouvy (NATO, 2021).
+4. Identita, atributy a řízení přístupu
+   - Pro vynucení politik nad daty uplatněte ABAC s atributy subjektu i zdroje (XACML/PEP/PDP vzor). Zásady Zero Trust dle NIST 800‑207 doplňují FMN bezpečnostní model o kontextově‑řízené rozhodování (NIST, 2020).
+5. Pozorovatelnost, SLI/SLO a provozní excelence
+   - FMN vyžaduje spolehlivost během misí. Definujte SLI/SLO pro čerstvost, úplnost, latenci a dostupnost datových produktů. Sdílejte metriky a incidentní informace v rámci MPE podle dohodnutých pravidel.
+6. Integrace s NATO Core Services
+   - Registrace/datový katalog (Service/Capability Registry) pro dohledatelnost.
+   - Messaging a pub/sub pro ISR a situační povědomí; datové API pro konzumaci produktů. Mediation/translation služby pro mapování mezi schématy/etiketami (NATO, 2021; NCI Agency, 2023).
+7. Cross‑Domain Solutions (CDS)
+   - Data‑centric bezpečnost s přesnými metadaty a kontrakty usnadňuje automatizované filtry, transformace a label‑translation při přenosu přes CDS mezi klasifikačními doménami.
+
+## Referenční provozní obraz: data‑centric FMN mission thread (textový scénář)
+- Producent (ISR jednotka) publikuje datový produkt „ISR_motion_imagery_gold“ ve formátu STANAG 4609, s metadaty klasifikace a releasability dle STANAG 4774/4778, verze schématu `v2`.
+- Data jsou ingestována do federovaného lakehouse (ACID tabulky, otevřený formát) s validací kontraktu a bezpečnostních tagů. Lineage a katalog jsou aktualizovány.
+- Konzumenti (koaliční štáb, analytické týmy) přistupují přes standardizované API/BI vrstvy. ABAC rozhodnutí vyhodnocuje klasifikaci, releasability a atributy uživatele.
+- Pozorovatelnost sleduje čerstvost (now − max(event_time)), úplnost a incidenty; porušení SLO vyvolá alert a sdílený post‑incident report v rámci MPE.
+
+## Praktické doporučení pro FMN prostředí
+- Smlouvy a profily
+  - Vytvořte „profile‑based“ data contracts: vazba na konkrétní NISP profil a STANAG, explicitní pole pro bezpečnostní tagy a releasability.
+  - Připravte migrační plán mezi verzemi schémat v souladu s FMN spiral roadmap.
+- Metadata a katalog
+  - Povinné položky: klasifikace, releasability, vlastník, účel, SLO, kontaktní bod, verze schématu, odkaz na standard (např. STANAG 4609).
+  - Pro discovery publikujte do FMN‑kompatibilního katalogu/služby registru.
+- Kvalita a testy
+  - V CI/CD vynucujte: validaci schématu (vč. bezpečnostních tagů), kontrolu čerstvosti, úplnosti a referenční integrity; kontraktní testy proti zlatému vzorku.
+  - Auditujte a logujte porušení se standardizovaným důvodem a klasifikačním kontextem.
+- Bezpečnost a přístup
+  - Implementujte ABAC nad atributy uživatelů a dat (tagy dle STANAG 4774/4778). Oddělte policy decision (PDP) a enforcement (PEP) pro lepší audit a federaci.
+  - Při překladech mezi doménami mapujte labely a releasability pravidly schválenými v koalici; automatizujte pomocí policy engine.
+- CDS a transformace
+  - CDS využívejte s „least privilege“ a principem minimálního sdílení. Transformace musí zachovat nebo zpřesnit bezpečnostní metadata.
+  - Definujte schválené transformace pro odtajnění/odstranění PII (např. maskování, generalizace).
+- Provoz a SRE
+  - Definujte SLO produktů kritických pro misi a sdílejte error budgety v koalici. Běžná SLI: čerstvost P95, dostupnost API, chybovost validací, latence CDS.
+  - Společný runbook a cvičení incident response napříč partnery.
+- FinOps a kapacita
+  - V misích plánujte kapacitní profily a cost guardraily; u ACID tabulek nastavte politiku compaction a retence dle taktických/strategických potřeb.
+
+## Příklad minimálního „FMN‑ready“ datového produktu (obsahová šablona)
+- Název a verze: `isr_motion_imagery_gold v2`
+- Účel: podpora situačního povědomí v misi XY
+- Standardy: STANAG 4609, NISP profil FMN‑Spiral‑X
+- Rozhraní: tabulka/stream/API, endpoint a autentizační metoda
+- Schéma: datové typy, jednotky, odkaz na kontrakt
+- Bezpečnostní metadata: klasifikace, releasability, caveats (STANAG 4774/4778)
+- SLO: čerstvost P95 < 2 min, dostupnost 99.9 %, úplnost > 0.995
+- Testy kvality: seznam asertů a kontraktních testů
+- Lineage: zdroje a transformace
+- Vlastník a kontakty: role/organizace
+- Licence/podmínky sdílení: omezení a pravidla užití
+
+## 30–60–90denní plán zavedení v kontextu FMN/MPE
+- 0–30 dní
+  - Inventarizace klíčových datových flow relevantních pro misi; mapování na STANAG/NISP profily.
+  - Zaveďte minimální datové smlouvy u 1–2 kritických produktů, včetně bezpečnostních tagů dle STANAG 4774/4778.
+  - Zprovozněte katalog a evidence vlastníků, účelu a SLO.
+- 31–60 dní
+  - CI/CD s kontraktními testy; validace bezpečnostních metadat v ingestu.
+  - Napojení na FMN core služby (registry, identity, PKI); ABAC s PDP/PEP.
+  - Observability dashboardy se SLI (čerstvost, dostupnost, chybovost).
+- 61–90 dní
+  - CDS integrační vzor a politika label‑translation; schválené transformace.
+  - Rozšíření na lakehouse s ACID tabulkami a řízenou retencí.
+  - Federovaná governance: minimální standardy pro publikaci produktů v koalici, periodický audit.
+
+## Antipatterny ve vztahu k FMN
+- „Formát bez sémantiky“: spoléhání pouze na STANAG datový formát bez kontraktovaných byznysových pravidel a kvality.
+- „Bez labelů“: chybějící nebo nekonzistentní bezpečnostní metadata brání ABAC a CDS.
+- „Centrální monolit“: snaha o jednotné centrální úložiště bez federace a doménové odpovědnosti.
+- „Ad‑hoc releasability“: manuální a nespolehlivé procesy sdílení místo politik v metadatech.
+
+## Jak měřit úspěch v FMN kontextu
+- Interoperabilita: procento produktů v souladu s NISP/ STANAG profily; počet úspěšných mezidoménových výměn bez manuální intervence.
+- Bezpečnost: pokrytí dat bezpečnostními tagy, počet blokovaných přístupů podle politik vs. false positives.
+- Spolehlivost: plnění SLO během cvičení/operací; MTTR incidentů s daty.
+- Adopce: počet koaličních konzumentů na datový produkt; doba onboardingu nového partnera.
+
+## Shrnutí
+Data‑centric přístup poskytuje přesně to, co FMN potřebuje: jasně specifikované, bezpečně označené, měřitelné a spravované datové produkty, které lze bezpečně a rychle sdílet napříč partnery a doménami. Kombinace STANAG standardů pro formát a bezpečnostní metadata, federované governance a ABAC/Zero Trust vytváří provozovatelný rámec pro interoperabilitu v reálných misích (NATO, 2021; NSO, 2015; NIST, 2020).
+
+## Reference
+- NATO (2021) Federated Mission Networking (FMN) – Overview and Spiral Specifications. NATO. Available at: https://www.nato.int/ (Accessed: 5 November 2025).
+- NCI Agency (2023) Federated Mission Networking: Enabling Mission Partner Environments. NATO Communications and Information Agency. Available at: https://www.ncia.nato.int/ (Accessed: 5 November 2025).
+- NSO (2015) STANAG 4774 and STANAG 4778: Confidentiality Metadata Label Syntax and Binding. NATO Standardization Office. Available at: https://nso.nato.int/ (Accessed: 5 November 2025).
+- NSO (2015) STANAG 4559 (NATO ISR Library), STANAG 4607 (GMTI), STANAG 4609 (NATO Digital Motion Imagery). NATO Standardization Office. Available at: https://nso.nato.int/ (Accessed: 5 November 2025).
+- NIST (2020) Special Publication 800‑207: Zero Trust Architecture. National Institute of Standards and Technology. Available at: https://csrc.nist.gov/publications/detail/sp/800-207/final (Accessed: 5 November 2025).
+- NIST (2014) Special Publication 800‑162: Guide to Attribute Based Access Control (ABAC) Definition and Considerations. National Institute of Standards and Technology. Available at: https://csrc.nist.gov/publications (Accessed: 5 November 2025).
 
   
