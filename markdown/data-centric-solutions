@@ -4,43 +4,111 @@ category: Počítače
 tags: [data, architektura, analytika, programování]
 last_update: 2025-11-05
 ---
-# Data‑centric solutions: odborný průvodce a praktický návod
+# 📚 Data‑centric solutions: odborný průvodce a praktický návod
 
-Soubor: data-centric-solutions.md
+Soubor: data-centric-solutions.md  
+Poslední aktualizace: 5. listopadu 2025
+
+> ⭐️ Stručné shrnutí: *Data‑centric přístup klade do středu pozornosti data samotná* — jejich kvalitu, sémantiku, pozorovatelnost, bezpečnost a spravovatelnost. ***Data jsou produkt***, se smlouvami, SLO a přísnou governance. Tento dokument propojuje principy data‑centric praxe s referenční architekturou, metrikami, SRE postupy, bezpečností a také s rámcem Federated Mission Networking (FMN) v NATO.
+
+---
+
+## 🧭 Obsah (ToC)
+
+- [Abstrakt](#abstrakt)
+- [Pro koho je tento návod](#pro-koho-je-tento-návod)
+- [Co je data‑centric přístup a proč na něm záleží](#co-je-data-centric-přístup-a-proč-na-něm-záleží)
+- [Klíčové aspekty data‑centric přístupu](#klíčové-aspekty-data-centric-přístupu)
+- [Základní principy data‑centric řešení](#základní-principy-data-centric-řešení)
+- [Referenční architektura (high‑level)](#referenční-architektura-high-level)
+- [Datové produkty a datové smlouvy](#datové-produkty-a-datové-smlouvy)
+- [Kvalita dat: dimenze, metriky, testy](#kvalita-dat-dimenze-metriky-testy)
+- [Metadata, katalog a lineage](#metadata-katalog-a-lineage)
+- [Orchestrace, CI/CD a DataOps](#orchestrace-cicd-a-dataops)
+- [Batch vs. streaming a CDC](#batch-vs-streaming-a-cdc)
+- [Úložiště a dotazy: formáty, partitioning, performance](#úložiště-a-dotazy-formáty-partitioning-performance)
+- [ML a feature management](#ml-a-feature-management)
+- [Pozorovatelnost dat a SRE praktiky](#pozorovatelnost-dat-a-sre-praktiky)
+- [Bezpečnost, soukromí a compliance](#bezpečnost-soukromí-a-compliance)
+- [Nákladová efektivita a FinOps pro data](#nákladová-efektivita-a-finops-pro-data)
+- [Škálování a spolehlivost](#škálování-a-spolehlivost)
+- [Organizační model a governance](#organizační-model-a-governance)
+- [Antipatterny, kterým se vyhnout](#antipatterny-kterým-se-vyhnout)
+- [KPI a metriky úspěchu](#kpi-a-metriky-úspěchu)
+- [Praktický návod: 30‑60‑90 dní](#praktický-návod-30-60-90-dní)
+- [Kontrolní seznamy (checklisty)](#kontrolní-seznamy-checklisty)
+- [Vzor SLO/SLI definic (příklad)](#vzor-slosli-definic-příklad)
+- [Tipy k implementaci technologií](#tipy-k-implementaci-technologií)
+- [Slovníček pojmů](#slovníček-pojmů)
+- [Data‑centric solutions a FMN v NATO: vazby a mapování](#data-centric-solutions-a-fmn-v-nato-vazby-a-mapování)
+- [FMN: referenční mission thread a doporučení](#fmn-referenční-mission-thread-a-doporučení)
+- [Závěr](#závěr)
+- [FAQ](#faq)
+- [Reference](#reference)
+
+---
 
 ## Abstrakt
 Data‑centric solutions staví kvalitu, spravovatelnost a využitelnost dat do středu architektury i procesů. Místo maximalizace přesnosti modelů či nástrojů samých o sobě kladou důraz na návrh datových produktů, srozumitelné smlouvy nad daty, měřitelnou kvalitu, pozorovatelnost, řízení rizik a efektivní provozní model. Tento dokument shrnuje osvědčené principy, referenční architektury, postupy zavádění, metriky i governance pro odborné publikum a doplňuje je o praktické check‑listy a šablony. V textu odkazujeme na etablované zdroje a standardy (Dehghani, 2021; Armbrust et al., 2021; DAMA International, 2017; Wilkinson et al., 2016).
 
+> ℹ️ Poznámka: *Data‑centric přístup přináší největší návratnost investic tam, kde je rozmanitost a rychlý vývoj datových zdrojů.* Umožňuje stabilní doručování hodnoty i při častých změnách aplikací.
+
+---
+
 ## Pro koho je tento návod
-- Architekti datových platforem a data leadři
-- Data inženýři, analytici, ML inženýři
-- Produktoví manažeři datových produktů a data stewardi
-- Bezpečnostní a compliance specialisté
+- 👩‍💼 Architekti datových platforem a data leadři
+- 🧑‍💻 Data inženýři, analytici, ML inženýři
+- 🧩 Produktoví manažeři datových produktů a data stewardi
+- 🔐 Bezpečnostní a compliance specialisté
+
+---
 
 ## Co je data‑centric přístup a proč na něm záleží
 - Od model‑centric k data‑centric: ve většině analytických a AI systémů je největší pákou kvalita a správa dat, nikoli samotný model či nástroj. Investice do kvality, smluv nad daty, lineage a pozorovatelnosti snižuje technický dluh a zrýchluje doručování hodnoty (Sculley et al., 2015; Breck et al., 2017).
 - Data jako produkt: Doménové týmy publikují data jako „datové produkty“ s jasným účelem, SLA/SLO, dokumentací a rozhraním (Dehghani, 2021).
 - FAIR a DMBOK: Data mají být dohledatelná, dostupná, interoperabilní a znovupoužitelná (FAIR) a spravovaná v souladu s DMBOK disciplínami (Wilkinson et al., 2016; DAMA International, 2017).
 
+> 💡 Doporučení: ***Nehledejte „silver bullet“ v novém nástroji.*** *Začněte kontrakty nad daty, kvalitou a metadaty.* Zlepšování modelů bude následovat rychleji.
+
+---
+
+## Klíčové aspekty data‑centric přístupu
+- 🧱 Data jako primární majetek: Data jsou trvalá hodnota, na nichž závisí procesy, reporting i AI.
+- 🎯 Zaměření na kvalitu: Přesnost, úplnost, konzistence a včasnost – i jednodušší model s kvalitními daty často překoná složitější model s nekvalitními daty (Breck et al., 2017).
+- 🏛️ Architektura orientovaná na data: Data jsou stabilním jádrem; aplikace se vyvíjejí kolem nich (Armbrust et al., 2021).
+- 🧠 Data‑centric AI: Systematické vylepšování dat, anotací a pravidel snižuje „hidden technical debt“ (Sculley et al., 2015).
+
+Další oblasti uplatnění
+- 🔐 Data‑centric Security: Ochrana samotných dat a jejich metadat napříč životním cyklem.
+- 🖥️ Data‑centric Computing: Přístup, který spojuje hardware a software tak, aby data byla považována za stálý zdroj hodnoty (Wikipedia, 2025).
+
+> 🚀 Executive insight: ***Data jsou „první třídou“ architektury.*** *Aplikace přicházejí a odcházejí; data zůstávají.*
+
+---
+
 ## Základní principy data‑centric řešení
-1. Data jako produkt a datové smlouvy (contracts)
+1. 📦 Data jako produkt a datové smlouvy (contracts)
    - Definujte jasné schéma, sémantiku a SLA/SLO pro doručování a kvalitu.
    - Uplatňujte verzování schémat a řízené změny (schema evolution).
-2. Kvalita a testovatelnost dat
+2. 🧪 Kvalita a testovatelnost dat
    - Automatizované testy, asserty a pravidla pro kvalitu v CI/CD datových pipeline (Breck et al., 2017; Great Expectations, 2020; ISO/IEC, 2008).
-3. Metadata‑first a lineage
+3. 🗺️ Metadata‑first a lineage
    - Povinné katalogizování, sběr lineage a datové discovery (OpenLineage, 2021).
-4. Pozorovatelnost dat a pipeline
+4. 👀 Pozorovatelnost dat a pipeline
    - Měřte čerstvost, úplnost, odlehlosti, odchylky schémat a výkon dotazů (Moses et al., 2022).
-5. Bezpečnost, soukromí a řízení rizik
+5. 🔐 Bezpečnost, soukromí a řízení rizik
    - Princip minimálních oprávnění, šifrování, pseudonymizace, retenční politiky a audit (EU, 2016; Dwork and Roth, 2014).
-6. Lakehouse a otevřené formáty
+6. 🏗️ Lakehouse a otevřené formáty
    - ACID tabulky nad objektovým úložištěm, separace compute a storage (Armbrust et al., 2021; Armbrust et al., 2020).
-7. Federovaná governance
+7. 🤝 Federovaná governance
    - Jednotné standardy, ale doménová autonomie (Dehghani, 2021).
 
+> ⚠️ Pozor: *Bez smluv nad daty a metadat je každý konzument „sám za sebe“.*** To zvyšuje rizika i náklady.
+
+---
+
 ## Referenční architektura (high‑level)
-- Zdroje: OLTP systémy, event logy, SaaS, soubory.
+- Zdrojová vrstva: OLTP systémy, event logy, SaaS, soubory.
 - Ingest:
   - Batch (files, JDBC) a streaming (Kafka, Pulsar) s CDC (např. Debezium) pro minimální dopady na zdroje (Kreps, 2013).
   - Validace proti schématu a datovým smlouvám.
@@ -56,6 +124,10 @@ Data‑centric solutions staví kvalitu, spravovatelnost a využitelnost dat do 
 - Observability a SRE:
   - Metriky, logy, trace, data SLO/SLI, alerting, incident management (Beyer et al., 2016).
 
+> 🧭 Navigační tip: *Oddělení compute a storage* umožňuje flexibilně volit výpočetní engine a škálovat náklady (Armbrust et al., 2021).
+
+---
+
 ## Datové produkty a datové smlouvy
 - Definice datového produktu
   - Účel a business owner
@@ -66,16 +138,20 @@ Data‑centric solutions staví kvalitu, spravovatelnost a využitelnost dat do 
   - Klasifikace a citlivost (PII/PHI/PCI)
 - Datové smlouvy (contracts)
   - Schéma (Avro/Protobuf/JSON Schema) jako zdroj pravdy
-  - Politika změn: backward compatibility, deprecations, verzování `v1`, `v2`
+  - Politika změn: backward compatibility, deprecations, verzování v1, v2
   - Validace v ingestu a pipeline; kontraktní testy proti testovacímu datovému vzorku
   - Error handling: dead‑letter queue, karanténa, reprocess policy
+
+> 📝 Callout – ***Co musí obsahovat každý datový produkt***: *vlastník, účel, schéma, SLO, klasifikace, dokumentace a kontaktní bod.* Bez toho nejde o „produkt“, ale o soubor.
+
+---
 
 ## Kvalita dat: dimenze, metriky, testy
 - Dimenze dle ISO/IEC 25012 a praxe: přesnost, úplnost, konzistence, včasnost/čerstvost, jedinečnost, platnost, integrita (ISO/IEC, 2008; Moses et al., 2022).
 - Příklady SLI a práhů
-  - Čerstvost: rozdíl `now - max(event_time)` < 10 min (P95)
+  - Čerstvost: rozdíl now − max(event_time) < 10 min (P95)
   - Úplnost: poměr neprázdných hodnot > 0.995
-  - Přesnost: validace doménových pravidel (např. `amount >= 0`)
+  - Přesnost: validace doménových pravidel (např. amount >= 0)
   - Konzistence: foreign key referenční integrita > 0.999
 - Testování a automatizace
   - Unit testy transformací (SQL assertions)
@@ -83,10 +159,18 @@ Data‑centric solutions staví kvalitu, spravovatelnost a využitelnost dat do 
   - Kontroly kvality při ingestu a před publikací (Great Expectations, 2020)
   - Kontinuální testování v CI/CD, gate s SLO práhy (Breck et al., 2017)
 
+> 🔎 Quality insight: ***Měřte kvalitu jako kód*** a udržujte „evidence“ porušení s jasnou diagnostikou a dopadem na SLO.
+
+---
+
 ## Metadata, katalog a lineage
 - Povinná registrace všech datových aktiv do katalogu, včetně popisu, vlastnictví, klasifikace (FAIR; Wilkinson et al., 2016).
 - Automatizovaný sběr lineage z orchestrátoru/engine (OpenLineage, 2021).
 - Metriky pokrytí: procento tabulek s dokumentací, schématem a vlastníkem; úplnost lineage.
+
+> 📇 Katalog tip: *Dostupnost ≠ použitelnost.* ***Cílem je „findability + understanding + trust“.***
+
+---
 
 ## Orchestrace, CI/CD a DataOps
 - Orchestrace: Airflow/Prefect/Dagster s deklarativními DAGy a idempotentními úlohami.
@@ -98,10 +182,18 @@ Data‑centric solutions staví kvalitu, spravovatelnost a využitelnost dat do 
   - Time‑travel tabulek (Delta/Iceberg) a snapshoty; audit trasy transformací (Armbrust et al., 2020).
   - GitOps pro kód a konfiguraci pipeline.
 
+> 🧰 Tip: ***Přesuňte validace „vlevo“ do CI***, aby chyby neunikly do produkce.
+
+---
+
 ## Batch vs. streaming a CDC
 - Batch: robustní pro heavy transformace; plánování oken a SLA.
 - Streaming: nízká latence, potřeba přesné jednou/alespoň jednou semantiky, idempotentních sink operací a deduplikace (Kreps, 2013).
 - CDC: snímání změn z OLTP, konektorová validace, řazení transakcí, slučování do Lakehouse s ACID upserty.
+
+> ⏱️ Latence vs. náklady: *Streaming není vždy lepší.* ***Volte latenci podle business potřeby*** a nákladové křivky.
+
+---
 
 ## Úložiště a dotazy: formáty, partitioning, performance
 - Formáty: Parquet/ORC (sloupcová komprese, statistiky), komprese ZSTD/Snappy.
@@ -112,10 +204,18 @@ Data‑centric solutions staví kvalitu, spravovatelnost a využitelnost dat do 
   - Souborová hygiena: velikost souborů, compaction, Z‑order (u Delta)
   - Indexing a materializované pohledy pro běžné dotazy
 
+> ⚙️ Performance pro‑tip: *Metriky velikosti souborů, počtu souborů a „skew“ sledujte průběžně.* ***Compaction je SRE téma, ne „úklid bokem“.***
+
+---
+
 ## ML a feature management
 - Feature pipelines: konzistence online/offline, point‑in‑time correct joins, sledování derivační logiky.
-- Feature store a TFX
+- Feature store a TFX:
   - Správa schémat a validace dat vstupů; monitoring driftu, training‑serving skew (Baylor et al., 2017; Breck et al., 2017).
+
+> 🤖 ML readiness: ***Bez datové platformy neexistuje MLOps.*** Investujte do kvality a lineage dříve než do exotických modelů (Sculley et al., 2015).
+
+---
 
 ## Pozorovatelnost dat a SRE praktiky
 - SLI/SLO pro data a pipeline
@@ -125,6 +225,10 @@ Data‑centric solutions staví kvalitu, spravovatelnost a využitelnost dat do 
   - Alerty založené na SLO, runbooks, post‑mortems a RCA (Beyer et al., 2016).
 - Detekce anomálií a driftu
   - Statistické profily, kontrolní grafy, pravidla výjimek (Moses et al., 2022).
+
+> 🚨 Callout – Incidenty: *Opakované porušení SLO* musí spouštět řízenou reakci, ne ad‑hoc „hasící“ zásahy.
+
+---
 
 ## Bezpečnost, soukromí a compliance
 - Přístup a klasifikace
@@ -136,6 +240,10 @@ Data‑centric solutions staví kvalitu, spravovatelnost a využitelnost dat do 
 - Diferenční soukromí a anonymizace
   - DP mechanismy pro publikaci agregací a trénink modelů (Dwork and Roth, 2014).
 
+> 🛡️ Compliance callout: ***„Privacy by design“*** a *„least privilege“* snižují dopady incidentů a náklady na audity.
+
+---
+
 ## Nákladová efektivita a FinOps pro data
 - Optimalizace dotazů a storage
   - Pruning, clusterování, materializace, cache.
@@ -143,6 +251,10 @@ Data‑centric solutions staví kvalitu, spravovatelnost a využitelnost dat do 
   - Kostrové metriky: cena na dotaz/dataset, náklady na GB/den, náklady na SLO; kvóty a budget alerty.
 - Životní cyklus dat
   - Studené/teplé/horké vrstvy, archivace, kompakce, snižování duplicit.
+
+> 💸 FinOps tip: ***Měřte „cena na SLO“*** u kritických produktů – je to přirozená jednotka hodnoty i nákladů.
+
+---
 
 ## Škálování a spolehlivost
 - Odolnost pipeline
@@ -152,6 +264,10 @@ Data‑centric solutions staví kvalitu, spravovatelnost a využitelnost dat do 
 - Více‑regionální a disaster recovery
   - Replikace metadat, RPO/RTO cíle pro kritická data.
 
+> 🌐 DR insight: *Replikujte metadatové registry a policy enginy.* ***Bez nich je replikace dat k ničemu.***
+
+---
+
 ## Organizační model a governance
 - Role a odpovědnosti
   - Product owner datového produktu, data steward, data engineer, analytics engineer, ML engineer, bezpečnostní a právní role.
@@ -160,6 +276,10 @@ Data‑centric solutions staví kvalitu, spravovatelnost a využitelnost dat do 
 - Procesy
   - RFC pro změny schémat, data review board, požadavky na dokumentaci, auditovatelné checklisty.
 
+> 🧩 Governance mantra: ***Standardy centrálou, provedení doménami.*** Vynucujte „minimum viable standards“.
+
+---
+
 ## Antipatterny, kterým se vyhnout
 - „Schéma později“: nedefinovaná sémantika a ad‑hoc transformace.
 - „Single mega pipeline“: monolit bez doménových hranic a znovupoužití.
@@ -167,11 +287,19 @@ Data‑centric solutions staví kvalitu, spravovatelnost a využitelnost dat do 
 - „ML bez datové infrastruktury“: modely trpí datovým dluhem a nespolehlivostí (Sculley et al., 2015).
 - „Compliance naposledy“: nákladné retro‑fitování GDPR a security (EU, 2016).
 
+> ❌ Anti‑tip: *„Schéma je přece v Parquetu.“* – ***Není.*** Schéma musí žít v kontraktu, ne v emergentní interpretaci.
+
+---
+
 ## KPI a metriky úspěchu
 - Produktové KPI: adopce datových produktů, NPS stakeholderů, čas do doručení (lead time).
 - Kvalita a spolehlivost: SLO plnění, incidenty na Q, MTTR/MTTD, podíl pipeline s testy a katalogizací.
 - Efektivita: cena na dotaz/dataset, utilization, procento automatizovaných kontrol.
 - Governance: pokrytí katalogem, procento aktiv s vlastníkem, audit compliance.
+
+> 📊 Reporting tip: Vizualizujte „SLO heatmap“ napříč produkty a doménami pro rychlé prioritizace.
+
+---
 
 ## Praktický návod: 30‑60‑90 dní
 - 0–30 dní: základy
@@ -190,30 +318,45 @@ Data‑centric solutions staví kvalitu, spravovatelnost a využitelnost dat do 
   - Federovaná governance: minimální standardy a šablony, review board.
   - FinOps: tagging nákladů, budgety, optimalizace compaction a partitioningu.
 
+> 🗺️ Roadmap tip: ***Začněte „thin slice“ napříč stackem*** – jeden produkt od ingestu po SLO a audit.
+
+---
+
 ## Kontrolní seznamy (checklisty)
-- Datový produkt
-  - Má jasného vlastníka a účel
-  - Schéma a sémantika v katalogu, verzované
-  - SLO definovaná a měřená (čerstvost, dostupnost, kvalita)
-  - Lineage dostupná, testy kvality v CI/CD
-  - Klasifikace a přístupová politika vynucena
-- Pipeline
-  - Idempotentní a deterministická
-  - Validace schématu a datových pravidel před publikací
-  - Monitoring metrik výkonu a kvality, alerty
-  - Runbook a možnost re‑run/reprocess
-- Bezpečnost a compliance
-  - PII tagování a maskování
-  - Šifrování at‑rest a in‑transit
-  - Retence a mazání dle politik
-  - Audit dotazů a exportů
+
+Datový produkt
+- Má jasného vlastníka a účel
+- Schéma a sémantika v katalogu, verzované
+- SLO definovaná a měřená (čerstvost, dostupnost, kvalita)
+- Lineage dostupná, testy kvality v CI/CD
+- Klasifikace a přístupová politika vynucena
+
+Pipeline
+- Idempotentní a deterministická
+- Validace schématu a datových pravidel před publikací
+- Monitoring metrik výkonu a kvality, alerty
+- Runbook a možnost re‑run/reprocess
+
+Bezpečnost a compliance
+- PII tagování a maskování
+- Šifrování at‑rest a in‑transit
+- Retence a mazání dle politik
+- Audit dotazů a exportů
+
+> ✅ Check‑and‑go: ***Publikace produktu je „release“*** – brána přes testy kvality, security a dokumentaci.
+
+---
 
 ## Vzor SLO/SLI definic (příklad)
-- Dataset: `payments_gold`
-  - SLI freshness: P95 `now - max(event_time)` < 10 min, SLO: 99 % dnů v měsíci
-  - SLI dostupnost: `SELECT ok / total` > 99.9 %, SLO: 99.9 %
-  - SLI úplnost: `non_null(card_token) / rows` > 0.999, SLO: 99 %
+- Dataset: payments_gold
+  - SLI freshness: P95 now − max(event_time) < 10 min, SLO: 99 % dnů v měsíci
+  - SLI dostupnost: SELECT ok / total > 99.9 %, SLO: 99.9 %
+  - SLI úplnost: non_null(card_token) / rows > 0.999, SLO: 99 %
   - Alert: pager při porušení SLO 3× za 24 h; ticket pro trend degradace
+
+> 📣 SLO praxe: ***SLO definujte spolu s byznysem.*** Technické metriky musí odrážet hodnotu.
+
+---
 
 ## Tipy k implementaci technologií
 - Ingest: Kafka + Debezium pro CDC; batch přes objekty/SaaS konektory.
@@ -224,6 +367,10 @@ Data‑centric solutions staví kvalitu, spravovatelnost a využitelnost dat do 
 - Observability: vlastních 5–10 SLI pro každý kritický produkt; dashboard + alerty.
 - ML: TFX/Feast pro feature management; drift detekce a testy skew.
 
+> 🧱 Vendor‑neutral: ***Preferujte otevřené formáty a standardy*** pro snazší interoperabilitu a dlouhodobou udržitelnost (Armbrust et al., 2021).
+
+---
+
 ## Slovníček pojmů
 - Datový produkt: kurátorovaná datová entita s jasným účelem, rozhraním a SLO.
 - Datová smlouva: formální dohoda o schématu, sémantice a SLA mezi producentem a konzumentem.
@@ -232,52 +379,24 @@ Data‑centric solutions staví kvalitu, spravovatelnost a využitelnost dat do 
 - SLI/SLO: indikátory a cíle spolehlivosti měřené na datech a pipeline.
 - CDC: snímání změn, replikace transakčních změn do analytické vrstvy.
 
-## Závěr
-Data‑centric přístup vyžaduje disciplínu, automatizaci a jasný provozní model. Základem je datová smlouva, kvalita jako kód, důsledná práce s metadaty a otevřené formáty v lakehouse architektuře. Úspěch měřte přesně definovanými SLI/SLO a produktovými KPI a průběžně minimalizujte technický dluh (Breck et al., 2017; Sculley et al., 2015; Armbrust et al., 2021).
-
-## Reference
-- Armbrust, M., Ghodsi, A., Xin, R., Zaharia, M., Franklin, M. et al. (2021) Lakehouse: A New Generation of Open Platforms for Data and AI. CIDR 2021. Available at: https://www.cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf (Accessed: 5 November 2025).
-- Armbrust, M., Das, T., Yang, S., Zhu, X., Ghodsi, A. et al. (2020) Delta Lake: High-Performance ACID Table Storage over Cloud Object Stores. CIDR 2020. Available at: http://cidrdb.org/cidr2020/papers/p29-armbrust-cidr20.pdf (Accessed: 5 November 2025).
-- Baylor, D., Breck, E., Cheng, H.T., Fiedel, N., Polyzotis, N. et al. (2017) TFX: A TensorFlow-Based Production-Scale Machine Learning Platform. Proceedings of the 23rd ACM SIGKDD. Available at: https://dl.acm.org/doi/10.1145/3097983.3098021 (Accessed: 5 November 2025).
-- Beyer, B., Jones, C., Petoff, J. and Murphy, N. (eds.) (2016) Site Reliability Engineering: How Google Runs Production Systems. O’Reilly Media. Available at: https://sre.google/sre-book/table-of-contents/ (Accessed: 5 November 2025).
-- Breck, E., Cai, S., Nielsen, E., Salib, M. and Sculley, D. (2017) What’s your ML Test Score? A Rubric for ML Production Readiness. arXiv: http://arxiv.org/abs/1803.09010 (Accessed: 5 November 2025).
-- DAMA International (2017) DAMA-DMBOK: Data Management Body of Knowledge (2nd ed.). Technics Publications. Available at: https://www.dama.org/ (Accessed: 5 November 2025).
-- Dehghani, Z. (2021) Data Mesh: Delivering Data-Driven Value at Scale. O’Reilly Media. Available at: https://www.oreilly.com/library/view/data-mesh/9781492092384/ (Accessed: 5 November 2025).
-- Dwork, C. and Roth, A. (2014) The Algorithmic Foundations of Differential Privacy. Foundations and Trends in Theoretical Computer Science, 9(3–4), pp. 211–407. Available at: https://www.nowpublishers.com/article/Details/TCS-042 (Accessed: 5 November 2025).
-- European Union (2016) Regulation (EU) 2016/679 (General Data Protection Regulation). Official Journal of the European Union. Available at: https://eur-lex.europa.eu/eli/reg/2016/679/oj (Accessed: 5 November 2025).
-- Great Expectations (2020) Great Expectations: Always Know What to Expect from Your Data. Documentation. Available at: https://greatexpectations.io/ (Accessed: 5 November 2025).
-- Kreps, J. (2013) The Log: What every software engineer should know about real-time data’s unifying abstraction. LinkedIn Engineering. Available at: https://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying (Accessed: 5 November 2025).
-- Moses, B., Nicholson, L. and Vasudevan, S. (2022) Data Quality Fundamentals. O’Reilly Media. Available at: https://www.oreilly.com/library/view/data-quality-fundamentals/9781098112042/ (Accessed: 5 November 2025).
-- OpenLineage (2021) OpenLineage: An Open Standard for Metadata and Lineage Collection. Specification. Available at: https://openlineage.io/ (Accessed: 5 November 2025).
-- Sculley, D., Holt, G., Golovin, D., Davydov, E., Phillips, T. et al. (2015) Hidden Technical Debt in Machine Learning Systems. In: Advances in Neural Information Processing Systems (NIPS). Available at: https://papers.nips.cc/paper_files/paper/2015/file/86df7dcfd896fcaf2674f757a2463eba-Paper.pdf (Accessed: 5 November 2025).
-- Wilkinson, M.D., Dumontier, M., Aalbersberg, I.J., Appleton, G., Axton, M. et al. (2016) The FAIR Guiding Principles for scientific data management and stewardship. Scientific Data 3, 160018. Available at: https://www.nature.com/articles/sdata201618 (Accessed: 5 November 2025).
-- ISO/IEC (2008) 25012:2008 Systems and software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — Data quality model. International Organization for Standardization. Available at: https://www.iso.org/standard/35736.html (Accessed: 5 November 2025).
-
-Data-centric solution je přístup, který staví data do středu všech operací firmy, namísto toho, aby je považoval jen za vedlejší produkt. To znamená, že se firmy zaměřují na kvalitu a organizaci dat jako na klíčový majetek pro rozhodování, optimalizaci procesů a zlepšování výkonnosti. V praxi to může znamenat například přístup data-centric AI, kde se zlepšuje výkonnost umělé inteligence prostřednictvím systematického vylepšování kvality dat, nikoli pouze úpravou kódu modelu. 
-
-## Klíčové aspekty
-
-Data jako primární majetek: Data jsou vnímána jako trvalá hodnota, na které závisí celý podnik.
-Zaměření na kvalitu: Prioritou je kvalita, přesnost a konzistence dat, protože i méně složitý model s kvalitními daty může být výkonnější než složitější model s nekvalitními daty.
-Architektura orientovaná na data: Architektura je navržena tak, aby data byla primární a trvalou součástí, zatímco aplikace se mohou a často mění.
-Široké uplatnění: Tento přístup se používá v různých oblastech, například ve finančních službách pro řízení rizik nebo v umělé inteligenci pro zajištění spolehlivých výsledků. 
-Další oblasti uplatnění
-
-Bezpečnost (Data-Centric Security): Bezpečnost se zaměřuje na ochranu samotných dat v celém jejich životním cyklu, nikoli pouze na zabezpečení infrastruktury.
-Výpočty (Data-Centric Computing): Tato oblast kombinuje hardware a software tak, aby data byla považována za stálý zdroj hodnoty a aby se maximalizovala jejich hodnota. 
-Data-centric computing - Wikipedia
-Data-centric computing is an approach that merges innovative hardware and software to treat data, not applications, as the permane...
-
 ---
 
-# Data‑centric solutions a Federated Mission Networking (FMN) v NATO: vazby, mapování a doporučení
+# Data‑centric solutions a FMN v NATO: vazby a mapování
 
 ## Abstrakt
 Data‑centric přístup je v přirozeném souladu s principy Federated Mission Networking (FMN) v rámci NATO. FMN buduje schopnost rychle zřizovat a provozovat federované, standardy‑řízené, bezpečné a interoperabilní mise a prostředí pro sdílení informací (Mission Partner Environment, MPE). Data‑centric řešení přináší disciplinovaný model práce s daty (datové produkty, smlouvy nad daty, měřitelná kvalita, metadata, bezpečnost a governance), který zapadá do FMN spiral specifikací, NISP profilů a datově‑centrické bezpečnosti (STANAG 4774/4778). Tento dokument shrnuje spojitosti, praktické mapování a kroky zavedení (NATO, 2021; NCI Agency, 2023; NSO, 2015; NIST, 2020).
 
+> 🛰️ Mission callout: ***„Interoperabilita je vlastnost dat, ne jen sítí.“*** Data‑centric principy umožňují rychlé a bezpečné sdílení napříč partnery.
+
+---
+
 ## Co je FMN a proč je relevantní pro data‑centric přístup
 - FMN: iniciativa NATO pro federované mise s důrazem na interoperabilitu, standardy a „mission threads“. Opírá se o spirálový model specifikací (FMN Spiral Specifications), výběr profilů interoperabilních standardů (NISP) a jádrové služby (identity, PKI, katalog, messaging, collaboration) (NATO, 2021; NCI Agency, 2023).
 - Data‑centric relevance: federace partnerů, rozdílné bezpečnostní domény a dynamické sdílení informací vyžadují přesné sémantické smlouvy, kvalitní metadata, označování citlivosti, měřitelnou kvalitu a pozorovatelnost – to jsou základní kameny data‑centric přístupu.
+
+> 🔐 Security focus: ***STANAG 4774/4778*** poskytují rámec pro bezpečnostní metadata a jejich vázání na obsah (NSO, 2015).
+
+---
 
 ## Klíčové pojítko: „data jako produkt“ ve federaci partnerů
 - FMN vyžaduje jasně popsané schopnosti a informační produkty. Data‑centric přístup formalizuje „datové produkty“ se smlouvami (schéma, sémantika, SLO), vlastníky, katalogizací a bezpečnostním označením. To umožňuje:
@@ -285,32 +404,41 @@ Data‑centric přístup je v přirozeném souladu s principy Federated Mission 
   - řízené změny (versioning) bez narušení mise,
   - auditovatelnost a měření kvality v čase.
 
+> 🤝 Partnerství: ***Kvalitní metadata + kontrakty*** zkracují onboardingu nového partnera z týdnů na dny.
+
+---
+
 ## Mapování principů data‑centric na FMN stavební bloky
 1. Smlouvy nad daty (data contracts) a schémata
    - FMN/NISP vyžaduje standardizované formáty; použijte STANAG schémata, kde existují (např. ISR: STANAG 4559 – NATO ISR Library, STANAG 4609 – Motion Imagery, STANAG 4607 – GMTI) a doplňte je o kontrakty na úrovni eventů/API/tabulek (NATO, 2021; NSO, 2015).
    - Politika verzování a „backward compatibility“ je klíčová pro heterogenní partnery.
 2. Metadata a bezpečnostní označování
-   - Zaveďte povinné bezpečnostní a releasability tagy v metadatech dle STANAG 4774/4778 (confidentiality metadata a vazba na obsah) tak, aby bylo možné vynucovat politiky sdílení napříč doménami (NSO, 2015).
-   - Kromě klasifikace (např. NATO SECRET) používejte releasability (např. REL TO) a caveats v metadatech.
+   - Povinné bezpečnostní a releasability tagy dle STANAG 4774/4778 (confidentiality metadata a vazba na obsah) pro vynucování politik napříč doménami (NSO, 2015).
+   - Kromě klasifikace (např. NATO SECRET) používejte releasability (REL TO) a caveats v metadatech.
 3. Federovaná governance a odpovědnosti
-   - FMN podporuje federaci – každá strana spravuje své produkty v rámci společných minimálních standardů (profilů). Data‑centric governance zavádí minimální „computational“ standardy: katalog, kvalita, lineage, bezpečnost, smlouvy (NATO, 2021).
+   - FMN podporuje federaci – každá strana spravuje své produkty v rámci společných minimálních standardů (profilů). Data‑centric governance zavádí minimum „computational“ standardů: katalog, kvalita, lineage, bezpečnost, smlouvy (NATO, 2021).
 4. Identita, atributy a řízení přístupu
-   - Pro vynucení politik nad daty uplatněte ABAC s atributy subjektu i zdroje (XACML/PEP/PDP vzor). Zásady Zero Trust dle NIST 800‑207 doplňují FMN bezpečnostní model o kontextově‑řízené rozhodování (NIST, 2020).
+   - Aplikujte ABAC s atributy subjektu i zdroje (XACML/PEP/PDP). Zero Trust dle NIST 800‑207 přidává kontextově‑řízené rozhodování (NIST, 2020; NIST, 2014).
 5. Pozorovatelnost, SLI/SLO a provozní excelence
-   - FMN vyžaduje spolehlivost během misí. Definujte SLI/SLO pro čerstvost, úplnost, latenci a dostupnost datových produktů. Sdílejte metriky a incidentní informace v rámci MPE podle dohodnutých pravidel.
+   - Definujte SLI/SLO pro čerstvost, úplnost, latenci a dostupnost; sdílejte agregované metriky v MPE.
 6. Integrace s NATO Core Services
-   - Registrace/datový katalog (Service/Capability Registry) pro dohledatelnost.
-   - Messaging a pub/sub pro ISR a situační povědomí; datové API pro konzumaci produktů. Mediation/translation služby pro mapování mezi schématy/etiketami (NATO, 2021; NCI Agency, 2023).
+   - Registrace/datový katalog (Service/Capability Registry), messaging/pub‑sub, datové API, mediation/translation (NATO, 2021; NCI Agency, 2023).
 7. Cross‑Domain Solutions (CDS)
-   - Data‑centric bezpečnost s přesnými metadaty a kontrakty usnadňuje automatizované filtry, transformace a label‑translation při přenosu přes CDS mezi klasifikačními doménami.
+   - Přesná bezpečnostní metadata a kontrakty usnadňují automatizované filtry, transformace a label‑translation při přenosu přes CDS.
 
-## Referenční provozní obraz: data‑centric FMN mission thread (textový scénář)
-- Producent (ISR jednotka) publikuje datový produkt „ISR_motion_imagery_gold“ ve formátu STANAG 4609, s metadaty klasifikace a releasability dle STANAG 4774/4778, verze schématu `v2`.
+> 🧭 Mapování v praxi: ***„Profilované“ kontrakty*** s odkazem na konkrétní NISP profil minimalizují nejasnosti.
+
+---
+
+## FMN: referenční mission thread a doporučení
+
+### Referenční provozní obraz (textový scénář)
+- Producent (ISR jednotka) publikuje datový produkt „ISR_motion_imagery_gold“ ve formátu STANAG 4609, s metadaty klasifikace a releasability dle STANAG 4774/4778, verze schématu v2.
 - Data jsou ingestována do federovaného lakehouse (ACID tabulky, otevřený formát) s validací kontraktu a bezpečnostních tagů. Lineage a katalog jsou aktualizovány.
 - Konzumenti (koaliční štáb, analytické týmy) přistupují přes standardizované API/BI vrstvy. ABAC rozhodnutí vyhodnocuje klasifikaci, releasability a atributy uživatele.
 - Pozorovatelnost sleduje čerstvost (now − max(event_time)), úplnost a incidenty; porušení SLO vyvolá alert a sdílený post‑incident report v rámci MPE.
 
-## Praktické doporučení pro FMN prostředí
+### Praktické doporučení pro FMN prostředí
 - Smlouvy a profily
   - Vytvořte „profile‑based“ data contracts: vazba na konkrétní NISP profil a STANAG, explicitní pole pro bezpečnostní tagy a releasability.
   - Připravte migrační plán mezi verzemi schémat v souladu s FMN spiral roadmap.
@@ -325,15 +453,15 @@ Data‑centric přístup je v přirozeném souladu s principy Federated Mission 
   - Při překladech mezi doménami mapujte labely a releasability pravidly schválenými v koalici; automatizujte pomocí policy engine.
 - CDS a transformace
   - CDS využívejte s „least privilege“ a principem minimálního sdílení. Transformace musí zachovat nebo zpřesnit bezpečnostní metadata.
-  - Definujte schválené transformace pro odtajnění/odstranění PII (např. maskování, generalizace).
+  - Definujte schválené transformace pro odtajnění/odstranění PII (maskování, generalizace).
 - Provoz a SRE
   - Definujte SLO produktů kritických pro misi a sdílejte error budgety v koalici. Běžná SLI: čerstvost P95, dostupnost API, chybovost validací, latence CDS.
   - Společný runbook a cvičení incident response napříč partnery.
 - FinOps a kapacita
-  - V misích plánujte kapacitní profily a cost guardraily; u ACID tabulek nastavte politiku compaction a retence dle taktických/strategických potřeb.
+  - Plánujte kapacitní profily a cost guardraily; u ACID tabulek nastavte politiku compaction a retence dle taktických/strategických potřeb.
 
-## Příklad minimálního „FMN‑ready“ datového produktu (obsahová šablona)
-- Název a verze: `isr_motion_imagery_gold v2`
+### Příklad minimálního „FMN‑ready“ datového produktu (obsahová šablona)
+- Název a verze: isr_motion_imagery_gold v2
 - Účel: podpora situačního povědomí v misi XY
 - Standardy: STANAG 4609, NISP profil FMN‑Spiral‑X
 - Rozhraní: tabulka/stream/API, endpoint a autentizační metoda
@@ -345,7 +473,7 @@ Data‑centric přístup je v přirozeném souladu s principy Federated Mission 
 - Vlastník a kontakty: role/organizace
 - Licence/podmínky sdílení: omezení a pravidla užití
 
-## 30–60–90denní plán zavedení v kontextu FMN/MPE
+### 30–60–90denní plán zavedení v kontextu FMN/MPE
 - 0–30 dní
   - Inventarizace klíčových datových flow relevantních pro misi; mapování na STANAG/NISP profily.
   - Zaveďte minimální datové smlouvy u 1–2 kritických produktů, včetně bezpečnostních tagů dle STANAG 4774/4778.
@@ -359,27 +487,70 @@ Data‑centric přístup je v přirozeném souladu s principy Federated Mission 
   - Rozšíření na lakehouse s ACID tabulkami a řízenou retencí.
   - Federovaná governance: minimální standardy pro publikaci produktů v koalici, periodický audit.
 
-## Antipatterny ve vztahu k FMN
+### Antipatterny ve vztahu k FMN
 - „Formát bez sémantiky“: spoléhání pouze na STANAG datový formát bez kontraktovaných byznysových pravidel a kvality.
 - „Bez labelů“: chybějící nebo nekonzistentní bezpečnostní metadata brání ABAC a CDS.
 - „Centrální monolit“: snaha o jednotné centrální úložiště bez federace a doménové odpovědnosti.
 - „Ad‑hoc releasability“: manuální a nespolehlivé procesy sdílení místo politik v metadatech.
 
-## Jak měřit úspěch v FMN kontextu
-- Interoperabilita: procento produktů v souladu s NISP/ STANAG profily; počet úspěšných mezidoménových výměn bez manuální intervence.
+### Jak měřit úspěch v FMN kontextu
+- Interoperabilita: procento produktů v souladu s NISP/STANAG profily; počet úspěšných mezidoménových výměn bez manuální intervence.
 - Bezpečnost: pokrytí dat bezpečnostními tagy, počet blokovaných přístupů podle politik vs. false positives.
 - Spolehlivost: plnění SLO během cvičení/operací; MTTR incidentů s daty.
 - Adopce: počet koaličních konzumentů na datový produkt; doba onboardingu nového partnera.
 
-## Shrnutí
-Data‑centric přístup poskytuje přesně to, co FMN potřebuje: jasně specifikované, bezpečně označené, měřitelné a spravované datové produkty, které lze bezpečně a rychle sdílet napříč partnery a doménami. Kombinace STANAG standardů pro formát a bezpečnostní metadata, federované governance a ABAC/Zero Trust vytváří provozovatelný rámec pro interoperabilitu v reálných misích (NATO, 2021; NSO, 2015; NIST, 2020).
+> 🧪 FMN ověřitelnost: ***Pro každý „mission thread“ mějte testovatelná SLO a simulace.***
+
+---
+
+## Závěr
+Data‑centric přístup vyžaduje disciplínu, automatizaci a jasný provozní model. Základem je datová smlouva, kvalita jako kód, důsledná práce s metadaty a otevřené formáty v lakehouse architektuře. Úspěch měřte přesně definovanými SLI/SLO a produktovými KPI a průběžně minimalizujte technický dluh (Breck et al., 2017; Sculley et al., 2015; Armbrust et al., 2021).  
+V kontextu FMN umožňuje data‑centric model bezpečné a rychlé sdílení informací napříč partnery díky standardům STANAG, federované governance a ABAC/Zero Trust (NATO, 2021; NSO, 2015; NIST, 2020).
+
+> 🏁 Takeaway: ***Začněte u jednoho kritického datového produktu*** – kontrakt, SLO, kvalita, metadata, bezpečnost – a rozšiřte vzor napříč doménami.
+
+---
+
+## FAQ
+
+Q: Jak začít, pokud nemáme katalog ani schema registry?  
+A: Vyberte 1–2 kritické zdroje, definujte minimální kontrakt (schéma + sémantika), zaveďte lehký katalog (i open‑source), a přidejte 5–10 asertů kvality. Tím ověříte hodnotu a vytvoříte precedent (Great Expectations, 2020).
+
+Q: Kdy zvolit streaming místo batch?  
+A: Pokud byznys vyžaduje minutovou čerstvost nebo reakce v řádu sekund, a nákladový profil je akceptovatelný. V opačných případech preferujte batch s menší složitostí (Kreps, 2013).
+
+Q: Jak přesvědčit vedení o investici do kvality dat?  
+A: Přepište incidentní náklady do „cena na SLO“ a ukažte dopady na KPI (zpožděná čerstvost = chybná rozhodnutí, penále, reputace).
+
+Q: Jak sladit GDPR s analytikou a AI?  
+A: Uplatněte data minimization, tagování PII, diferencované přístupy (masking/pseudonymizace), a auditovatelné retenční politiky (EU, 2016; Dwork and Roth, 2014).
+
+Q: Co je „profile‑based“ kontrakt ve FMN?  
+A: Kontrakt, který explicitně odkazuje na NISP/STANAG profil a obsahuje povinné bezpečnostní tagy pro ABAC/CDS (NATO, 2021; NSO, 2015).
+
+---
 
 ## Reference
+- Armbrust, M., Ghodsi, A., Xin, R., Zaharia, M., Franklin, M. et al. (2021) Lakehouse: A New Generation of Open Platforms for Data and AI. CIDR 2021. Available at: https://www.cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf (Accessed: 5 November 2025).
+- Armbrust, M., Das, T., Yang, S., Zhu, X., Ghodsi, A. et al. (2020) Delta Lake: High-Performance ACID Table Storage over Cloud Object Stores. CIDR 2020. Available at: http://cidrdb.org/cidr2020/papers/p29-armbrust-cidr20.pdf (Accessed: 5 November 2025).
+- Baylor, D., Breck, E., Cheng, H.T., Fiedel, N., Polyzotis, N. et al. (2017) TFX: A TensorFlow-Based Production-Scale Machine Learning Platform. Proceedings of the 23rd ACM SIGKDD. Available at: https://dl.acm.org/doi/10.1145/3097983.3098021 (Accessed: 5 November 2025).
+- Beyer, B., Jones, C., Petoff, J. and Murphy, N. (eds.) (2016) Site Reliability Engineering: How Google Runs Production Systems. O’Reilly Media. Available at: https://sre.google/sre-book/table-of-contents/ (Accessed: 5 November 2025).
+- Breck, E., Cai, S., Nielsen, E., Salib, M. and Sculley, D. (2017) What’s your ML Test Score? A Rubric for ML Production Readiness. arXiv: http://arxiv.org/abs/1803.09010 (Accessed: 5 November 2025).
+- DAMA International (2017) DAMA-DMBOK: Data Management Body of Knowledge (2nd ed.). Technics Publications. Available at: https://www.dama.org/ (Accessed: 5 November 2025).
+- Dehghani, Z. (2021) Data Mesh: Delivering Data-Driven Value at Scale. O’Reilly Media. Available at: https://www.oreilly.com/library/view/data-mesh/9781492092384/ (Accessed: 5 November 2025).
+- Dwork, C. and Roth, A. (2014) The Algorithmic Foundations of Differential Privacy. Foundations and Trends in Theoretical Computer Science, 9(3–4), pp. 211–407. Available at: https://www.nowpublishers.com/article/Details/TCS-042 (Accessed: 5 November 2025).
+- European Union (2016) Regulation (EU) 2016/679 (General Data Protection Regulation). Official Journal of the European Union. Available at: https://eur-lex.europa.eu/eli/reg/2016/679/oj (Accessed: 5 November 2025).
+- Great Expectations (2020) Great Expectations: Always Know What to Expect from Your Data. Documentation. Available at: https://greatexpectations.io/ (Accessed: 5 November 2025).
+- Kreps, J. (2013) The Log: What every software engineer should know about real-time data’s unifying abstraction. LinkedIn Engineering. Available at: https://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying (Accessed: 5 November 2025).
+- Moses, B., Nicholson, L. and Vasudevan, S. (2022) Data Quality Fundamentals. O’Reilly Media. Available at: https://www.oreilly.com/library/view/data-quality-fundamentals/9781098112042/ (Accessed: 5 November 2025).
 - NATO (2021) Federated Mission Networking (FMN) – Overview and Spiral Specifications. NATO. Available at: https://www.nato.int/ (Accessed: 5 November 2025).
 - NCI Agency (2023) Federated Mission Networking: Enabling Mission Partner Environments. NATO Communications and Information Agency. Available at: https://www.ncia.nato.int/ (Accessed: 5 November 2025).
-- NSO (2015) STANAG 4774 and STANAG 4778: Confidentiality Metadata Label Syntax and Binding. NATO Standardization Office. Available at: https://nso.nato.int/ (Accessed: 5 November 2025).
-- NSO (2015) STANAG 4559 (NATO ISR Library), STANAG 4607 (GMTI), STANAG 4609 (NATO Digital Motion Imagery). NATO Standardization Office. Available at: https://nso.nato.int/ (Accessed: 5 November 2025).
-- NIST (2020) Special Publication 800‑207: Zero Trust Architecture. National Institute of Standards and Technology. Available at: https://csrc.nist.gov/publications/detail/sp/800-207/final (Accessed: 5 November 2025).
 - NIST (2014) Special Publication 800‑162: Guide to Attribute Based Access Control (ABAC) Definition and Considerations. National Institute of Standards and Technology. Available at: https://csrc.nist.gov/publications (Accessed: 5 November 2025).
-
-  
+- NIST (2020) Special Publication 800‑207: Zero Trust Architecture. National Institute of Standards and Technology. Available at: https://csrc.nist.gov/publications/detail/sp/800-207/final (Accessed: 5 November 2025).
+- NSO (2015) STANAG 4559 (NATO ISR Library), STANAG 4607 (GMTI), STANAG 4609 (NATO Digital Motion Imagery). NATO Standardization Office. Available at: https://nso.nato.int/ (Accessed: 5 November 2025).
+- NSO (2015) STANAG 4774 and STANAG 4778: Confidentiality Metadata Label Syntax and Binding. NATO Standardization Office. Available at: https://nso.nato.int/ (Accessed: 5 November 2025).
+- OpenLineage (2021) OpenLineage: An Open Standard for Metadata and Lineage Collection. Specification. Available at: https://openlineage.io/ (Accessed: 5 November 2025).
+- Sculley, D., Holt, G., Golovin, D., Davydov, E., Phillips, T. et al. (2015) Hidden Technical Debt in Machine Learning Systems. In: Advances in Neural Information Processing Systems (NIPS). Available at: https://papers.nips.cc/paper_files/paper/2015/file/86df7dcfd896fcaf2674f757a2463eba-Paper.pdf (Accessed: 5 November 2025).
+- Wilkinson, M.D., Dumontier, M., Aalbersberg, I.J., Appleton, G., Axton, M. et al. (2016) The FAIR Guiding Principles for scientific data management and stewardship. Scientific Data 3, 160018. Available at: https://www.nature.com/articles/sdata201618 (Accessed: 5 November 2025).
+- ISO/IEC (2008) 25012:2008 Systems and software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — Data quality model. International Organization for Standardization. Available at: https://www.iso.org/standard/35736.html (Accessed: 5 November 2025).
+- Wikipedia (2025) Data-centric computing. Available at: https://en.wikipedia.org/wiki/Data-centric_computing (Accessed: 5 November 2025).
