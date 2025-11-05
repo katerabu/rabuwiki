@@ -33,7 +33,7 @@ Poslední aktualizace: 5. listopadu 2025
 - [Nákladová efektivita a FinOps pro data](#nákladová-efektivita-a-finops-pro-data)
 - [Škálování a spolehlivost](#škálování-a-spolehlivost)
 - [Organizační model a governance](#organizační-model-a-governance)
-- [Antipatterny, kterým se vyhnout](#antipatterny-kterým-se-vyhnout)
+- [Antipatterns, kterým se vyhnout](#antipatterny-kterým-se-vyhnout)
 - [KPI a metriky úspěchu](#kpi-a-metriky-úspěchu)
 - [Praktický návod: 30‑60‑90 dní](#praktický-návod-30-60-90-dní)
 - [Kontrolní seznamy (checklisty)](#kontrolní-seznamy-checklisty)
@@ -554,3 +554,69 @@ A: Kontrakt, který explicitně odkazuje na NISP/STANAG profil a obsahuje povinn
 - Wilkinson, M.D., Dumontier, M., Aalbersberg, I.J., Appleton, G., Axton, M. et al. (2016) The FAIR Guiding Principles for scientific data management and stewardship. Scientific Data 3, 160018. Available at: https://www.nature.com/articles/sdata201618 (Accessed: 5 November 2025).
 - ISO/IEC (2008) 25012:2008 Systems and software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — Data quality model. International Organization for Standardization. Available at: https://www.iso.org/standard/35736.html (Accessed: 5 November 2025).
 - Wikipedia (2025) Data-centric computing. Available at: https://en.wikipedia.org/wiki/Data-centric_computing (Accessed: 5 November 2025).
+
+# Seznam zkratek a jejich vysvětlení
+
+- ABAC — Attribute-Based Access Control: řízení přístupu založené na atributech subjektu i zdroje; klíčové pro jemnozrnnou a kontextovou autorizaci.
+- ACID — Atomicity, Consistency, Isolation, Durability: vlastnosti transakčních tabulek a systémů (např. Delta/Iceberg/Hudi) pro spolehlivé zápisy a čtení.
+- API — Application Programming Interface: rozhraní pro přístup k datům a službám; v datových produktech často HTTP/REST nebo gRPC.
+- BI — Business Intelligence: nástroje a postupy pro analytiku a vizualizaci nad daty.
+- CDC — Change Data Capture: snímání změn z transakčních systémů a jejich replikace do analytické vrstvy (stream i batch).
+- CDS — Cross-Domain Solutions: mezidoménová řešení pro bezpečný přenos informací mezi klasifikačními doménami.
+- CI/CD — Continuous Integration / Continuous Delivery (nebo Deployment): automatizace vývoje, testů a nasazování datových pipeline a produktů.
+- CIDR — Conference on Innovative Data Systems Research: konference zaměřená na systémy pro data (citovaná u Lakehouse/Delta Lake).
+- DAG — Directed Acyclic Graph: bezcyklický graf závislostí úloh používaný v orchestraci (Airflow, Dagster, Prefect).
+- DAMA-DMBOK — Data Management Body of Knowledge: rámec disciplín správy dat (DAMA International).
+- DataOps — Data Operations: operační postupy a automatizace pro datový vývoj a provoz (analogicky k DevOps).
+- dbt — data build tool: framework pro transformace jako kód (SQL/templating), dokumentaci a testy.
+- DLQ — Dead-Letter Queue: fronta pro zprávy či dávky, které neprošly validací nebo zpracováním; umožňuje reprocess s diagnostikou.
+- DP — Differential Privacy: přístup k ochraně soukromí přidáváním řízeného šumu, aby nebylo možné odhalit jednotlivce v agregacích.
+- ELT/ETL — Extract, Load, Transform / Extract, Transform, Load: vzory přesunů a transformací dat; ELT využívá výpočet cílové platformy.
+- FAIR — Findable, Accessible, Interoperable, Reusable: principy pro dohledatelnost, dostupnost, interoperabilitu a znovupoužitelnost dat.
+- FMN — Federated Mission Networking: rámec NATO pro federovanou interoperabilitu a sdílení informací mezi partnery (Mission Partner Environment).
+- GitOps — Git-based Operations: řízení konfigurací a nasazení přes Git a automatizační agenty.
+- GMTI — Ground Moving Target Indicator: typ senzorických dat a standardů v ISR doméně (např. STANAG 4607).
+- GDPR — General Data Protection Regulation: obecné nařízení EU o ochraně osobních údajů.
+- ISO/IEC 25012 — Data quality model: mezinárodní norma pro dimenze kvality dat.
+- ISR — Intelligence, Surveillance and Reconnaissance: zpravodajství, sledování a průzkum; typická FMN datová doména a standardy STANAG.
+- JSON — JavaScript Object Notation: formát výměny dat, často se schématy (JSON Schema) v datových smlouvách.
+- KMS — Key Management Service: služba pro správu šifrovacích klíčů (at-rest, customer-managed keys).
+- KPI — Key Performance Indicator: klíčový ukazatel výkonnosti (adopce, náklady, doba dodání).
+- Lakehouse — architektura kombinující data lake a data warehouse nad ACID tabulkami a otevřenými formáty.
+- ML — Machine Learning: strojové učení, závislé na kvalitních datech a konzistentních featurách.
+- MLOps — Machine Learning Operations: provozní praktiky pro životní cyklus ML modelů a featur.
+- MPE — Mission Partner Environment: koaliční prostředí pro sdílení informací v rámci FMN misí.
+- MTTR — Mean Time To Repair/Restore: průměrná doba obnovení služby po incidentu.
+- MTTD — Mean Time To Detect: průměrná doba detekce incidentu.
+- NCIA — NATO Communications and Information Agency: agentura NATO pro komunikace a informační systémy.
+- NISP — NATO Interoperability Standards and Profiles: katalog interoperabilních standardů a profilů v NATO.
+- NSO — NATO Standardization Office: kancelář odpovědná za standardizační dohody STANAG.
+- OLAP — Online Analytical Processing: analytické dotazování nad agregovanými daty (kubusy, hvězdice, BI).
+- OLTP — Online Transaction Processing: transakční zpracování operativních systémů (zdrojová vrstva).
+- ORC — Optimized Row Columnar: sloupcový souborový formát s kompresí a statistikami.
+- PCI DSS — Payment Card Industry Data Security Standard: bezpečnostní standard pro zpracování platebních karet.
+- PDP/PEP — Policy Decision Point / Policy Enforcement Point: rozhodovací a prosazovací komponenty politik přístupu (často v ABAC).
+- PHI — Protected Health Information: chráněné zdravotní informace (citlivá data).
+- PII — Personally Identifiable Information: osobní údaje umožňující identifikovat jednotlivce.
+- PKI — Public Key Infrastructure: infrastruktura veřejných klíčů pro šifrování, podepisování a identitu.
+- RPO — Recovery Point Objective: maximální přijatelné stáří dat po obnově (bod obnovy).
+- RTO — Recovery Time Objective: maximální přijatelný čas pro obnovu služby (čas obnovy).
+- RCA — Root Cause Analysis: analýza kořenové příčiny incidentu.
+- RBAC — Role-Based Access Control: řízení přístupu založené na rolích.
+- SLI — Service Level Indicator: měřený indikátor spolehlivosti (např. čerstvost, dostupnost, latence).
+- SLO — Service Level Objective: cílová hodnota SLI pro interní závazky spolehlivosti.
+- SLA — Service Level Agreement: smluvní úroveň služeb vůči externím příjemcům (nad rámec interních SLO).
+- SQL — Structured Query Language: deklarativní jazyk pro práci s relačními daty.
+- SRE — Site Reliability Engineering: disciplína provozní spolehlivosti (SLO, incidenty, automatizace).
+- STANAG — Standardization Agreement: standardizační dohoda NATO (např. 4559, 4607, 4609, 4774, 4778).
+- TFX — TensorFlow Extended: platforma pro produkční ML pipeline (správa dat, validace, trénink, nasazení).
+- TLS — Transport Layer Security: šifrování dat při přenosu.
+- XACML — eXtensible Access Control Markup Language: standard pro vyjadřování autorizačních politik (používaný s PDP/PEP).
+- Zero Trust — architektura nulové důvěry: model bezpečnosti založený na neustálé verifikaci identit, zařízení, kontextu a politik.
+
+Doplňkové zkratky používané v kontextu souborových formátů a výkonu
+- Parquet — sloupcový formát (není zkratka), vhodný pro analytické dotazy.
+- ZSTD — Zstandard: moderní kompresní algoritmus s dobrým poměrem komprese a výkonu.
+
+Poznámkové značky a zvyklosti v metrikách
+- P95 — 95. percentil: hodnota, pod kterou leží 95 % měření (např. latence nebo čerstvost).
