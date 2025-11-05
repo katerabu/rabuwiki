@@ -620,3 +620,11 @@ Doplňkové zkratky používané v kontextu souborových formátů a výkonu
 
 Poznámkové značky a zvyklosti v metrikách
 - P95 — 95. percentil: hodnota, pod kterou leží 95 % měření (např. latence nebo čerstvost).
+
+# Závěrečná poznámka k použití AI (k vložení na konec stránky)
+
+> Poznámka: Článek prošel několikerou úpravou pomocí AI, která v něm zanechala pár chyb a některé pasáže si zjednodušila. A to tak že je i zcela vymazala. Protože nikdo – ale opravdu nikdo – není dokonalý, prosíme o shovívavost a případné tipy na opravy. Děkujeme! 🙏
+
+Doporučení k údržbě:
+- Přidejte odkaz na issue tracker a changelog, aby čtenáři mohli snadno nahlásit chyby a sledovat opravy.
+- Uveďte datum poslední aktualizace a kontaktní osobu (vlastníka datového produktu / stránky).
