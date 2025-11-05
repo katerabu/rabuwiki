@@ -1,0 +1,257 @@
+---
+title: Data‑centric solutions: odborný průvodce a praktický návod
+category: Počítače
+tags: [data, architektura, analytika, programování]
+last_update: 2025-11-05
+---
+# Data‑centric solutions: odborný průvodce a praktický návod pro GitHub Wiki
+
+Soubor: data-centric-solutions.md
+
+## Abstrakt
+Data‑centric solutions staví kvalitu, spravovatelnost a využitelnost dat do středu architektury i procesů. Místo maximalizace přesnosti modelů či nástrojů samých o sobě kladou důraz na návrh datových produktů, srozumitelné smlouvy nad daty, měřitelnou kvalitu, pozorovatelnost, řízení rizik a efektivní provozní model. Tento dokument shrnuje osvědčené principy, referenční architektury, postupy zavádění, metriky i governance pro odborné publikum a doplňuje je o praktické check‑listy a šablony. V textu odkazujeme na etablované zdroje a standardy (Dehghani, 2021; Armbrust et al., 2021; DAMA International, 2017; Wilkinson et al., 2016).
+
+## Pro koho je tento návod
+- Architekti datových platforem a data leadři
+- Data inženýři, analytici, ML inženýři
+- Produktoví manažeři datových produktů a data stewardi
+- Bezpečnostní a compliance specialisté
+
+## Co je data‑centric přístup a proč na něm záleží
+- Od model‑centric k data‑centric: ve většině analytických a AI systémů je největší pákou kvalita a správa dat, nikoli samotný model či nástroj. Investice do kvality, smluv nad daty, lineage a pozorovatelnosti snižuje technický dluh a zrýchluje doručování hodnoty (Sculley et al., 2015; Breck et al., 2017).
+- Data jako produkt: Doménové týmy publikují data jako „datové produkty“ s jasným účelem, SLA/SLO, dokumentací a rozhraním (Dehghani, 2021).
+- FAIR a DMBOK: Data mají být dohledatelná, dostupná, interoperabilní a znovupoužitelná (FAIR) a spravovaná v souladu s DMBOK disciplínami (Wilkinson et al., 2016; DAMA International, 2017).
+
+## Základní principy data‑centric řešení
+1. Data jako produkt a datové smlouvy (contracts)
+   - Definujte jasné schéma, sémantiku a SLA/SLO pro doručování a kvalitu.
+   - Uplatňujte verzování schémat a řízené změny (schema evolution).
+2. Kvalita a testovatelnost dat
+   - Automatizované testy, asserty a pravidla pro kvalitu v CI/CD datových pipeline (Breck et al., 2017; Great Expectations, 2020; ISO/IEC, 2008).
+3. Metadata‑first a lineage
+   - Povinné katalogizování, sběr lineage a datové discovery (OpenLineage, 2021).
+4. Pozorovatelnost dat a pipeline
+   - Měřte čerstvost, úplnost, odlehlosti, odchylky schémat a výkon dotazů (Moses et al., 2022).
+5. Bezpečnost, soukromí a řízení rizik
+   - Princip minimálních oprávnění, šifrování, pseudonymizace, retenční politiky a audit (EU, 2016; Dwork and Roth, 2014).
+6. Lakehouse a otevřené formáty
+   - ACID tabulky nad objektovým úložištěm, separace compute a storage (Armbrust et al., 2021; Armbrust et al., 2020).
+7. Federovaná governance
+   - Jednotné standardy, ale doménová autonomie (Dehghani, 2021).
+
+## Referenční architektura (high‑level)
+- Zdroje: OLTP systémy, event logy, SaaS, soubory.
+- Ingest:
+  - Batch (files, JDBC) a streaming (Kafka, Pulsar) s CDC (např. Debezium) pro minimální dopady na zdroje (Kreps, 2013).
+  - Validace proti schématu a datovým smlouvám.
+- Lakehouse vrstva:
+  - Raw/Bronze (min. transformací), Curated/Silver (čištění, standardizace), Gold (byznysové agregace, datové produkty).
+  - Otevřené tabulkové formáty s ACID: Delta Lake, Apache Iceberg, Apache Hudi (Armbrust et al., 2020).
+- Transformace a modelování:
+  - ELT v enginech typu Spark/Trino/BigQuery/SQL Warehouse; transformace jako kód (dbt, Spark SQL).
+- Metadata a governance:
+  - Katalog (DataHub/Amundsen/Collibra), lineage (OpenLineage), quality registry.
+- Serving:
+  - OLAP/BI, datové API, feature store pro ML (TFX/Feast; Baylor et al., 2017).
+- Observability a SRE:
+  - Metriky, logy, trace, data SLO/SLI, alerting, incident management (Beyer et al., 2016).
+
+## Datové produkty a datové smlouvy
+- Definice datového produktu
+  - Účel a business owner
+  - Doména a rozhraní: tabulky, views, eventy, API
+  - Schéma a sémantika: datové typy, jednotky, business pravidla
+  - SLO: čerstvost (např. P95 < 10 min), dostupnost, latence dotazů, přesnost/úplnost
+  - Katalogizace a lineage
+  - Klasifikace a citlivost (PII/PHI/PCI)
+- Datové smlouvy (contracts)
+  - Schéma (Avro/Protobuf/JSON Schema) jako zdroj pravdy
+  - Politika změn: backward compatibility, deprecations, verzování `v1`, `v2`
+  - Validace v ingestu a pipeline; kontraktní testy proti testovacímu datovému vzorku
+  - Error handling: dead‑letter queue, karanténa, reprocess policy
+
+## Kvalita dat: dimenze, metriky, testy
+- Dimenze dle ISO/IEC 25012 a praxe: přesnost, úplnost, konzistence, včasnost/čerstvost, jedinečnost, platnost, integrita (ISO/IEC, 2008; Moses et al., 2022).
+- Příklady SLI a práhů
+  - Čerstvost: rozdíl `now - max(event_time)` < 10 min (P95)
+  - Úplnost: poměr neprázdných hodnot > 0.995
+  - Přesnost: validace doménových pravidel (např. `amount >= 0`)
+  - Konzistence: foreign key referenční integrita > 0.999
+- Testování a automatizace
+  - Unit testy transformací (SQL assertions)
+  - Contract testy proti schématu
+  - Kontroly kvality při ingestu a před publikací (Great Expectations, 2020)
+  - Kontinuální testování v CI/CD, gate s SLO práhy (Breck et al., 2017)
+
+## Metadata, katalog a lineage
+- Povinná registrace všech datových aktiv do katalogu, včetně popisu, vlastnictví, klasifikace (FAIR; Wilkinson et al., 2016).
+- Automatizovaný sběr lineage z orchestrátoru/engine (OpenLineage, 2021).
+- Metriky pokrytí: procento tabulek s dokumentací, schématem a vlastníkem; úplnost lineage.
+
+## Orchestrace, CI/CD a DataOps
+- Orchestrace: Airflow/Prefect/Dagster s deklarativními DAGy a idempotentními úlohami.
+- CI/CD datových pipeline:
+  - Lint, unit a kontraktní testy
+  - Ephemeral prostředí (sandbox) a testovací datasety
+  - Schvalování schémat (schema registry) a řízené rollouty
+- Reproducibilita a verzování dat
+  - Time‑travel tabulek (Delta/Iceberg) a snapshoty; audit trasy transformací (Armbrust et al., 2020).
+  - GitOps pro kód a konfiguraci pipeline.
+
+## Batch vs. streaming a CDC
+- Batch: robustní pro heavy transformace; plánování oken a SLA.
+- Streaming: nízká latence, potřeba přesné jednou/alespoň jednou semantiky, idempotentních sink operací a deduplikace (Kreps, 2013).
+- CDC: snímání změn z OLTP, konektorová validace, řazení transakcí, slučování do Lakehouse s ACID upserty.
+
+## Úložiště a dotazy: formáty, partitioning, performance
+- Formáty: Parquet/ORC (sloupcová komprese, statistiky), komprese ZSTD/Snappy.
+- Tabulkové vrstvy: Delta Lake/Iceberg/Hudi – ACID, schema evolution, time‑travel, compaction (Armbrust et al., 2020).
+- Oddělení compute/storage, lakehouse pattern (Armbrust et al., 2021).
+- Optimalizace:
+  - Partitioning podle selektivních sloupců, clustering a data skipping
+  - Souborová hygiena: velikost souborů, compaction, Z‑order (u Delta)
+  - Indexing a materializované pohledy pro běžné dotazy
+
+## ML a feature management
+- Feature pipelines: konzistence online/offline, point‑in‑time correct joins, sledování derivační logiky.
+- Feature store a TFX
+  - Správa schémat a validace dat vstupů; monitoring driftu, training‑serving skew (Baylor et al., 2017; Breck et al., 2017).
+
+## Pozorovatelnost dat a SRE praktiky
+- SLI/SLO pro data a pipeline
+  - SLI: čerstvost, úplnost, chyba schématu, latence pipeline, chybovost úloh
+  - SLO: např. čerstvost P95 < 10 min; dostupnost datasetu 99.9 %
+- Error budget a incident response
+  - Alerty založené na SLO, runbooks, post‑mortems a RCA (Beyer et al., 2016).
+- Detekce anomálií a driftu
+  - Statistické profily, kontrolní grafy, pravidla výjimek (Moses et al., 2022).
+
+## Bezpečnost, soukromí a compliance
+- Přístup a klasifikace
+  - RBAC/ABAC, data masking, tokenizace, tagované řízení přístupu.
+- Šifrování a audit
+  - At‑rest (KMS) i in‑transit (TLS), audit logy dotazů a exportů.
+- Minimalizace a retenční politika
+  - Data minimization, TTL, automatizované mazání a DSAR workflow (EU, 2016).
+- Diferenční soukromí a anonymizace
+  - DP mechanismy pro publikaci agregací a trénink modelů (Dwork and Roth, 2014).
+
+## Nákladová efektivita a FinOps pro data
+- Optimalizace dotazů a storage
+  - Pruning, clusterování, materializace, cache.
+- Správa nákladů
+  - Kostrové metriky: cena na dotaz/dataset, náklady na GB/den, náklady na SLO; kvóty a budget alerty.
+- Životní cyklus dat
+  - Studené/teplé/horké vrstvy, archivace, kompakce, snižování duplicit.
+
+## Škálování a spolehlivost
+- Odolnost pipeline
+  - Idempotence, přesné jednou semantics, retry s backoff, DLQ.
+- Distribuované výpočty
+  - Správná granularita úloh, locality, autoscaling, adaptivní query execution.
+- Více‑regionální a disaster recovery
+  - Replikace metadat, RPO/RTO cíle pro kritická data.
+
+## Organizační model a governance
+- Role a odpovědnosti
+  - Product owner datového produktu, data steward, data engineer, analytics engineer, ML engineer, bezpečnostní a právní role.
+- Federovaná computational governance
+  - Minimální standardy napříč doménami: kontrakty, katalog, kvalita, lineage, bezpečnost (Dehghani, 2021).
+- Procesy
+  - RFC pro změny schémat, data review board, požadavky na dokumentaci, auditovatelné checklisty.
+
+## Antipatterny, kterým se vyhnout
+- „Schéma později“: nedefinovaná sémantika a ad‑hoc transformace.
+- „Single mega pipeline“: monolit bez doménových hranic a znovupoužití.
+- „Dashboard‑driven ingestion“: ingest motivovaný UI, nikoli kontrakty a doménou.
+- „ML bez datové infrastruktury“: modely trpí datovým dluhem a nespolehlivostí (Sculley et al., 2015).
+- „Compliance naposledy“: nákladné retro‑fitování GDPR a security (EU, 2016).
+
+## KPI a metriky úspěchu
+- Produktové KPI: adopce datových produktů, NPS stakeholderů, čas do doručení (lead time).
+- Kvalita a spolehlivost: SLO plnění, incidenty na Q, MTTR/MTTD, podíl pipeline s testy a katalogizací.
+- Efektivita: cena na dotaz/dataset, utilization, procento automatizovaných kontrol.
+- Governance: pokrytí katalogem, procento aktiv s vlastníkem, audit compliance.
+
+## Praktický návod: 30‑60‑90 dní
+- 0–30 dní: základy
+  - Zřiďte katalog a minimální metadata (název, vlastník, klasifikace).
+  - Zaveďte datové smlouvy pro 1–2 klíčové zdroje; zprovozněte schema registry.
+  - Pilotujte kvalitu s 5–10 kritickými asserty (Great Expectations).
+  - Změřte baseline SLI/SLO pro čerstvost a dostupnost.
+- 31–60 dní: průmyslová hygiena
+  - Orchestrace s CI/CD, kontraktní testy, automatické validace v ingestu.
+  - Publikujte první datové produkty se SLA a dokumentací v katalogu.
+  - Zaveďte lineage sběr (OpenLineage) a základní observability dashboardy.
+  - Zautomatizujte retenční politiky a přístupová práva pro PII.
+- 61–90 dní: škálování a governance
+  - Konsolidujte do lakehouse s ACID tabulkami (Delta/Iceberg/Hudi).
+  - Rozšiřte SLO, error budgety, incidentní procesy (SRE).
+  - Federovaná governance: minimální standardy a šablony, review board.
+  - FinOps: tagging nákladů, budgety, optimalizace compaction a partitioningu.
+
+## Kontrolní seznamy (checklisty)
+- Datový produkt
+  - Má jasného vlastníka a účel
+  - Schéma a sémantika v katalogu, verzované
+  - SLO definovaná a měřená (čerstvost, dostupnost, kvalita)
+  - Lineage dostupná, testy kvality v CI/CD
+  - Klasifikace a přístupová politika vynucena
+- Pipeline
+  - Idempotentní a deterministická
+  - Validace schématu a datových pravidel před publikací
+  - Monitoring metrik výkonu a kvality, alerty
+  - Runbook a možnost re‑run/reprocess
+- Bezpečnost a compliance
+  - PII tagování a maskování
+  - Šifrování at‑rest a in‑transit
+  - Retence a mazání dle politik
+  - Audit dotazů a exportů
+
+## Vzor SLO/SLI definic (příklad)
+- Dataset: `payments_gold`
+  - SLI freshness: P95 `now - max(event_time)` < 10 min, SLO: 99 % dnů v měsíci
+  - SLI dostupnost: `SELECT ok / total` > 99.9 %, SLO: 99.9 %
+  - SLI úplnost: `non_null(card_token) / rows` > 0.999, SLO: 99 %
+  - Alert: pager při porušení SLO 3× za 24 h; ticket pro trend degradace
+
+## Tipy k implementaci technologií
+- Ingest: Kafka + Debezium pro CDC; batch přes objekty/SaaS konektory.
+- Lakehouse: otevřený formát (Delta/Iceberg/Hudi) dle provozního prostředí a ekosystému.
+- Transformace: SQL‑first s dbt pro BI; Spark/Flink pro těžší transformace a stream.
+- Metadata: DataHub/Amundsen; standard OpenLineage pro lineage.
+- Kvalita: Great Expectations, případně Deequ; pravidla jako kód.
+- Observability: vlastních 5–10 SLI pro každý kritický produkt; dashboard + alerty.
+- ML: TFX/Feast pro feature management; drift detekce a testy skew.
+
+## Slovníček pojmů
+- Datový produkt: kurátorovaná datová entita s jasným účelem, rozhraním a SLO.
+- Datová smlouva: formální dohoda o schématu, sémantice a SLA mezi producentem a konzumentem.
+- Lineage: vztahy „odkud‑kam“ mezi daty a transformacemi.
+- Lakehouse: kombinace datového jezera a skladiště nad ACID tabulkami a otevřenými formáty.
+- SLI/SLO: indikátory a cíle spolehlivosti měřené na datech a pipeline.
+- CDC: snímání změn, replikace transakčních změn do analytické vrstvy.
+
+## Závěr
+Data‑centric přístup vyžaduje disciplínu, automatizaci a jasný provozní model. Základem je datová smlouva, kvalita jako kód, důsledná práce s metadaty a otevřené formáty v lakehouse architektuře. Úspěch měřte přesně definovanými SLI/SLO a produktovými KPI a průběžně minimalizujte technický dluh (Breck et al., 2017; Sculley et al., 2015; Armbrust et al., 2021).
+
+## Reference
+- Armbrust, M., Ghodsi, A., Xin, R., Zaharia, M., Franklin, M. et al. (2021) Lakehouse: A New Generation of Open Platforms for Data and AI. CIDR 2021. Available at: https://www.cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf (Accessed: 5 November 2025).
+- Armbrust, M., Das, T., Yang, S., Zhu, X., Ghodsi, A. et al. (2020) Delta Lake: High-Performance ACID Table Storage over Cloud Object Stores. CIDR 2020. Available at: http://cidrdb.org/cidr2020/papers/p29-armbrust-cidr20.pdf (Accessed: 5 November 2025).
+- Baylor, D., Breck, E., Cheng, H.T., Fiedel, N., Polyzotis, N. et al. (2017) TFX: A TensorFlow-Based Production-Scale Machine Learning Platform. Proceedings of the 23rd ACM SIGKDD. Available at: https://dl.acm.org/doi/10.1145/3097983.3098021 (Accessed: 5 November 2025).
+- Beyer, B., Jones, C., Petoff, J. and Murphy, N. (eds.) (2016) Site Reliability Engineering: How Google Runs Production Systems. O’Reilly Media. Available at: https://sre.google/sre-book/table-of-contents/ (Accessed: 5 November 2025).
+- Breck, E., Cai, S., Nielsen, E., Salib, M. and Sculley, D. (2017) What’s your ML Test Score? A Rubric for ML Production Readiness. arXiv: http://arxiv.org/abs/1803.09010 (Accessed: 5 November 2025).
+- DAMA International (2017) DAMA-DMBOK: Data Management Body of Knowledge (2nd ed.). Technics Publications. Available at: https://www.dama.org/ (Accessed: 5 November 2025).
+- Dehghani, Z. (2021) Data Mesh: Delivering Data-Driven Value at Scale. O’Reilly Media. Available at: https://www.oreilly.com/library/view/data-mesh/9781492092384/ (Accessed: 5 November 2025).
+- Dwork, C. and Roth, A. (2014) The Algorithmic Foundations of Differential Privacy. Foundations and Trends in Theoretical Computer Science, 9(3–4), pp. 211–407. Available at: https://www.nowpublishers.com/article/Details/TCS-042 (Accessed: 5 November 2025).
+- European Union (2016) Regulation (EU) 2016/679 (General Data Protection Regulation). Official Journal of the European Union. Available at: https://eur-lex.europa.eu/eli/reg/2016/679/oj (Accessed: 5 November 2025).
+- Great Expectations (2020) Great Expectations: Always Know What to Expect from Your Data. Documentation. Available at: https://greatexpectations.io/ (Accessed: 5 November 2025).
+- Kreps, J. (2013) The Log: What every software engineer should know about real-time data’s unifying abstraction. LinkedIn Engineering. Available at: https://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying (Accessed: 5 November 2025).
+- Moses, B., Nicholson, L. and Vasudevan, S. (2022) Data Quality Fundamentals. O’Reilly Media. Available at: https://www.oreilly.com/library/view/data-quality-fundamentals/9781098112042/ (Accessed: 5 November 2025).
+- OpenLineage (2021) OpenLineage: An Open Standard for Metadata and Lineage Collection. Specification. Available at: https://openlineage.io/ (Accessed: 5 November 2025).
+- Sculley, D., Holt, G., Golovin, D., Davydov, E., Phillips, T. et al. (2015) Hidden Technical Debt in Machine Learning Systems. In: Advances in Neural Information Processing Systems (NIPS). Available at: https://papers.nips.cc/paper_files/paper/2015/file/86df7dcfd896fcaf2674f757a2463eba-Paper.pdf (Accessed: 5 November 2025).
+- Wilkinson, M.D., Dumontier, M., Aalbersberg, I.J., Appleton, G., Axton, M. et al. (2016) The FAIR Guiding Principles for scientific data management and stewardship. Scientific Data 3, 160018. Available at: https://www.nature.com/articles/sdata201618 (Accessed: 5 November 2025).
+- ISO/IEC (2008) 25012:2008 Systems and software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — Data quality model. International Organization for Standardization. Available at: https://www.iso.org/standard/35736.html (Accessed: 5 November 2025).
+
+
+  
