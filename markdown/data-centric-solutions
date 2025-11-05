@@ -4,7 +4,7 @@ category: Počítače
 tags: [data, architektura, analytika, programování]
 last_update: 2025-11-05
 ---
-# Data‑centric solutions: odborný průvodce a praktický návod pro GitHub Wiki
+# Data‑centric solutions: odborný průvodce a praktický návod
 
 Soubor: data-centric-solutions.md
 
@@ -253,10 +253,9 @@ Data‑centric přístup vyžaduje disciplínu, automatizaci a jasný provozní 
 - Wilkinson, M.D., Dumontier, M., Aalbersberg, I.J., Appleton, G., Axton, M. et al. (2016) The FAIR Guiding Principles for scientific data management and stewardship. Scientific Data 3, 160018. Available at: https://www.nature.com/articles/sdata201618 (Accessed: 5 November 2025).
 - ISO/IEC (2008) 25012:2008 Systems and software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — Data quality model. International Organization for Standardization. Available at: https://www.iso.org/standard/35736.html (Accessed: 5 November 2025).
 
-Doplnění od AI:
-
 Data-centric solution je přístup, který staví data do středu všech operací firmy, namísto toho, aby je považoval jen za vedlejší produkt. To znamená, že se firmy zaměřují na kvalitu a organizaci dat jako na klíčový majetek pro rozhodování, optimalizaci procesů a zlepšování výkonnosti. V praxi to může znamenat například přístup data-centric AI, kde se zlepšuje výkonnost umělé inteligence prostřednictvím systematického vylepšování kvality dat, nikoli pouze úpravou kódu modelu. 
-Klíčové aspekty
+
+## Klíčové aspekty
 
 Data jako primární majetek: Data jsou vnímána jako trvalá hodnota, na které závisí celý podnik.
 Zaměření na kvalitu: Prioritou je kvalita, přesnost a konzistence dat, protože i méně složitý model s kvalitními daty může být výkonnější než složitější model s nekvalitními daty.
