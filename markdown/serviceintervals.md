@@ -4,121 +4,90 @@ category: Cestování
 tags: [auto, cestování, servis, intervaly, údržba]
 last_update: 2025-11-29
 ---
- # Servisní intervaly domácích vozidel
+# 🚗 Servisní intervaly domácích vozidel
 
-Tento dokument obsahuje souhrn doporučených servisních intervalů a přehled již provedených úkonů pro všechna vozidla v domácnosti. Je připraven pro přímé vložení do GitHub Wiki.
-
----
-
-## 1. Účel dokumentu
-Cílem je udržovat dlouhodobý přehled o servisu všech vozidel v domácnosti, zaznamenávat termíny servisů, nájezdy a plánované úkony. Tím se minimalizuje riziko zanedbané údržby a zlepšuje spolehlivost i životnost vozidel.
+Tento dokument slouží jako přehled a plán pravidelného servisu pro všechna rodinná vozidla. Obsahuje obecné servisní intervaly, konkrétní údaje o autech a doporučení typů dílů / kapalin. Je připraven pro vložení do GitHub Wiki.
 
 ---
 
-## 2. Obecné servisní intervaly
-Níže uvedené intervaly jsou doporučení pro běžné osobní automobily. Konkrétní intervaly se mohou lišit podle výrobce, motoru a podmínek provozu. Všechna vozidla jsou servisována **neznačkovým servisem**, kde se pravidelně provádí kompletní údržba – výměna oleje, filtrů, kontrola kapalin, stavu baterie a v případě automatů i pravidelný servis převodovky.
-
-### 2.1 Motorový olej a olejový filtr
-- Interval: 10 000–15 000 km nebo 1 rok  
-- Výměna oleje a olejového filtru vždy společně
-
-### 2.2 Kabinový filtr
-- Interval: 15 000–20 000 km nebo 1 rok
-
-### 2.3 Vzduchový filtr motoru
-- Interval: 20 000–30 000 km
-
-### 2.4 Palivový filtr
-- Diesel: 30 000–60 000 km  
-- Benzín: 60 000–90 000 km
-
-### 2.5 Brzdová kapalina
-- Interval: každé 2 roky
-
-### 2.6 Chladicí kapalina
-- Interval: cca každé 4 roky (dle specifikace výrobce)
-
-### 2.7 Zapalovací svíčky (benzín)
-- 40 000–60 000 km (klasické)  
-- Až 100 000 km (iridiové)
-
-### 2.8 Automatická převodovka
-- Interval: každých 60 000–80 000 km (pokud konstrukce umožňuje výměnu oleje/filtru)
-
-### 2.9 Pravidelné kontroly
-- Brzdy: každých 10 000–15 000 km  
-- Baterie: minimálně 1× ročně  
-- Pneumatiky: při sezónním přezutí  
-- Podvozek: 1× ročně nebo dle potřeby  
+## 🔧 1. Účel dokumentu
+Cílem je mít přehled o údržbě všech vozidel – zaznamenat, kdy byl poslední servis, co se měnilo, a kdy bude vhodné servis zopakovat. To pomáhá minimalizovat riziko zanedbané údržby a zjednodušuje plán oprav.
 
 ---
 
-## 3. Vozidla v domácnosti
+## 📅 2. Obecné servisní intervaly
+Úkony a doporučené intervaly pro běžná osobní auta (neznačkový servis, plná údržba).
 
-### 3.1 Volkswagen UP!
+- **Motorový olej + olejový filtr** – každých 10 000–15 000 km nebo 1 rok  
+- **Kabinový filtr** – každých 15 000–20 000 km nebo 1 rok  
+- **Vzduchový filtr motoru** – každých 20 000–30 000 km  
+- **Palivový filtr** – nafta: 30 000–60 000 km; benzín: 60 000–90 000 km  
+- **Brzdová kapalina** – každé 2 roky  
+- **Chladicí kapalina** – cca každých 4 roky (nebo dle doporučení výrobce)  
+- **Zapalovací svíčky (benzín)** – cca 40 000–60 000 km (klasické) nebo až 100 000 km (iridiové)  
+- **Automatická převodovka (olej + filtr, pokud je výměna možná)** – každých 60 000–80 000 km  
+- **Pravidelné kontroly** – brzdy 10 000–15 000 km, pneuservis při přezutí, baterie minimálně 1× ročně, podvozek 1× ročně nebo dle potřeby  
+
+---
+
+## 🚙 3. Vozidla v domácnosti
+
+### ### 3.1 Volkswagen UP!
 - **Rok výroby:** 2014  
-- **Motor:** CHY, 999 ccm, 55 kW, benzín  
+- **Motor:** CHY, 999 ccm, benzín  
 - **Převodovka:** automat  
 - **Aktuální nájezd:** 29 000 km  
 - **Poslední servis:** 3. 2. 2025 při 26 000 km  
-- **Provedené úkony:** kompletní pravidelný servis včetně servisu automatu  
-- **Doporučený příští servis:** 36 000–38 000 km nebo únor 2026  
-- **Poznámky:** vzhledem k nízkému ročnímu nájezdu doporučený interval je spíše 1 rok než podle kilometrů
+- **Provedené úkony:** kompletní servis včetně převodovky  
 
-### 3.2 Toyota RAV4
+### ### 3.2 Toyota RAV4
 - **Rok výroby:** 2015  
-- **Motor:** 2.0 D-4D 1AD, 91 kW, nafta  
+- **Motor:** 2.0 D-4D (1AD-FTV), nafta, 91 kW :contentReference[oaicite:0]{index=0}  
 - **Převodovka:** manuální  
 - **Aktuální nájezd:** 179 000 km  
 - **Poslední servis:** 7. 12. 2024 při 165 000 km  
-- **Provedené úkony:** kompletní pravidelný servis  
-- **Doporučený příští servis:** 180 000–185 000 km nebo prosinec 2025  
-- **Poznámky:** u motoru 1AD doporučeno sledovat stav DPF, EGR a palivového systému
 
-### 3.3 Dodge Grand Caravan
+### ### 3.3 Dodge Grand Caravan
 - **Rok výroby:** 2014  
-- **Motor:** 3.6 Pentastar V6, 211 kW, benzín  
+- **Motor:** 3.6 Pentastar V6, benzín  
 - **Převodovka:** automat  
 - **Aktuální nájezd:** 199 000 km  
 - **Poslední servis:** 1. 8. 2025 při 194 000 km  
-- **Provedené úkony:** kompletní pravidelný servis + servis automatu  
-- **Doporučený příští servis:** 205 000–210 000 km nebo srpen 2026  
-- **Poznámky:** doporučuje se sledovat svíčky, chladicí soustavu a těsnost převodovky
 
 ---
 
-## 4. Roční plán údržby
+## 🧰 4. Doporučení — typy dílů / kapalin pro jednotlivá vozidla
 
-### 4.1 Jaro
-- Přezutí na letní pneumatiky  
-- Kontrola podvozku  
-- Kontrola brzd  
+### **Volkswagen UP! (2014, 1.0 benzín, automat)**  
+- Olejový filtr: vhodné obecné OEM nebo aftermarket filtr kompatibilní s 1.0 benzín VW (např. filtr podle katalogu pro VW Up) :contentReference[oaicite:1]{index=1}  
+- Motorový olej: plně syntetický olej podle specifikace VW (např. 5W-30 nebo dle servisního manuálu)  
+- Kabinový, palivový, vzduchový filtr: standardní filtry doporučené pro typ motoru a konstrukci vozu  
+- Automatická převodovka: olej + filtr (pokud konstrukce umožňuje výměnu) každých 60 000–80 000 km  
 
-### 4.2 Léto
-- Kontrola klimatizace a výměna kabinového filtru  
-- Kontrola chladicí kapaliny  
-- Kontrola dobíjení baterie  
+### **Toyota RAV4 (2015, 2.0 D-4D nafta)**  
+- Olej + olejový filtr: např. syntetický olej 0W-30 nebo 5W-30 vhodný pro diesel, kapacita motoru ~ 5,9 l pro plnou náplň + filtr 0,4 l :contentReference[oaicite:2]{index=2}  
+- Palivový filtr: kvalitní filtr určený pro diesel s Common-rail systémem (doporučeno vzhledem k citlivosti vstřikování) — s ohledem na rizika podle motoru 1AD-FTV (EGR, DPF) :contentReference[oaicite:3]{index=3}  
+- Vzduchový a kabinový filtr: běžné filtry pro daný model  
+- Brzdové destičky / kotouče: sada destiček + kotouče vhodné pro RAV4  
+- Doporučení: kvůli specifikům motoru sledovat stav EGR, DPF a vstřikovací soustavy  
 
-### 4.3 Podzim
-- Příprava na zimu  
-- Kontrola akumulátoru  
-- Kontrola stavu oleje  
-
-### 4.4 Zima
-- Kontrola zimních pneumatik  
-- Kontrola světel a ostřikovačů  
-
----
-
-## 5. Doporučení pro vedení záznamů
-- Po každém servisu doplnit datum, nájezd a provedené úkony  
-- Uchovávat účtenky a servisní protokoly  
-- Poznamenávat závady nebo doporučení mechanika  
-- Doporučuje se mít samostatnou sekci pro každé vozidlo
+### **Dodge Grand Caravan (2014, 3.6 V6 benzín, automat)**  
+- Olej + olejový filtr: plně syntetický olej pro V6 benzínový motor (dle manuálu), filtr podle specifikace Pentastar 3.6  
+- Zapalovací svíčky: v rámci intervalu (cca 40 000–60 000 km nebo podle kvality svíček)  
+- Vzduchový, palivový a kabinový filtr: standardní filtry pro daný motor a konstrukci  
+- Automatická převodovka: olej + filtr (pravidelný servis převodovky každých 60 000–80 000 km)  
+- Kontrola chladicí kapaliny a brzdových systémů pravidelně  
 
 ---
 
-## 6. Reference (Harvard)
+## ✅ 5. Doporučení pro vedení záznamů
+- Po každém servisu zapsat: datum, nájezd, provedené úkony, použitý olej/díly, případné poznámky (oprav, doporučení mechanika)  
+- Uchovávat účtenky, protokoly, seznam použitých dílů a kapalin  
+- Vytvořit pro každé vozidlo samostatnou podsekci — ideálně tabulku s historií servisu + plán dalších servisů  
+
+---
+
+## 📚 6. Reference (Harvard styl)
 Bosch Automotive (2022). *Vehicle Maintenance Guidelines*. Bosch Mobility Group.  
 Škoda Auto (2023). *Service Intervals and Vehicle Care Recommendations*. Škoda Auto a.s.  
 Castrol (2021). *Engine Oil Specification and Change Intervals*. Castrol Ltd.  
