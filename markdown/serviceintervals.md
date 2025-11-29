@@ -81,6 +81,50 @@ Cílem je mít přehled o údržbě všech vozidel – zaznamenat, kdy byl posle
 ---
 ## 🧰 5. Doporučené díly / kapaliny pro každé vozidlo (příklad k objednání)
 
+# Olej – doporučení pro všechna vozidla
+
+## 🔹 Doporučený motorový olej: Shrnutí
+
+Níže je tabulka s doporučením motorového oleje pro každé z vašich vozidel — ideální volba / alternativy, které jsou běžně dostupné.
+
+| Auto | Motor / základní údaje | Doporučený olej (výrobce / standard) | Alternativy / běžné oleje | Poznámka |
+|------|------------------------|---------------------------------------|----------------------------|----------|
+| **VW UP! (2014, 1.0 benzín, automat)** | 1.0 l benzín, malý městský motor | Plně syntetický olej 5W‑30, norma API SN / ACEA (low‑SAPS / Cx) | 0W‑40 — plně syntetický | 5W‑30 je ideální pro běžný provoz, dobrý kompromis mezi mazáním a spotřebou; 0W‑40 může poskytnout lepší ochranu při delších cestách nebo vyšší zátěži |
+| **Toyota RAV4 (2015, 2.0 D‑4D diesel)** | 2.0 D‑4D diesel, naftový motor (možné DPF/EGR) | 5W‑30 plně syntetický, norma API SN/CF + ACEA C3 / low‑ash (SAPS) | 5W‑30, případně 5W‑40 pokud je olej kompatibilní s diesel motory a emisními systémy | 5W‑30 plně vyhovuje běžným požadavkům, low‑ash oleje jsou vhodné při DPF/EGR; 5W‑40 může být volbou pro vyšší zátěž či delší intervaly |
+| **Dodge Grand Caravan (2014, 3.6 V6 benzín, automat)** | 3.6 V6 benzín, větší motor | Podle výrobce: 5W‑20 plně syntetický (nebo dle majitele možná i 5W‑30 při vhodné kvalitě) | 5W‑30 plně syntetický | 5W‑20 je originální doporučení; 5W‑30 lze použít jako bezpečnou, univerzálnější volbu, pokud chcete snadnější dostupnost oleje a robustní mazání při vyšší zátěži |
+
+---
+
+## ✅ Proč je olej 5W‑30 (např. Shell Helix Ultra Professional AG) univerzálně použitelný
+
+- Olej 5W‑30 s normami jako **API SN** a **ACEA C3 / low‑SAPS** je navržen pro moderní benzínové i dieselové motory — včetně těch s katalyzátorem, DPF nebo EGR. :contentReference[oaicite:1]{index=1}  
+- Díky syntetické základě se chová dobře při startu i v zimních teplotách a zároveň při zahřátém motoru poskytuje dostatečný mazací film. :contentReference[oaicite:2]{index=2}  
+- Olej typu “low‑SAPS / mid‑SAPS / ACEA C3” bývá vhodný i pro naftové motory s filtry pevných částic. :contentReference[oaicite:3]{index=3}  
+
+### 🔎 Shell Helix Ultra Professional AG 5W‑30 (příklad, který se dá použít)
+
+- Plně syntetický motorový olej, viskozita SAE 5W‑30. :contentReference[oaicite:4]{index=4}  
+- Norma API SN, ACEA C3, licence GM dexos2 — vhodný pro benzínové i dieselové motory. :contentReference[oaicite:5]{index=5}  
+- Určen pro automobily s přísnými emisními normami a moderními systémy úpravy spalin — tedy vhodný i pro dieselové motory s filtrem pevných částic. :contentReference[oaicite:6]{index=6}  
+
+---
+
+## ⚠️ Na co si dát při výběru oleje pozor
+
+- U dieselového motoru (jako má RAV4) zkontroluj, že olej má **low‑ash / low‑SAPS normu** — to pomáhá ochránit DPF / EGR před zanášením.  
+- U většího motoru (např. 3.6 V6 benzín) pokud chceš maximální ochranu při vyšších teplotách nebo vyšší zátěži, volba 5W‑30 je univerzální — ale pokud výrobce uvádí jinou viskozitu (např. 5W‑20), doporučuji ji preferovat nebo zvaž risk‑benefit při odlišném oleji.  
+- Při výměně vždy sleduj objem (doplnění oleje) + olejový filtr — abys měl jistotu, že motor dostává správné množství oleje a filtrace je funkční.  
+
+---
+
+## 📄 Doporučení do praxe pro vaši domácnost
+
+Pokud chceš mít jeden olej pro všechna auta — **Shell Helix Ultra Professional AG 5W‑30** je velmi rozumná, univerzální volba. U benzínových i dieselových motorů poskytuje solidní ochranu a vyhovuje technickým normám.  
+
+Pokud však chceš dodržet přesné doporučení výrobce pro každý motor, je dobré mít v záloze i originální viskozitu (u Caravanu 5W‑20) a sledovat, jak motor reaguje na nový olej.  
+
+---
+
 ### Dodge Grand Caravan (2014, 3.6 V6, automat)
 - **Motorový olej + olejový filtr:** doporučený olej je originální Mopar (nebo ekvivalent splňující normu Chrysler MS‑6395), viz sada na výměnu. :contentReference[oaicite:2]{index=2}  
 - **Příklad olejového filtru:** :contentReference[oaicite:3]{index=3} — filtr je určen pro 3.6 V6 Pentastar 2014+ (vhodné i pro Grand Caravan). :contentReference[oaicite:4]{index=4}  
