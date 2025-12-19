@@ -53,28 +53,31 @@ Systém zahrnuje optimizéry na každý panel, možnost omezené zálohy (limite
 
 ## 3. Roční výroba a spotřeba elektřiny – 2026
 
-### 3.1. Měsíční profil výroby FVE (kWh) – typický solární profil ČR
+### 3.1. Měsíční profil výroby, spotřeby a nákladů FVE (kWh) 
 
-| Měsíc | Výroba FVE (kWh) | Spotřeba (kWh) | Spotřeba ze sítě (kWh) | Úspora (Kč) |
-|-------|----------------|----------------|------------------------|--------------|
-| Leden | 220 | 333 | 113 | 2 545 |
-| Únor  | 320 | 333 | 13 | 293 |
-| Březen| 540 | 333 | 0 | 1 683 |
-| Duben | 640 | 333 | 0 | 1 996 |
-| Květen| 720 | 333 | 0 | 2 246 |
-| Červen| 740 | 333 | 0 | 2 309 |
-| Červenec| 750 | 333 | 0 | 2 337 |
-| Srpen | 720 | 333 | 0 | 2 246 |
-| Září | 600 | 333 | 0 | 1 871 |
-| Říjen| 440 | 333 | 0 | 1 372 |
-| Listopad| 300 | 333 | 33 | 499 |
-| Prosinec| 220 | 333 | 113 | 2 545 |
 
-**Celkem výroba FVE 2026:** 6 910 kWh  
+| Měsíc      | Výroba FVE (kWh) | Spotřeba (kWh) | Spotřeba ze sítě (kWh) | Pokrytí (%) | Vizualizace pokrytí | Náklad na síť (Kč) |
+|-----------|-----------------|----------------|------------------------|-------------|-------------------|------------------|
+| Leden     | 99              | 453            | 354                    | 22          | █░░░░░░░░░░░░░░░░░░ | 2 196            |
+| Únor      | 291             | 503            | 212                    | 58          | ██████░░░░░░░░░░░░░ | 1 315            |
+| Březen    | 497             | 443            | 0                      | 100         | ████████████████████ | 0                |
+| Duben     | 640             | 307            | 0                      | 100         | ████████████████████ | 0                |
+| Květen    | 668             | 241            | 0                      | 100         | ████████████████████ | 0                |
+| Červen    | 686             | 270            | 0                      | 100         | ████████████████████ | 0                |
+| Červenec  | 672             | 292            | 0                      | 100         | ████████████████████ | 0                |
+| Srpen     | 615             | 287            | 0                      | 100         | ████████████████████ | 0                |
+| Září      | 478             | 247            | 0                      | 100         | ████████████████████ | 0                |
+| Říjen     | 310             | 297            | 0                      | 100         | ████████████████████ | 0                |
+| Listopad  | 105             | 277            | 172                    | 38          | █████░░░░░░░░░░░░░░░ | 1 067            |
+| Prosinec  | 66              | 383            | 317                    | 17          | ███░░░░░░░░░░░░░░░░░ | 1 967            |
+
+**Celkem výroba FVE 2026:** 5 874 kWh  
 **Celková spotřeba 2026:** 4 000 kWh  
-**Elektřina ze sítě:** 0 kWh (přebytky lze prodat, případně využít sezónně)  
-
-> Pozn.: Výroba FVE + baterie pokryje prakticky celou domácí spotřebu, s rezervou na víkendy.
+**Elektřina ze sítě:** 1 055 kWh  
+**Celkový náklad na elektřinu ze sítě:** 6 545 Kč
+**Poznámka:** Ve skutečnosti mohou být některé panely částečně zastíněny (např. stín od komína, stromy, části střechy), což může snížit výrobu FVE v některých měsících o cca 5–15 %. 
+Tento faktor nebyl v tabulce zohledněn, ale je vhodné s ním při plánování a predikci úspor počítat. 
+Výroba FVE + baterie pokryje prakticky celou domácí spotřebu, s rezervou na víkendy.
 
 ---
 
