@@ -47,7 +47,7 @@ Systém zahrnuje optimizéry na každý panel, možnost omezené zálohy (limite
 
 **Celkem:** 367 500 Kč  
 
-> Pozn.: Procentuální podíl je vztažen k celkové investici ~367 500 Kč (zaokrouhlené ceny). Celková fakturovaná cena nabídky je 393 945 Kč.
+> Pozn.: Procentuální podíl je vztažen k celkové investici ~367 500 Kč (zaokrouhlené ceny). Celková fakturovaná cena nabídky je 394 000 Kč.
 
 ---
 
