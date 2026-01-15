@@ -1,3 +1,10 @@
+---
+title: Co mít na lyžařský výcvikový kurz
+category: Cestování
+tags: [snowboard, zimnitabor, tabor, lyžování, výbava]
+last_update: 202-01-15
+---
+
 # Checklist k LVK – Lyžařský výcvikový kurz
 
 Tento dokument slouží jako **kontrolní seznam (checklist)** pro **rodiče a žáky** účastnící se lyžařského výcvikového kurzu (LVK). Cílem je zajistit, aby měl každý účastník včas připravené všechny potřebné dokumenty, vybavení a informace před odjezdem na kurz.
