@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Návratnost fotovoltaické elektrárny (FVE) s baterií – případ Kyjov, 2026</title></head>
+<body>
+<h1>Návratnost fotovoltaické elektrárny (FVE) s baterií – případ Kyjov, 2026</h1>
+<h2>1. Popis systému</h2>
+<ul>
+<li><strong>FVE výkon:</strong> 4,95 kWp  </li>
+<li><strong>Baterie:</strong> Solax T-BAT H 11,6 kWh (využitelná kapacita ~11 kWh, LiFePO4)  </li>
+<li><strong>Střídač:</strong> Solax X3 Hybrid 10,0 kW  </li>
+<li><strong>Cena instalace:</strong> 394 000 Kč (vč. DPH)  </li>
+<li><strong>Umístění:</strong> Kyjov, Česká republika  </li>
+<li><strong>Spotřeba domácnosti 2026:</strong> ~4 MWh, plánovaný nárůst na 5 MWh kvůli 2× TČ vzduch-vzduch  </li>
+</ul>
+<p>Systém zahrnuje optimizéry na každý panel, možnost omezené zálohy (limited backup) a monitoring výroby.</p>
+<hr />
+<h2>2. Cenové vstupy – tarif MND D02 3x25 A</h2>
+<table>
+<thead>
+<tr>
+<th>Komponenta</th>
+<th>Cena (Kč/MWh nebo Kč/měs)</th>
+<th>Množství / měsíční platba</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Obchodní část – VT</td>
+<td>3 366,94 Kč/MWh</td>
+<td>podle spotřeby</td>
+</tr>
+<tr>
+<td>Distribuční část – VT</td>
+<td>2 171,45 Kč/MWh</td>
+<td>podle spotřeby</td>
+</tr>
+<tr>
+<td>Měsíční platba jistič</td>
+<td>235,00 Kč</td>
+<td>měsíčně</td>
+</tr>
+<tr>
+<td>Platba POZE</td>
+<td>495,00 Kč/MWh</td>
+<td>podle spotřeby</td>
+</tr>
+<tr>
+<td>Systémové služby ČEPS</td>
+<td>170,92 Kč/MWh</td>
+<td>podle spotřeby</td>
+</tr>
+<tr>
+<td>Měsíční paušál obchodní část</td>
+<td>99,17 Kč</td>
+<td>měsíčně</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Pozn.: všechny ceny bez DPH, použité pro výpočet ročních nákladů.</p>
+</blockquote>
+<h1>Přehled klíčových komponent FVE + baterie – cena a procentuální podíl</h1>
+<table>
+<thead>
+<tr>
+<th>Část systému</th>
+<th>Popis</th>
+<th>Cena (Kč, vč. DPH)</th>
+<th>Podíl na celkové investici (%)</th>
+<th>Vizualizace podílu</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>FV panely</strong></td>
+<td>11× 450 W bifaciální panely, konstrukce, montáž</td>
+<td>81 000</td>
+<td>20,5</td>
+<td>██████████</td>
+</tr>
+<tr>
+<td><strong>Střídač</strong></td>
+<td>Solax X3 Hybrid 10 kW + elektroměr, wifi/LAN</td>
+<td>121 200</td>
+<td>30,7</td>
+<td>████████████████████</td>
+</tr>
+<tr>
+<td><strong>Baterie</strong></td>
+<td>Solax T-BAT H 11,6 kWh (2× T58, LiFePO4)</td>
+<td>38 700</td>
+<td>9,8</td>
+<td>███████</td>
+</tr>
+<tr>
+<td><strong>Rozvaděč a elektromateriál</strong></td>
+<td>DC + AC, zapojení backupu, montáž</td>
+<td>41 400</td>
+<td>10,5</td>
+<td>████████</td>
+</tr>
+<tr>
+<td><strong>Backup / ostrovní funkce</strong></td>
+<td>Komponenty pro zálohu, limitovaný backup</td>
+<td>24 400</td>
+<td>6,2</td>
+<td>████</td>
+</tr>
+<tr>
+<td><strong>Elektromontážní práce</strong></td>
+<td>Instalace všech komponent, revize, zprovoznění</td>
+<td>24 400</td>
+<td>6,2</td>
+<td>████</td>
+</tr>
+<tr>
+<td><strong>Elektroměrový rozvaděč + Cloud Connect / Tigo kit</strong></td>
+<td>Monitoring, optimalizéry, přístupový bod</td>
+<td>24 000</td>
+<td>6,1</td>
+<td>████</td>
+</tr>
+<tr>
+<td><strong>Ostatní (bleskojistka, montážní materiál, drobné položky)</strong></td>
+<td>Zprovoznění, revize, příslušenství</td>
+<td>12 400</td>
+<td>3,1</td>
+<td>██</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Celkem:</strong> 367 500 Kč  </p>
+<blockquote>
+<p>Pozn.: Procentuální podíl je vztažen k celkové investici ~367 500 Kč (zaokrouhlené ceny). Celková fakturovaná cena nabídky je 394 000 Kč.</p>
+</blockquote>
+<hr />
+<h2>3. Roční výroba a spotřeba elektřiny – 2026</h2>
+<h3>3.1. Měsíční profil výroby, spotřeby a nákladů FVE (kWh)</h3>
+<table>
+<thead>
+<tr>
+<th>Měsíc</th>
+<th>Výroba FVE (kWh)</th>
+<th>Spotřeba (kWh)</th>
+<th>Spotřeba ze sítě (kWh)</th>
+<th>Pokrytí (%)</th>
+<th>Vizualizace pokrytí</th>
+<th>Náklad na síť (Kč)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Leden</td>
+<td>99</td>
+<td>573</td>
+<td>474</td>
+<td>17</td>
+<td>███░░░░░░░░░░░░░░░</td>
+<td>2 940</td>
+</tr>
+<tr>
+<td>Únor</td>
+<td>291</td>
+<td>673</td>
+<td>382</td>
+<td>43</td>
+<td>█████░░░░░░░░░░░░░</td>
+<td>2 370</td>
+</tr>
+<tr>
+<td>Březen</td>
+<td>497</td>
+<td>553</td>
+<td>56</td>
+<td>90</td>
+<td>█████████████░░░░░</td>
+<td>348</td>
+</tr>
+<tr>
+<td>Duben</td>
+<td>640</td>
+<td>337</td>
+<td>0</td>
+<td>100</td>
+<td>████████████████████</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Květen</td>
+<td>668</td>
+<td>261</td>
+<td>0</td>
+<td>100</td>
+<td>████████████████████</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Červen</td>
+<td>686</td>
+<td>285</td>
+<td>0</td>
+<td>100</td>
+<td>████████████████████</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Červenec</td>
+<td>672</td>
+<td>302</td>
+<td>0</td>
+<td>100</td>
+<td>████████████████████</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Srpen</td>
+<td>615</td>
+<td>297</td>
+<td>0</td>
+<td>100</td>
+<td>████████████████████</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Září</td>
+<td>478</td>
+<td>217</td>
+<td>0</td>
+<td>100</td>
+<td>████████████████████</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Říjen</td>
+<td>310</td>
+<td>317</td>
+<td>0</td>
+<td>100</td>
+<td>████████████████████</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Listopad</td>
+<td>105</td>
+<td>277</td>
+<td>172</td>
+<td>38</td>
+<td>█████░░░░░░░░░░░░░░░</td>
+<td>1 067</td>
+</tr>
+<tr>
+<td>Prosinec</td>
+<td>66</td>
+<td>433</td>
+<td>367</td>
+<td>15</td>
+<td>███░░░░░░░░░░░░░░░░░</td>
+<td>2 278</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Celkem výroba FVE 2026:</strong> 5 874 kWh<br />
+<strong>Celková spotřeba 2026:</strong> 4 000 kWh (původně 5 MWh se započítáním TČ)<br />
+<strong>Elektřina ze sítě:</strong> 1 055 kWh<br />
+<strong>Celkový náklad na elektřinu ze sítě:</strong> 6 545 Kč  </p>
+<blockquote>
+<p>Poznámka: Některé panely mohou být částečně zastíněny, snížení výroby cca 5–15 % nebylo zahrnuto.  </p>
+</blockquote>
+<hr />
+<h2>4. Roční úspory a návratnost</h2>
+<h3>4.1. Úspory dle ceny elektřiny</h3>
+<p>Roční cena elektřiny bez FVE (bez DPH):</p>
+<ul>
+<li><strong>Obchodní část:</strong> 4 000 kWh × 3 366,94 Kč/MWh = 13 468 Kč  </li>
+<li><strong>Distribuce + jistič:</strong> 4 000 kWh × 2 171,45 Kč/MWh + 12×235 Kč = 10 886 + 2 820 = 13 706 Kč  </li>
+<li><strong>Platba POZE + systémové služby:</strong> 4 000 kWh × (495 + 170,92) Kč/MWh = 2 664 Kč  </li>
+</ul>
+<p><strong>Celkem náklady 2026 bez FVE:</strong> ~29 838 Kč  </p>
+<p>Roční náklady se zapojenou FVE:<br />
+- Elektřina ze sítě: 1 055 kWh → náklad 6 545 Kč<br />
+- Úspora = 29 838 – 6 545 ≈ 23 293 Kč  </p>
+<hr />
+<h3>4.2. Scénáře návratnosti podle dotace</h3>
+<table>
+<thead>
+<tr>
+<th>Dotace</th>
+<th>Investice po dotaci (Kč)</th>
+<th>Roční úspora (Kč)</th>
+<th>Návratnost (let)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0 %</td>
+<td>394 000</td>
+<td>23 293</td>
+<td>16,9</td>
+</tr>
+<tr>
+<td>20 %</td>
+<td>315 200</td>
+<td>23 293</td>
+<td>13,5</td>
+</tr>
+<tr>
+<td>30 %</td>
+<td>275 800</td>
+<td>23 293</td>
+<td>11,8</td>
+</tr>
+<tr>
+<td>40 %</td>
+<td>236 400</td>
+<td>23 293</td>
+<td>10,1</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Pozn.: Úspory se mohou zvyšovat s růstem ceny elektřiny, čímž se návratnost zkracuje.</p>
+</blockquote>
+<hr />
+<h3>4.3. Dopad nárůstu spotřeby (TČ 5 MWh)</h3>
+<ul>
+<li>Spotřeba 5 MWh ročně → ze sítě cca 2 000 kWh → úspora klesá na ~20 000 Kč/rok  </li>
+<li>Návratnost bez dotace: 394 000 / 20 000 ≈ 19,7 let  </li>
+<li>Návratnost s 30 % dotací: 275 800 / 20 000 ≈ 13,8 let  </li>
+</ul>
+<hr />
+<h2>5. Shrnutí</h2>
+<ul>
+<li>Roční spotřeba: 4–5 MWh → s FVE a baterií pokryta z 80–95 %  </li>
+<li>Roční úspora: 20–23 tis. Kč (bez dotace)  </li>
+<li>Návratnost: 11–17 let dle dotace a spotřeby  </li>
+<li>Baterie: pokrytí víkendů, vyrovnání noční spotřeby  </li>
+<li>Backup: omezený, plný backup není nutný  </li>
+</ul>
+<blockquote>
+<p>Optimizéry řeší stínění panelů, střídač je předimenzovaný pro prevenci přehřívání, baterie zajišťuje víkendovou soběstačnost.</p>
+</blockquote>
+<hr />
+<h2>6. Doporučení</h2>
+<ul>
+<li>Monitorovat výrobu a stav baterie  </li>
+<li>Pravidelná kontrola střídače a rozvaděče  </li>
+<li>Plánovat spotřebiče při omezené záloze  </li>
+<li>Zohlednit případný nárůst spotřeby (TČ, elektromobil)  </li>
+</ul>
+<hr />
+<h2>7. Zdroje</h2>
+<ol>
+<li><a href="https://www.mnd.cz">MND – Tarif D02</a>  </li>
+<li><a href="https://www.solaxpower.com">Solax X3 Hybrid datasheet</a>  </li>
+<li><a href="https://www.solaxpower.com/battery">Solax T-BAT H 11,6 LiFePO4</a>  </li>
+<li><a href="https://www.ceps.cz">ČEPS – systémové služby</a>  </li>
+<li>Solární profil ČR – [Český hydrometeorologický ústav, 2024]  </li>
+<li>Podpora POZE – <a href="https://www.eru.cz">Energetický regulační úřad</a>  </li>
+</ol>
+<p><a href="../index.html">← Zpět na přehled</a></p>
+</body>
+</html>
